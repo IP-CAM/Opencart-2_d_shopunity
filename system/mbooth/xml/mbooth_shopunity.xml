@@ -9,11 +9,14 @@
     <author>Dreamvention</author>
     <files>
 		<file>system/mbooth/xml/mbooth_shopunity.xml</file>
+		<file>admin/view/template/common/d_file_manager.tpl</file>
+		<file>vqmod/xml/a_vqmod_shopunity.xml</file>
 	</files>
 	<dirs>
 		<dir>admin/view/javascript/shopunity</dir>
 		<dir>admin/view/stylesheet/shopunity</dir>
 		<dir>system/library/hyperlight</dir>
+		<dir>system/elfinder</dir>
 	</dirs>
 	<required>
 		<require></require>
