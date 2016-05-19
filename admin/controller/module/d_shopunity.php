@@ -172,7 +172,7 @@ class ControllerModuleDShopunity extends Controller {
 	    	'client_id' => 'testclient',
 			'code' => $this->request->get['code'],
 	        'state' => $this->request->get['state'],
-	        'redirect_uri' => $this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL')
+	        'redirect_uri' => str_replace('&amp;', '&', $this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'))
 		);
 
 		$ch = curl_init();
@@ -184,7 +184,7 @@ class ControllerModuleDShopunity extends Controller {
 		$server_output = curl_exec ($ch);
 		curl_close ($ch);
 
-		
+
 
 		//if ($server_output == "OK") { 
 		//$body = json_decode($res->getBody(), true);
