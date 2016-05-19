@@ -111,6 +111,9 @@ class ControllerModuleDShopunity extends Controller {
 		//get setting
 		$data['setting'] = $this->model_module_d_shopunity->getConfigData($this->id, $this->id.'_setting', $this->store_id, $this->config_file);
 
+
+		print_r($this->session->data['shopunity']);
+
    		$data['header'] = $this->load->controller('common/header');
    		$data['column_left'] = $this->load->controller('common/column_left');
    		$data['footer'] = $this->load->controller('common/footer');
@@ -186,12 +189,10 @@ class ControllerModuleDShopunity extends Controller {
 
 
 
-		//if ($server_output == "OK") { 
-		//$body = json_decode($res->getBody(), true);
-			print_r( $server_output );
-		// } else { 
-		// echo 'OOPS!!!!';
-		// }
+		if ($server_output == "OK") { 
+			$body = json_decode($res->getBody(), true);
+			$this->session->data['shopunity'] = $server_output;
+		}
    	}
 
 

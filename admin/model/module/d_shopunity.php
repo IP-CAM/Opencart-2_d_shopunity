@@ -6,7 +6,11 @@
 class ModelModuleDShopunity extends Model {
 
 	public function isLogged(){
-		return false;
+		if(!empty($this->session->data['shopunity'])){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	/**
