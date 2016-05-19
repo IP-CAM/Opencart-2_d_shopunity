@@ -160,7 +160,7 @@ class ControllerModuleDShopunity extends Controller {
 
    	public function connect(){
 
-		$this->response->redirect('http://localhost:8888/shopunity_api/oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL')));
+		$this->response->redirect('https://api.shopunity.net/v1/oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL')));
 
    	}
 
@@ -177,7 +177,7 @@ class ControllerModuleDShopunity extends Controller {
 
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL,"http://localhost:8888/shopunity_api/oauth/token");
+		curl_setopt($ch, CURLOPT_URL,"https://api.shopunity.net/v1/oauth/token");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resource));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
