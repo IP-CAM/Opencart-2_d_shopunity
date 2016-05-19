@@ -172,7 +172,7 @@ class ControllerModuleDShopunity extends Controller {
 	    	'client_id' => 'testclient',
 			'code' => $this->request->get['code'],
 	        'state' => $this->request->get['state'],
-	        'redirect_uri' => str_replace('&amp;', '&', $this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'))
+	        'redirect_uri' => urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'))
 		);
 
 		$ch = curl_init();
