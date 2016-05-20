@@ -193,6 +193,8 @@ class ControllerModuleDShopunity extends Controller {
 			$body = json_decode($res->getBody(), true);
 			$this->session->data['shopunity'] = $server_output;
 		}
+
+		$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
    	}
 
 
