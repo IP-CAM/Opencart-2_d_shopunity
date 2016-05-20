@@ -111,9 +111,6 @@ class ControllerModuleDShopunity extends Controller {
 		//get setting
 		$data['setting'] = $this->model_module_d_shopunity->getConfigData($this->id, $this->id.'_setting', $this->store_id, $this->config_file);
 
-
-		print_r($this->session->data['shopunity']);
-
    		$data['header'] = $this->load->controller('common/header');
    		$data['column_left'] = $this->load->controller('common/column_left');
    		$data['footer'] = $this->load->controller('common/footer');
@@ -122,6 +119,11 @@ class ControllerModuleDShopunity extends Controller {
    	}
 
    	public function login($data){
+
+   		if($this->model_module_d_shopunity->isLogged()){
+
+			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
+		}
 
    		$this->load->language('d_shopunity/login');
    		$this->load->model('module/d_shopunity');
@@ -153,7 +155,7 @@ class ControllerModuleDShopunity extends Controller {
 		$data['button_connect'] = $this->language->get('button_connect');
 
 		$data['href_connect'] = $this->url->link('module/d_shopunity/connect', 'token=' . $this->session->data['token'], 'SSL');
-		
+	
    		$data['header'] = $this->load->controller('common/header');
    		$data['column_left'] = $this->load->controller('common/column_left');
    		$data['footer'] = $this->load->controller('common/footer');
@@ -187,15 +189,68 @@ class ControllerModuleDShopunity extends Controller {
 		$server_output = curl_exec ($ch);
 		curl_close ($ch);
 
+		$json = json_decode($server_output,true);
 
+		if (json_last_error() === JSON_ERROR_NONE) {
+			if(isset($json['access_token'])){
+				$data = array();
+				$data['d_shopunity_oauth'] = $json;
+				$this->load->model('setting/setting');
+				$this->model_setting_setting->editSetting('d_shopunity', $data);
+			}else{
+				$this->session->data['error']   = $this->language->get('error_connection_failed');
+			}
+			
+		}else{
+			$this->session->data['error']   = $this->language->get('error_not_json');
+		}
+		$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
+		
+	}
 
-		if ($server_output == "OK") { 
-			$body = json_decode($res->getBody(), true);
-			$this->session->data['shopunity'] = $server_output;
+	public function extension(){
+		if($this->model_module_d_shopunity->isLogged()){
+
+			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
-   	}
+   		$this->load->language('d_shopunity/extension');
+   		$this->load->model('module/d_shopunity');
+   		$route = 'd_shopunity/login';
+
+   		// Breadcrumbs
+		$data['breadcrumbs'] = array(); 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+		$data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_module'),
+			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link($route, 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+   		$this->document->setTitle($this->language->get('heading_title'));
+   		$data['heading_title'] = $this->language->get('heading_title');
+
+   		$data['version'] = $this->model_module_d_shopunity->getVersion($this->mbooth);
+
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['button_connect'] = $this->language->get('button_connect');
+
+		$data['href_connect'] = $this->url->link('module/d_shopunity/connect', 'token=' . $this->session->data['token'], 'SSL');
+	
+   		$data['header'] = $this->load->controller('common/header');
+   		$data['column_left'] = $this->load->controller('common/column_left');
+   		$data['footer'] = $this->load->controller('common/footer');
+
+   		$this->response->setOutput($this->load->view($route.'.tpl', $data));
+	}
 
 
 	/**

@@ -6,7 +6,7 @@
 class ModelModuleDShopunity extends Model {
 
 	public function isLogged(){
-		if(!empty($this->session->data['shopunity'])){
+		if(($this->config->get('d_shopunity_oauth'))){
 			return true;
 		}else{
 			return false;
