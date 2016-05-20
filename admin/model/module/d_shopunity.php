@@ -12,7 +12,6 @@ class ModelModuleDShopunity extends Model {
 			return false;
 		}
 	}
-
 	/**
 
 	 Modal functions
