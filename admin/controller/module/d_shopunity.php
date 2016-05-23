@@ -252,6 +252,32 @@ class ControllerModuleDShopunity extends Controller {
    		$this->response->setOutput($this->load->view($route.'.tpl', $data));
 	}
 
+	public function info(){
+		$json = array(
+			'codename' => '',
+			'name' => '',
+			'description' => '',
+			'demo' => 0,
+			'version' => VERSION,
+			'url' => HTTP_CATALOG,
+			'ssl' => HTTPS_CATALOG,
+			'dir' => DIR_CATALOG,
+			'image' => '',
+			'server_ip' => $this->request->server['SERVER_ADDR'],
+			'db_driver' => DB_DRIVER,
+			'db_host' => DB_HOSTNAME,
+			'db_user' => DB_USERNAME,
+			'db_password' => DB_USERNAME,
+			'db_name' => DB_DATABASE,
+			'db_prefix' => DB_PREFIX,
+			'admin_url' => HTTP_SERVER,
+			'admin_user' => $this->user->getUserName(),
+			'admin_password' => '',
+
+		);
+
+		$this->response->setOutput(json_encode($json));
+	}
 
 	/**
 
