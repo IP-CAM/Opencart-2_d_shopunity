@@ -255,14 +255,12 @@ class ControllerModuleDShopunity extends Controller {
 	public function info(){
 		$json = array(
 			'codename' => '',
-			'name' => '',
-			'description' => '',
-			'demo' => 0,
+			'name' => $this->config->get('config_name'),
+			'description' => $this->config->get('config_meta_description'),
 			'version' => VERSION,
 			'url' => HTTP_CATALOG,
 			'ssl' => HTTPS_CATALOG,
 			'dir' => DIR_CATALOG,
-			'image' => '',
 			'server_ip' => $this->request->server['SERVER_ADDR'],
 			'db_driver' => DB_DRIVER,
 			'db_host' => DB_HOSTNAME,
@@ -270,12 +268,12 @@ class ControllerModuleDShopunity extends Controller {
 			'db_password' => DB_USERNAME,
 			'db_name' => DB_DATABASE,
 			'db_prefix' => DB_PREFIX,
-			'admin_url' => HTTP_SERVER,
+			'admin_url' => HTTPS_SERVER,
 			'admin_user' => $this->user->getUserName(),
 			'admin_password' => '',
 
 		);
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
