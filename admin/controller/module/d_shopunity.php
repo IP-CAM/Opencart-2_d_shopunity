@@ -158,7 +158,7 @@ class ControllerModuleDShopunity extends Controller {
 			'description' => $this->config->get('config_meta_description'),
 			'version' => VERSION,
 			'url' => HTTP_CATALOG,
-			'ssl' => HTTPS_CATALOG,
+			'ssl_url' => HTTPS_CATALOG,
 			'dir' => DIR_CATALOG,
 			'server_ip' => $this->request->server['SERVER_ADDR'],
 			'db_driver' => DB_DRIVER,
