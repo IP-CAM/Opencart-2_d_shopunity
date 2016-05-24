@@ -165,7 +165,7 @@ class ControllerModuleDShopunity extends Controller {
 
    	public function connect(){
 
-		$this->response->redirect('https://api.shopunity.net/v1/oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL')));
+		$this->response->redirect('https://api.shopunity.net/v1/oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL')) . '&store_info_url='.urlencode($this->url->link('module/d_shopunity/info', 'token=' . $this->session->data['token'], 'SSL')));
 
    	}
 
@@ -254,7 +254,6 @@ class ControllerModuleDShopunity extends Controller {
 
 	public function info(){
 		$json = array(
-			'codename' => '',
 			'name' => $this->config->get('config_name'),
 			'description' => $this->config->get('config_meta_description'),
 			'version' => VERSION,
@@ -270,7 +269,6 @@ class ControllerModuleDShopunity extends Controller {
 			'db_prefix' => DB_PREFIX,
 			'admin_url' => HTTPS_SERVER,
 			'admin_user' => $this->user->getUserName(),
-			'admin_password' => '',
 
 		);
 
