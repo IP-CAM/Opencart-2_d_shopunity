@@ -152,6 +152,24 @@ class ControllerModuleDShopunity extends Controller {
    		$data['version'] = $this->model_module_d_shopunity->getVersion($this->mbooth);
 
 		$data['text_edit'] = $this->language->get('text_edit');
+		$data['action_connect'] = 'https://api.shopunity.net/v1/oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'));
+		$data['store_info'] = array(
+			'name' => $this->config->get('config_name'),
+			'description' => $this->config->get('config_meta_description'),
+			'version' => VERSION,
+			'url' => HTTP_CATALOG,
+			'ssl' => HTTPS_CATALOG,
+			'dir' => DIR_CATALOG,
+			'server_ip' => $this->request->server['SERVER_ADDR'],
+			'db_driver' => DB_DRIVER,
+			'db_host' => DB_HOSTNAME,
+			'db_user' => DB_USERNAME,
+			'db_password' => DB_USERNAME,
+			'db_name' => DB_DATABASE,
+			'db_prefix' => DB_PREFIX,
+			'admin_url' => HTTPS_SERVER,
+			'admin_user' => $this->user->getUserName()
+		);
 		$data['button_connect'] = $this->language->get('button_connect');
 
 		$data['href_connect'] = $this->url->link('module/d_shopunity/connect', 'token=' . $this->session->data['token'], 'SSL');
@@ -165,7 +183,7 @@ class ControllerModuleDShopunity extends Controller {
 
    	public function connect(){
 
-		$this->response->redirect('https://api.shopunity.net/v1/oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL')) . '&store_info_url='.urlencode($this->url->link('module/d_shopunity/info', 'token=' . $this->session->data['token'], 'SSL')));
+		$this->response->redirect('https://api.shopunity.net/v1/oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL')));
 
    	}
 

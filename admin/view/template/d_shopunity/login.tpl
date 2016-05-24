@@ -34,8 +34,12 @@
 				<h3 class="panel-title"><?php echo $text_edit; ?></h3>
 			</div>
 			<div class="panel-body">
-				<a href="<?php echo $href_connect; ?>" class="btn btn-primary">Connect</a>
-	
+				<form action="<?php echo $action_connect; ?>" method="post">
+					<?php foreach($store_info as $key => $value) {?>
+						<input type="hidden" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
+					<?php } ?>
+					<button class="btn btn-primary">Connect</button>
+				</form>
 			</div>
 		</div>
 	</div>
