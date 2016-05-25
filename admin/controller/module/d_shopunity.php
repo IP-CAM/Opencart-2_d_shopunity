@@ -110,7 +110,7 @@ class ControllerModuleDShopunity extends Controller {
 
 		$data['button_logout'] =  $this->language->get('button_logout');
 		$data['logout'] = $this->url->link('module/d_shopunity/logout', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		//get setting
 		$data['setting'] = $this->model_module_d_shopunity->getConfigData($this->id, $this->id.'_setting', $this->store_id, $this->config_file);
 
@@ -158,7 +158,7 @@ class ControllerModuleDShopunity extends Controller {
 		$data['action_connect'] = 'https://api.shopunity.net/v1/oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'));
 		$this->load->model('user/user');
 		$user = $this->model_user_user->getUser($this->user->getId());
-		$data['store_info'] = json_encode(array(
+		$data['store_info'] = array(
 			'name' => $this->config->get('config_name'),
 			'description' => $this->config->get('config_meta_description'),
 			'version' => VERSION,
@@ -176,7 +176,7 @@ class ControllerModuleDShopunity extends Controller {
 			'admin_url' => HTTPS_SERVER,
 			'admin_user' => $user['username'],
 			'admin_email' => $user['email'],
-		));
+		);
 		$data['button_connect'] = $this->language->get('button_connect');
 
 		$data['href_connect'] = $this->url->link('module/d_shopunity/connect', 'token=' . $this->session->data['token'], 'SSL');
