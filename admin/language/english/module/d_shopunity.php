@@ -9,6 +9,9 @@ $_['heading_title_main']		= 'Shopunity';
 $_['text_edit']					= 'Edit Shopunity settings';
 $_['text_module']               = 'Modules';
 
+$_['button_logout']             = 'Logout';
+
+
 //customer
 $_['entry_customer_group']  = 'Customer Group';
 $_['entry_approved']        = 'Approved';

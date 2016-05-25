@@ -62,6 +62,7 @@
 						<?php echo $tab_backup; ?>
 					</a></li>
 				</ul>
+				<a href="<?php echo $logout; ?>" class="btn btn-default pull-right"><?php echo $button_logout; ?></a>
 			</div>
 			<div class="panel-body">
 

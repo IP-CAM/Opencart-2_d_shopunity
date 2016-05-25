@@ -6,12 +6,18 @@
 class ModelModuleDShopunity extends Model {
 
 	public function isLogged(){
-		if(($this->config->get('d_shopunity_oauth'))){
+		if($this->config->get('d_shopunity_oauth')){
 			return true;
 		}else{
 			return false;
 		}
 	}
+
+	public function Logout(){
+		$this->config->set('d_shopunity_oauth', false);
+	}
+
+	
 	/**
 
 	 Modal functions
