@@ -15,10 +15,9 @@ class ModelModuleDShopunity extends Model {
 
 	public function Logout(){
 		$this->load->model('setting/setting');
-		$this->model_setting_setting->deleteSetting('d_shopunity_oauth');
+		$this->model_setting_setting->deleteSetting('d_shopunity');
 	}
 
-	
 	/**
 
 	 Modal functions
