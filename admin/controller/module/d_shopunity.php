@@ -83,6 +83,7 @@ class ControllerModuleDShopunity extends Controller {
 
 		if(!empty($this->session->data['success'])){
 			$data['success'] = $this->session->data['success'];
+			unset($this->session->data['success']);
 		}
 		
 		// Heading
