@@ -44,6 +44,7 @@
 		<?php } ?>
 		<div class="panel panel-default">
 			<div class="panel-heading">
+				<a href="<?php echo $logout; ?>" class="btn btn-default pull-right"><?php echo $button_logout; ?></a>
 				<ul  class="nav nav-pills">
 					<li class="active"><a href="<?php echo $href_extension; ?>" >
 						<span class="fa fa-puzzle-piece"></span> 
@@ -62,7 +63,7 @@
 						<?php echo $tab_backup; ?>
 					</a></li>
 				</ul>
-				<a href="<?php echo $logout; ?>" class="btn btn-default pull-right"><?php echo $button_logout; ?></a>
+
 			</div>
 			<div class="panel-body">
 
