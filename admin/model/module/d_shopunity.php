@@ -14,7 +14,7 @@ class ModelModuleDShopunity extends Model {
 	}
 
 	public function Logout(){
-		$this->config->set('d_shopunity_oauth', false);
+		$this->config->set('d_shopunity_oauth', 0);
 	}
 
 	
