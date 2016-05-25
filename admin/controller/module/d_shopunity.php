@@ -12,6 +12,7 @@ class ControllerModuleDShopunity extends Controller {
 	private $prefix = '';
 	private $store_id = 0;
 	private $error = array(); 
+	private $client_id = 'testclient';
 
 	public function __construct($registry) {
 		parent::__construct($registry);
@@ -80,6 +81,10 @@ class ControllerModuleDShopunity extends Controller {
 			$data['error'][$key] = $error;
 		}
 
+		if(!empty($this->session->data['success'])){
+			$data['success'] = $this->session->data['success'];
+		}
+		
 		// Heading
 		$this->document->setTitle($this->language->get('heading_title_main'));
 		$data['heading_title'] = $this->language->get('heading_title_main');
@@ -207,7 +212,7 @@ class ControllerModuleDShopunity extends Controller {
 
 		$resource = array( 
 	    	'grant_type' => 'authorization_code',
-	    	'client_id' => 'testclient',
+	    	'client_id' => $this->client_id,
 			'code' => $this->request->get['code'],
 	        'state' => $this->request->get['state'],
 	        'redirect_uri' => urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'))
@@ -239,6 +244,56 @@ class ControllerModuleDShopunity extends Controller {
 		}
 		$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
 		
+	}
+
+	public function refreshToken(){
+
+		$this->load->model('setting/setting');
+
+		if(!isset($this->config->get('d_shopunity_oauth')['refresh_token'])){
+			$this->session->data['error'] = $this->language->get('error_refresh_token_missing');
+			$this->model_setting_setting->deleteSetting('d_shopunity');
+			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+
+		$refresh_token = $this->config->get('d_shopunity_oauth')['refresh_token'];
+
+		$resource = array( 
+	    	'grant_type' => 'refresh_token',
+	    	'client_id' => $this->client_id,
+			'refresh_token' => $refresh_token,
+	    );
+
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL,"https://api.shopunity.net/v1/oauth/token");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resource));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$server_output = curl_exec ($ch);
+		curl_close ($ch);
+
+		$json = json_decode($server_output,true);
+
+		if (json_last_error() === JSON_ERROR_NONE) {
+
+			if(isset($json['access_token'])){
+				$data = array();
+				$data['d_shopunity_oauth'] = $json;
+				$this->model_setting_setting->editSetting('d_shopunity', $data);
+				$this->session->data['success'] = $this->language->get('success_token_refresh');
+			}else{
+				$this->model_setting_setting->deleteSetting('d_shopunity');
+				$this->session->data['error'] = $this->language->get('error_connection_failed');
+			}
+			
+		}else{
+			$this->model_setting_setting->deleteSetting('d_shopunity');
+			$this->session->data['error'] = $this->language->get('error_not_json');
+		}
+		$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
+		
+	
 	}
 
 	public function extension(){
