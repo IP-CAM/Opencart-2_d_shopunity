@@ -253,7 +253,7 @@ class ControllerModuleDShopunity extends Controller {
 		if(!isset($this->config->get('d_shopunity_oauth')['refresh_token'])){
 			$this->session->data['error'] = $this->language->get('error_refresh_token_missing');
 			$this->model_setting_setting->deleteSetting('d_shopunity');
-			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('module/d_shopunity/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$refresh_token = $this->config->get('d_shopunity_oauth')['refresh_token'];
@@ -285,11 +285,13 @@ class ControllerModuleDShopunity extends Controller {
 			}else{
 				$this->model_setting_setting->deleteSetting('d_shopunity');
 				$this->session->data['error'] = $this->language->get('error_connection_failed');
+				$this->response->redirect($this->url->link('module/d_shopunity/login', 'token=' . $this->session->data['token'], 'SSL'));
 			}
 			
 		}else{
 			$this->model_setting_setting->deleteSetting('d_shopunity');
 			$this->session->data['error'] = $this->language->get('error_not_json');
+			$this->response->redirect($this->url->link('module/d_shopunity/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 		$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
 		
