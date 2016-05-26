@@ -300,7 +300,7 @@ class ControllerModuleDShopunity extends Controller {
 	}
 
 	public function extension(){
-		if($this->model_module_d_shopunity->isLogged()){
+		if(!$this->model_module_d_shopunity->isLogged()){
 
 			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -344,7 +344,7 @@ class ControllerModuleDShopunity extends Controller {
 	}
 
 	public function store(){
-		if($this->model_module_d_shopunity->isLogged()){
+		if(!$this->model_module_d_shopunity->isLogged()){
 
 			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
 		}
