@@ -343,6 +343,49 @@ class ControllerModuleDShopunity extends Controller {
    		$this->response->setOutput($this->load->view($route.'.tpl', $data));
 	}
 
+	public function store(){
+		if($this->model_module_d_shopunity->isLogged()){
+
+			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+
+   		$this->load->language('d_shopunity/extension');
+   		$this->load->model('module/d_shopunity');
+   		$route = 'd_shopunity/store';
+
+   		// Breadcrumbs
+		$data['breadcrumbs'] = array(); 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+		$data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_module'),
+			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link($route, 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+   		$this->document->setTitle($this->language->get('heading_title'));
+   		$data['heading_title'] = $this->language->get('heading_title');
+
+   		$data['version'] = $this->model_module_d_shopunity->getVersion($this->mbooth);
+		$data['text_edit'] = $this->language->get('text_edit');
+		$store_id = false;
+
+		$data['store'] = $this->model_module_d_shopunity->getStore($store_id);
+
+   		$data['header'] = $this->load->controller('common/header');
+   		$data['column_left'] = $this->load->controller('common/column_left');
+   		$data['footer'] = $this->load->controller('common/footer');
+
+   		$this->response->setOutput($this->load->view($route.'.tpl', $data));
+	}
+
 	public function info(){
 		$json = array(
 			'name' => $this->config->get('config_name'),

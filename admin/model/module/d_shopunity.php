@@ -18,6 +18,22 @@ class ModelModuleDShopunity extends Model {
 		$this->model_setting_setting->deleteSetting('d_shopunity');
 	}
 
+	public function getStore($store_id = false){
+		if(!$store_id){
+			$store_id = 'current';
+		}
+
+		$result = file_get_contents("https://api.shopunity.net/v1/stores/".$store_id);
+
+		$json = json_decode($result,true);
+
+		if (json_last_error() === JSON_ERROR_NONE) {
+			return $json;
+		}else{
+			return false;
+		}
+	}
+
 	/**
 
 	 Modal functions
