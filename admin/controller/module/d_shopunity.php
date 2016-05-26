@@ -127,6 +127,82 @@ class ControllerModuleDShopunity extends Controller {
    		$this->response->setOutput($this->load->view('d_shopunity/extension.tpl', $data));
    	}
 
+   	public function heading(){
+
+   		$this->load->language($this->route);
+		$this->load->model('module/d_shopunity');
+		$this->load->model('setting/setting');
+		$this->load->model('extension/module');
+		
+		if(!$this->model_module_d_shopunity->isLogged()){
+
+			$this->response->redirect($this->url->link('module/d_shopunity/login', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+
+   		$this->document->addStyle('view/stylesheet/shopunity/bootstrap.css');
+
+		// Breadcrumbs
+		$data['breadcrumbs'] = array(); 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+		$data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_module'),
+			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title_main'),
+			'href' => $this->url->link($this->route, 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+		// Notification
+		foreach($this->error as $key => $error){
+			$data['error'][$key] = $error;
+		}
+
+		if(!empty($this->session->data['success'])){
+			$data['success'] = $this->session->data['success'];
+			unset($this->session->data['success']);
+		}
+		
+		// Heading
+		$this->document->setTitle($this->language->get('heading_title_main'));
+		$data['heading_title'] = $this->language->get('heading_title_main');
+		$data['text_edit'] = $this->language->get('text_edit');
+
+   		// Variable
+		$data['id'] = $this->id;
+		$data['route'] = $this->route;
+		$data['store_id'] = $this->store_id;
+		$data['stores'] = $this->model_module_d_shopunity->getStores();
+		$data['mbooth'] = $this->mbooth;
+		$data['config'] = $this->config_file;
+		$data['support_email'] = $this->support_email;
+
+		$data['version'] = $this->model_module_d_shopunity->getVersion($data['mbooth']);
+		$data['token'] =  $this->session->data['token'];
+
+   		//language
+		$data['tab_extension'] =  $this->language->get('tab_extension');
+		$data['tab_market'] =  $this->language->get('tab_market');
+		$data['tab_account'] =  $this->language->get('tab_account');
+		$data['tab_backup'] =  $this->language->get('tab_backup');
+
+		$data['href_extension'] =  $this->url->link('module/d_shopunity/index', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_market'] =  $this->url->link('module/d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_account'] =  $this->url->link('module/d_shopunity/account', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_backup'] = $this->url->link('module/d_shopunity/backup', 'token=' . $this->session->data['token'], 'SSL');
+
+		$data['button_logout'] =  $this->language->get('button_logout');
+		$data['logout'] = $this->url->link('module/d_shopunity/logout', 'token=' . $this->session->data['token'], 'SSL');
+
+		return $data;
+
+   	}
+
    	public function login($data){
 
    		if($this->model_module_d_shopunity->isLogged()){
@@ -344,6 +420,7 @@ class ControllerModuleDShopunity extends Controller {
 	}
 
 	public function store(){
+		$data = $this->heading();
 		if(!$this->model_module_d_shopunity->isLogged()){
 
 			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
