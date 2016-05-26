@@ -23,7 +23,7 @@ class ModelModuleDShopunity extends Model {
 			$store_id = 'current';
 		}
 
-		$result = file_get_contents("https://api.shopunity.net/v1/stores/".$store_id);
+		$result = file_get_contents("https://api.shopunity.net/v1/stores/".$store_id . "?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
 
 		$json = json_decode($result,true);
 
