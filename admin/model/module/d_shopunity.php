@@ -4,11 +4,49 @@
  */
 
 class ModelModuleDShopunity extends Model {
+	private $client_id = 'testclient';
 
 	public function isLogged(){
+		//validate if settings is avalible.
 		if($this->config->get('d_shopunity_oauth')){
-			return true;
+			$result = file_get_contents("https://api.shopunity.net/v1/account?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
+			$json = json_decode($result,true);
+
+			//validate is json returned.
+			if (json_last_error() === JSON_ERROR_NONE) {
+
+				//validate if expired_token
+				if(isset($json['error']['error']) && $json['error']['error'] === 'expired_token'){
+					$json = $this->refreshToken($this->config->get('d_shopunity_oauth')['refresh_token']);
+					
+					//get new access token
+					if($json){
+
+						//validate is access_token returned.
+						if(empty($json['access_token'])){
+
+							//access_token is not retunred
+							$this->logout();
+							return false;
+						}else{
+							$data['d_shopunity_oauth'] = $json;
+							$this->load->model('setting/setting');
+							$this->model_setting_setting->editSetting('d_shopunity', $data);
+							$this->config->set('d_shopunity_oauth', $json);
+							return true;
+						}
+					}
+				}else{
+					//OK. account returned. 
+					return true;
+				}
+			}else{
+				//json not returned. logout. 
+				$this->logout();
+				return false;
+			}
 		}else{
+			//no settings set.
 			return false;
 		}
 	}
@@ -26,6 +64,31 @@ class ModelModuleDShopunity extends Model {
 		$result = file_get_contents("https://api.shopunity.net/v1/stores/".$store_id . "?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
 
 		$json = json_decode($result,true);
+
+		if (json_last_error() === JSON_ERROR_NONE) {
+			return $json;
+		}else{
+			return false;
+		}
+	}
+
+	public function refreshToken($refresh_token){
+		$resource = array( 
+	    	'grant_type' => 'refresh_token',
+	    	'client_id' => $this->client_id,
+			'refresh_token' => $refresh_token,
+	    );
+
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL,"https://api.shopunity.net/v1/oauth/token");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resource));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$server_output = curl_exec ($ch);
+		curl_close ($ch);
+
+		$json = json_decode($server_output,true);
 
 		if (json_last_error() === JSON_ERROR_NONE) {
 			return $json;
