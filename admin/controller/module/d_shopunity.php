@@ -452,9 +452,8 @@ class ControllerModuleDShopunity extends Controller {
 
    		$data['version'] = $this->model_module_d_shopunity->getVersion($this->mbooth);
 		$data['text_edit'] = $this->language->get('text_edit');
-		$store_id = false;
 
-		$data['store'] = $this->model_module_d_shopunity->getStore($store_id);
+		$data['store'] = $this->model_module_d_shopunity->getCurrentStore();
 
    		$data['header'] = $this->load->controller('common/header');
    		$data['column_left'] = $this->load->controller('common/column_left');
