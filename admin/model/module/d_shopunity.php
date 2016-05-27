@@ -56,12 +56,9 @@ class ModelModuleDShopunity extends Model {
 		$this->model_setting_setting->deleteSetting('d_shopunity');
 	}
 
-	public function getStore($store_id = false){
-		if(!$store_id){
-			$store_id = 'current';
-		}
+	public function getStore($store_id = 'current'){
 
-		$result = file_get_contents("https://api.shopunity.net/v1/stores/".$store_id . "?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
+		$result = file_get_contents("https://api.shopunity.net/v1/stores?access_token=".$this->config->get('d_shopunity_oauth')['access_token']).'&url='.urlencode(HTTP_CATALOG);
 
 		$json = json_decode($result,true);
 
