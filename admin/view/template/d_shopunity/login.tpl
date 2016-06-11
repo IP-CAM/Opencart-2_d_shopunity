@@ -34,12 +34,22 @@
 				<h3 class="panel-title"><?php echo $text_edit; ?></h3>
 			</div>
 			<div class="panel-body">
-				<form action="<?php echo $action_connect; ?>" method="post">
-					<?php foreach($store_info as $key => $value) {?>
-						<input type="hidden" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
-					<?php } ?>
-					<button class="btn btn-primary">Connect</button>
-				</form>
+				<div class="login">
+					<div class="logo">Shopunity</div>
+					<p class="description">
+						Welcome to the most advance module manager in opencart community. 
+						When becoming a member of Shopunity, you get access to many cool 
+						features such as: automatic install, store update, module update 
+						notification, subscribtion to commercial extensions and more. Now 
+						managing your modules is as simple as pushing a button.
+					</p>
+					<form action="<?php echo $action_connect; ?>" method="post">
+						<?php foreach($store_info as $key => $value) {?>
+							<input type="hidden" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
+						<?php } ?>
+						<button class="btn btn-success btn-lg"><span class="fa fa-plug"></span> Connect to <strong>Shopunity</strong></button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

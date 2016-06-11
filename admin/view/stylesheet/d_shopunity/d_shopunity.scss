@@ -9,7 +9,21 @@
 	background: #f3f3f4;
 	padding: 25px;
 }
-
+.login{
+	text-align: center;
+	.logo{
+		font-size: 80px;
+		font-weight: bold;
+		color: #ccc;
+		line-height: 1.6;
+	}
+	.description{
+		width: 60%;
+		margin-bottom: 20px;
+		margin: 20px auto;
+	}
+	padding: 40px 0px;
+}
 .account-profile{
 	.ibox-content{
 		padding: 40px 20px;
