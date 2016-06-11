@@ -5,11 +5,17 @@
 
 class ModelModuleDShopunity extends Model {
 	private $client_id = 'testclient';
+	//private $api = 'https://api.shopunity.net/v1/';
+	private $api = 'http://localhost:8888/shopunity_api/';
+
+	public function isCurl(){
+		return function_exists('curl_version');
+	}
 
 	public function isLogged(){
 		//validate if settings is avalible.
 		if($this->config->get('d_shopunity_oauth')){
-			$result = file_get_contents("https://api.shopunity.net/v1/account?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
+			$result = file_get_contents( $this->api."account?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
 			$json = json_decode($result,true);
 
 			//validate is json returned.
@@ -29,10 +35,10 @@ class ModelModuleDShopunity extends Model {
 							$this->logout();
 							return false;
 						}else{
-							$data['d_shopunity_oauth'] = $json;
 							$this->load->model('setting/setting');
-							$this->model_setting_setting->editSetting('d_shopunity', $data);
+							$this->model_setting_setting->editSettingValue('d_shopunity', 'd_shopunity_oauth', $json);
 							$this->config->set('d_shopunity_oauth', $json);
+							$this->getCurrentStore();
 							return true;
 						}
 					}
@@ -58,7 +64,7 @@ class ModelModuleDShopunity extends Model {
 
 	public function getStore($store_id = 'current'){
 
-		$result = file_get_contents("https://api.shopunity.net/v1/stores/".$store_id . "?access_token=".$this->config->get('d_shopunity_oauth')['access_token']).'&url='.urlencode(HTTP_CATALOG);
+		$result = file_get_contents($this->api."stores/".$store_id . "?access_token=".$this->config->get('d_shopunity_oauth')['access_token']).'&url='.urlencode(HTTP_CATALOG);
 
 		$json = json_decode($result,true);
 
@@ -70,13 +76,67 @@ class ModelModuleDShopunity extends Model {
 	}
 
 	public function getCurrentStore(){
+		if($this->config->get('d_shopunity_store_info')){
+			return $this->config->get('d_shopunity_store_info');
+		}else{
 
-		$result = file_get_contents("https://api.shopunity.net/v1/stores?access_token=".$this->config->get('d_shopunity_oauth')['access_token']).'&url='.urlencode(HTTP_CATALOG);
+
+			$result = file_get_contents($this->api."stores?access_token=".$this->config->get('d_shopunity_oauth')['access_token'].'&url='.urlencode(HTTP_CATALOG));
+
+			$json = json_decode($result,true);
+
+			if (json_last_error() === JSON_ERROR_NONE) {
+				$this->load->model('setting/setting');
+				$data = array('d_shopunity_store_info' => $json[0]);
+				$data += $this->model_setting_setting->getSetting('d_shopunity');
+				$this->model_setting_setting->editSetting('d_shopunity', $data);
+				return $json[0];
+			}else{
+				return false;
+			}
+		}
+	}
+
+	public function getStoreExtensions($store_id){
+		$result = file_get_contents($this->api."stores/".$store_id."/extensions?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
 
 		$json = json_decode($result,true);
 
 		if (json_last_error() === JSON_ERROR_NONE) {
-			return $json[0];
+			return $json;
+		}else{
+			return false;
+		}
+	}
+
+
+
+	public function getAuthorizeUrl(){
+		 return $this->api.'oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'));
+	}
+
+	public function getToken(){
+		$resource = array( 
+	    	'grant_type' => 'authorization_code',
+	    	'client_id' => $this->client_id,
+			'code' => $this->request->get['code'],
+	        'state' => $this->request->get['state'],
+	        'redirect_uri' => urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'))
+		);
+
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL,  $this->api."oauth/token");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resource));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$server_output = curl_exec ($ch);
+		curl_close ($ch);
+
+		$json = json_decode($server_output,true);
+
+		if (json_last_error() === JSON_ERROR_NONE) {
+			return $json;
 		}else{
 			return false;
 		}
@@ -91,7 +151,7 @@ class ModelModuleDShopunity extends Model {
 
 		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL,"https://api.shopunity.net/v1/oauth/token");
+		curl_setopt($ch, CURLOPT_URL, $this->api."oauth/token");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resource));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -19,8 +19,8 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<?php if (!empty($error['warning'])) { ?>
-		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['warning']; ?>
+		<?php if (!empty($error)) { ?>
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error; ?>
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 		</div>
 		<?php } ?>

@@ -32,8 +32,8 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<?php if (!empty($error['warning'])) { ?>
-		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['warning']; ?>
+		<?php if (!empty($error)) { ?>
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error; ?>
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 		</div>
 		<?php } ?>
@@ -66,12 +66,83 @@
 
 			</div>
 			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-3">
+						<?php echo $profile; ?>
+						
+					</div>
+					<div class="col-md-9">
+						<div class="ibox">
+							<div class="ibox-title">
+								<h4>Purchased modules.</h4>
+								<p>These modules have been purchased. You can use them only for this webshop.</p>
+							</div>
+						</div>
 
-				
-					<div>			
-				
+						<?php if($store_extensions){ ?>
+						<div class="row">
+							<?php foreach($store_extensions as $extension) { ?>
+								<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+							<?php } ?>
+						</div>
+						<?php }else{ ?>
+							<div class="bs-callout bs-callout-info">No store modules to display</div>
+						<?php } ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="bs-callout bs-callout-info">
+							<h4>Expired licenses.</h4>
+							<p>These modules do not have a license, or their lisence has been expired. </p>
+						</div>
+					</div>
+					<div class="col-md-9">		 
+						<?php if($local_extensions){ ?>
+						<div class="row">
+							<?php foreach($local_extensions as $extension) { ?>
+								<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+							<?php } ?>
+						</div>
+						<?php }else{ ?>
+							<div class="bs-callout bs-callout-info">No local modules to display</div>
+						<?php } ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="bs-callout bs-callout-info">
+							<h4>Unknown Modules.</h4>
+							<p>These modules are not regestered with the shopunity network.</p>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<?php if($unregestered_extensions){ ?>
+						<div class="row">
+							<?php foreach($unregestered_extensions as $extension) { ?>
+								<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+							<?php } ?>
+						</div>
+						<?php }else{ ?>
+							<div class="bs-callout bs-callout-info">No local modules to display</div>
+						<?php } ?>
+					<!-- 	<pre>
+
+							
+						<?php print_r($store_extensions );?>
+					</pre>  
+					<pre>
+						<?php print_r($local_extensions );?>
+					</pre>   -->
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script>
+		d_shopunity.init({ 
+			'purchase_url': '<?php echo $purchase_url; ?>'
+		});
+</script>
 <?php echo $footer; ?>
