@@ -12,6 +12,17 @@ class ModelModuleDShopunity extends Model {
 		return function_exists('curl_version');
 	}
 
+	public function getGroupId(){
+        if(VERSION == '2.0.0.0'){
+            $user_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "user WHERE user_id = '" . $this->user->getId() . "'");
+            $user_group_id = (int)$user_query->row['user_group_id'];
+        }else{
+            $user_group_id = $this->user->getGroupId();
+        }
+
+        return $user_group_id;
+    }
+
 	public function isLogged(){
 		//validate if settings is avalible.
 		if($this->config->get('d_shopunity_oauth')){

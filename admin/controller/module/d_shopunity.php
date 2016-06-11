@@ -85,16 +85,16 @@ class ControllerModuleDShopunity extends Controller {
 		$this->model_module_d_shopunity->setVqmod('a_vqmod_d_shopunity.xml', 1);
 
 		$this->load->model('user/user_group');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'access', $this->id.'/account');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'modify', $this->id.'/account');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'access', $this->id.'/extension');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'modify', $this->id.'/extension');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'access', $this->id.'/login');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'modify', $this->id.'/login');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'access', $this->id.'/market');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'modify', $this->id.'/market');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'access', $this->id.'/backup');
-        $this->model_user_user_group->addPermission($this->model_module_d_blog_module->getGroupId(), 'modify', $this->id.'/backup');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/account');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/account');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/extension');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/extension');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/login');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/login');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/market');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/market');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/backup');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/backup');
 
 		$this->model_module_d_shopunity->installDependencies($this->mbooth);
 
