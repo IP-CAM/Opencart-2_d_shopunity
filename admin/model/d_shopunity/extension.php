@@ -25,8 +25,13 @@ class ModelDShopunityExtension extends Model {
                 $json[$key] = $this->_extension($value);
             }  
         }
-		
-		return $json;
+
+        json_decode($json);
+        if(json_last_error()===JSON_ERROR_NONE){
+            return $json;
+        }else{
+            return false;
+        }
 	}
 
 
@@ -42,7 +47,12 @@ class ModelDShopunityExtension extends Model {
             }
         }
         
-        return $json;
+        json_decode($json);
+        if(json_last_error()===JSON_ERROR_NONE){
+            return $json;
+        }else{
+            return false;
+        }
     }
 
     public function getLocalExtensions(){
