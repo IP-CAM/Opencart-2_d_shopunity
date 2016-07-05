@@ -1,4 +1,4 @@
-<div class="extension-thumb col-md-4 col-sm-6">
+<div class="extension-thumb">
 	<div class="ibox">
 		<!-- <?php if(!empty($extension['description_short'])) {?>
         <p class="absolute-description">
@@ -19,9 +19,12 @@
 		        </h4>
 		        <p class="info">
 		        	<span class="version label label-info">v<?php echo $extension['version']; ?></span>
+					<?php if($extension['installed'] && $extension['store_extension'] && !$extension['store_extension']['status']) { ?>
+		        	<span class="version label label-danger" data-toggle="tooltip" data-original-title="This extension is installed, yet you do not have an order or the invoice is not paid.">Unpaid</span>
+		        	<?php } ?>
 		        </p>
 		        
-		        <?php if($extension['store_extension'] || empty($extension['prices'])){ ?>
+		        <?php if(($extension['store_extension'] && $extension['store_extension']['status']) || empty($extension['prices'])){ ?>
 					<?php if(!$extension['installed']){?>
 			        <div class="pull-right">
 		                <a class="btn btn-info show-loading install-extension" data-href="<?php echo $extension['install']; ?>"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-plus"></span></a>

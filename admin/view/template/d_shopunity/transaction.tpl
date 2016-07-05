@@ -50,12 +50,12 @@
 						<span class="fa fa-puzzle-piece"></span> 
 						<?php echo $tab_extension; ?>
 					</a></li>
-					<li class="active"><a href="<?php echo $href_market; ?>" >
+					<li><a href="<?php echo $href_market; ?>" >
 						<span class="fa fa-flask"></span> 
 						<?php echo $tab_market; ?>
 					</a></li>
-					<li><a href="<?php echo $href_account; ?>" >
-						<span class="fa fa-cog"></span> 
+					<li class="active"><a href="<?php echo $href_account; ?>" >
+						<span class="fa fa-user"></span> 
 						<?php echo $tab_account; ?>
 					</a></li>
 					<li><a href="<?php echo $href_backup; ?>" >
@@ -67,27 +67,66 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-3"></div>
+					<div class="col-md-3">
+						<?php echo $profile; ?>
+					</div>
 					<div class="col-md-9">
-						<div class="row">
-							<?php foreach($extensions as $extension) { ?>
-								<div class="col-md-4 col-sm-6">
-									<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
-								</div>
-							<?php } ?>
+						<div class="ibox">
+							<div class="ibox-title">
+								<ul class="nav nav-tabs">
+									<li><a href="<?php echo $href_account; ?>" >
+										<span class="fa fa-user"></span> 
+										<?php echo $tab_order; ?>
+									</a></li>
+									<li><a href="<?php echo $href_invoice; ?>" >
+										<span class="fa fa-user"></span> 
+										<?php echo $tab_invoice; ?>
+									</a></li>
+									<li class="active"><a href="<?php echo $href_transaction; ?>" >
+										<span class="fa fa-user"></span> 
+										<?php echo $tab_transaction; ?>
+									</a></li>
+								</ul>
+								<h2>Transactions</h2>
+								<p>These are the purchases for the current shop. You may have more purchases for other shops. To view them, visit your account.</p>
+							</div>
+							<div class="ibox-content">
+								 <?php if($transactions){?>
+								 <table class="table">
+								 	<thead>
+								 		<tr>
+								 			<th>Order ID</th>
+											<th>Description</th>
+											<th>Amount</th>
+								 		</tr>
+
+								 	</thead>
+								 	<tbody>
+									<?php foreach($transactions as $transaction){ ?>
+										<tr>
+											<td>
+												<?php echo $transaction['date_added'] ?>
+											</td>
+											<td>
+												<div class="h4 name">#<?php echo $transaction['user_transaction_id'] ?> <?php echo $transaction['description'] ?></div>
+											</td>
+											<td>
+												<?php echo $transaction['amount_format'] ?>
+											</td>
+										</tr>
+									<?php } ?>
+									</tbody>
+								</table>
+								<?php } ?>
+							</div>
 						</div>
 					</div>
 				</div>
-				<!-- <pre>
-					<?php print_r($extensions); ?>
-				</pre> -->
+				<<!-- pre>
+					<?php print_r($transactions); ?>
+				</pre> -->	
 			</div>
 		</div>
 	</div>
 </div>
-<script>
-		d_shopunity.init({ 
-			'purchase_url': '<?php echo $purchase_url; ?>'
-		});
-</script>
 <?php echo $footer; ?>

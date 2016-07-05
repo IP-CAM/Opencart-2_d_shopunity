@@ -109,7 +109,7 @@ d_shopunity = {
 		}, 
 		function(isConfirm){  
 			if (isConfirm) {     
-				//location.href = $node.data('href');  
+				location.href = $node.data('href');  
 			} else {     
 				that.hideLoading($('.loading'));
 		 	}	

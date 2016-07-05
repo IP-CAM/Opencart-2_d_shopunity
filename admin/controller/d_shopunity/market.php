@@ -40,6 +40,11 @@ class ControllerDShopunityMarket extends Controller {
 			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
+		//documentation http://t4t5.github.io/sweetalert/
+		$this->document->addStyle('view/javascript/d_shopunity/library/sweetalert/sweetalert.css');
+		$this->document->addScript('view/javascript/d_shopunity/library/sweetalert/sweetalert.min.js');
+
+		$this->document->addStyle('view/stylesheet/shopunity/bootstrap.css');
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
 		$this->document->addScript('view/javascript/d_shopunity/d_shopunity.js');
 		
@@ -76,11 +81,15 @@ class ControllerDShopunityMarket extends Controller {
 		$data['tab_market'] =  $this->language->get('tab_market');
 		$data['tab_account'] =  $this->language->get('tab_account');
 		$data['tab_backup'] =  $this->language->get('tab_backup');
+		$data['tab_invoice'] =  $this->language->get('tab_invoice');
+		$data['tab_transaction'] =  $this->language->get('tab_transaction');
 
 		$data['href_extension'] =  $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_market'] =  $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_account'] =  $this->url->link('d_shopunity/account', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_backup'] = $this->url->link('d_shopunity/backup', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_invoice'] = $this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_transaction'] = $this->url->link('d_shopunity/transaction', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['button_logout'] =  $this->language->get('button_logout');
 		$data['logout'] = $this->url->link('d_shopunity/account/logout', 'token=' . $this->session->data['token'], 'SSL');

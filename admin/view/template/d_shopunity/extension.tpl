@@ -82,7 +82,9 @@
 						<?php if($store_extensions){ ?>
 						<div class="row">
 							<?php foreach($store_extensions as $extension) { ?>
-								<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+								<div class="col-md-4 col-sm-6">
+									<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+								</div>
 							<?php } ?>
 						</div>
 						<?php }else{ ?>
@@ -101,7 +103,9 @@
 						<?php if($local_extensions){ ?>
 						<div class="row">
 							<?php foreach($local_extensions as $extension) { ?>
-								<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+								<div class="col-md-4 col-sm-6">
+									<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+								</div>
 							<?php } ?>
 						</div>
 						<?php }else{ ?>
@@ -120,7 +124,9 @@
 						<?php if($unregestered_extensions){ ?>
 						<div class="row">
 							<?php foreach($unregestered_extensions as $extension) { ?>
-								<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+								<div class="col-md-4 col-sm-6">
+									<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+								</div>
 							<?php } ?>
 						</div>
 						<?php }else{ ?>

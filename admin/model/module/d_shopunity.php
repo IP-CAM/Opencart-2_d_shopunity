@@ -4,9 +4,9 @@
  */
 
 class ModelModuleDShopunity extends Model {
-	private $client_id = 'testclient';
+	//private $client_id = 'testclient';
 	//private $api = 'https://api.shopunity.net/v1/';
-	private $api = 'http://localhost:8888/shopunity_api/';
+	//private $api = 'http://localhost:8888/shopunity_api/';
 
 	public function isCurl(){
 		return function_exists('curl_version');
@@ -23,160 +23,160 @@ class ModelModuleDShopunity extends Model {
         return $user_group_id;
     }
 
-	public function isLogged(){
-		//validate if settings is avalible.
-		if($this->config->get('d_shopunity_oauth')){
-			$result = file_get_contents( $this->api."account?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
-			$json = json_decode($result,true);
+	// public function isLogged(){
+	// 	//validate if settings is avalible.
+	// 	if($this->config->get('d_shopunity_oauth')){
+	// 		$result = file_get_contents( $this->api."account?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
+	// 		$json = json_decode($result,true);
 
-			//validate is json returned.
-			if (json_last_error() === JSON_ERROR_NONE) {
+	// 		//validate is json returned.
+	// 		if (json_last_error() === JSON_ERROR_NONE) {
 
-				//validate if expired_token
-				if(isset($json['error']['error']) && $json['error']['error'] === 'expired_token'){
-					$json = $this->refreshToken($this->config->get('d_shopunity_oauth')['refresh_token']);
+	// 			//validate if expired_token
+	// 			if(isset($json['error']['error']) && $json['error']['error'] === 'expired_token'){
+	// 				$json = $this->refreshToken($this->config->get('d_shopunity_oauth')['refresh_token']);
 					
-					//get new access token
-					if($json){
+	// 				//get new access token
+	// 				if($json){
 
-						//validate is access_token returned.
-						if(empty($json['access_token'])){
+	// 					//validate is access_token returned.
+	// 					if(empty($json['access_token'])){
 
-							//access_token is not retunred
-							$this->logout();
-							return false;
-						}else{
-							$this->load->model('setting/setting');
-							$this->model_setting_setting->editSettingValue('d_shopunity', 'd_shopunity_oauth', $json);
-							$this->config->set('d_shopunity_oauth', $json);
-							$this->getCurrentStore();
-							return true;
-						}
-					}
-				}else{
-					//OK. account returned. 
-					return true;
-				}
-			}else{
-				//json not returned. logout. 
-				$this->logout();
-				return false;
-			}
-		}else{
-			//no settings set.
-			return false;
-		}
-	}
+	// 						//access_token is not retunred
+	// 						$this->logout();
+	// 						return false;
+	// 					}else{
+	// 						$this->load->model('setting/setting');
+	// 						$this->model_setting_setting->editSettingValue('d_shopunity', 'd_shopunity_oauth', $json);
+	// 						$this->config->set('d_shopunity_oauth', $json);
+	// 						$this->getCurrentStore();
+	// 						return true;
+	// 					}
+	// 				}
+	// 			}else{
+	// 				//OK. account returned. 
+	// 				return true;
+	// 			}
+	// 		}else{
+	// 			//json not returned. logout. 
+	// 			$this->logout();
+	// 			return false;
+	// 		}
+	// 	}else{
+	// 		//no settings set.
+	// 		return false;
+	// 	}
+	// }
 
-	public function Logout(){
-		$this->load->model('setting/setting');
-		$this->model_setting_setting->deleteSetting('d_shopunity');
-	}
+	// public function Logout(){
+	// 	$this->load->model('setting/setting');
+	// 	$this->model_setting_setting->deleteSetting('d_shopunity');
+	// }
 
-	public function getStore($store_id = 'current'){
+	// public function getStore($store_id = 'current'){
 
-		$result = file_get_contents($this->api."stores/".$store_id . "?access_token=".$this->config->get('d_shopunity_oauth')['access_token']).'&url='.urlencode(HTTP_CATALOG);
+	// 	$result = file_get_contents($this->api."stores/".$store_id . "?access_token=".$this->config->get('d_shopunity_oauth')['access_token']).'&url='.urlencode(HTTP_CATALOG);
 
-		$json = json_decode($result,true);
+	// 	$json = json_decode($result,true);
 
-		if (json_last_error() === JSON_ERROR_NONE) {
-			return $json;
-		}else{
-			return false;
-		}
-	}
+	// 	if (json_last_error() === JSON_ERROR_NONE) {
+	// 		return $json;
+	// 	}else{
+	// 		return false;
+	// 	}
+	// }
 
-	public function getCurrentStore(){
-		if($this->config->get('d_shopunity_store_info')){
-			return $this->config->get('d_shopunity_store_info');
-		}else{
-
-
-			$result = file_get_contents($this->api."stores?access_token=".$this->config->get('d_shopunity_oauth')['access_token'].'&url='.urlencode(HTTP_CATALOG));
-
-			$json = json_decode($result,true);
-
-			if (json_last_error() === JSON_ERROR_NONE) {
-				$this->load->model('setting/setting');
-				$data = array('d_shopunity_store_info' => $json[0]);
-				$data += $this->model_setting_setting->getSetting('d_shopunity');
-				$this->model_setting_setting->editSetting('d_shopunity', $data);
-				return $json[0];
-			}else{
-				return false;
-			}
-		}
-	}
-
-	public function getStoreExtensions($store_id){
-		$result = file_get_contents($this->api."stores/".$store_id."/extensions?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
-
-		$json = json_decode($result,true);
-
-		if (json_last_error() === JSON_ERROR_NONE) {
-			return $json;
-		}else{
-			return false;
-		}
-	}
+	// public function getCurrentStore(){
+	// 	if($this->config->get('d_shopunity_store_info')){
+	// 		return $this->config->get('d_shopunity_store_info');
+	// 	}else{
 
 
+	// 		$result = file_get_contents($this->api."stores?access_token=".$this->config->get('d_shopunity_oauth')['access_token'].'&url='.urlencode(HTTP_CATALOG));
 
-	public function getAuthorizeUrl(){
-		 return $this->api.'oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'));
-	}
+	// 		$json = json_decode($result,true);
 
-	public function getToken(){
-		$resource = array( 
-	    	'grant_type' => 'authorization_code',
-	    	'client_id' => $this->client_id,
-			'code' => $this->request->get['code'],
-	        'state' => $this->request->get['state'],
-	        'redirect_uri' => urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'))
-		);
+	// 		if (json_last_error() === JSON_ERROR_NONE) {
+	// 			$this->load->model('setting/setting');
+	// 			$data = array('d_shopunity_store_info' => $json[0]);
+	// 			$data += $this->model_setting_setting->getSetting('d_shopunity');
+	// 			$this->model_setting_setting->editSetting('d_shopunity', $data);
+	// 			return $json[0];
+	// 		}else{
+	// 			return false;
+	// 		}
+	// 	}
+	// }
 
-		$ch = curl_init();
+	// public function getStoreExtensions($store_id){
+	// 	$result = file_get_contents($this->api."stores/".$store_id."/extensions?access_token=".$this->config->get('d_shopunity_oauth')['access_token']);
 
-		curl_setopt($ch, CURLOPT_URL,  $this->api."oauth/token");
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resource));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$server_output = curl_exec ($ch);
-		curl_close ($ch);
+	// 	$json = json_decode($result,true);
 
-		$json = json_decode($server_output,true);
+	// 	if (json_last_error() === JSON_ERROR_NONE) {
+	// 		return $json;
+	// 	}else{
+	// 		return false;
+	// 	}
+	// }
 
-		if (json_last_error() === JSON_ERROR_NONE) {
-			return $json;
-		}else{
-			return false;
-		}
-	}
 
-	public function refreshToken($refresh_token){
-		$resource = array( 
-	    	'grant_type' => 'refresh_token',
-	    	'client_id' => $this->client_id,
-			'refresh_token' => $refresh_token,
-	    );
 
-		$ch = curl_init();
+	// public function getAuthorizeUrl(){
+	// 	 return $this->api.'oauth/authorize?response_type=code&client_id=testclient&state=xyz&redirect_uri='. urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'));
+	// }
 
-		curl_setopt($ch, CURLOPT_URL, $this->api."oauth/token");
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resource));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$server_output = curl_exec ($ch);
-		curl_close ($ch);
+	// public function getToken(){
+	// 	$resource = array( 
+	//     	'grant_type' => 'authorization_code',
+	//     	'client_id' => $this->client_id,
+	// 		'code' => $this->request->get['code'],
+	//         'state' => $this->request->get['state'],
+	//         'redirect_uri' => urlencode($this->url->link('module/d_shopunity/callback', 'token=' . $this->session->data['token'], 'SSL'))
+	// 	);
 
-		$json = json_decode($server_output,true);
+	// 	$ch = curl_init();
 
-		if (json_last_error() === JSON_ERROR_NONE) {
-			return $json;
-		}else{
-			return false;
-		}
-	}
+	// 	curl_setopt($ch, CURLOPT_URL,  $this->api."oauth/token");
+	// 	curl_setopt($ch, CURLOPT_POST, 1);
+	// 	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resource));
+	// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	// 	$server_output = curl_exec ($ch);
+	// 	curl_close ($ch);
+
+	// 	$json = json_decode($server_output,true);
+
+	// 	if (json_last_error() === JSON_ERROR_NONE) {
+	// 		return $json;
+	// 	}else{
+	// 		return false;
+	// 	}
+	// }
+
+	// public function refreshToken($refresh_token){
+	// 	$resource = array( 
+	//     	'grant_type' => 'refresh_token',
+	//     	'client_id' => $this->client_id,
+	// 		'refresh_token' => $refresh_token,
+	//     );
+
+	// 	$ch = curl_init();
+
+	// 	curl_setopt($ch, CURLOPT_URL, $this->api."oauth/token");
+	// 	curl_setopt($ch, CURLOPT_POST, 1);
+	// 	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($resource));
+	// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	// 	$server_output = curl_exec ($ch);
+	// 	curl_close ($ch);
+
+	// 	$json = json_decode($server_output,true);
+
+	// 	if (json_last_error() === JSON_ERROR_NONE) {
+	// 		return $json;
+	// 	}else{
+	// 		return false;
+	// 	}
+	// }
 
 	/**
 
@@ -184,46 +184,46 @@ class ModelModuleDShopunity extends Model {
 
 	 **/
 
-	public function getCustomers($data = array()) {
-		if(VERSION >= '2.1.0.1'){
-			$this->load->model('customer/customer');
-			return $this->model_customer_customer->getCustomers($data);
-		}else{
-			$this->load->model('sale/customer');
-			return $this->model_sale_customer->getCustomers($data);
-		}
+	// public function getCustomers($data = array()) {
+	// 	if(VERSION >= '2.1.0.1'){
+	// 		$this->load->model('customer/customer');
+	// 		return $this->model_customer_customer->getCustomers($data);
+	// 	}else{
+	// 		$this->load->model('sale/customer');
+	// 		return $this->model_sale_customer->getCustomers($data);
+	// 	}
 		
-	}
+	// }
 
-	public function getTotalCustomers($data = array()) {
-		if(VERSION >= '2.1.0.1'){
-			$this->load->model('customer/customer');
-			return $this->model_customer_customer->getTotalCustomers($data);
-		}else{
-			$this->load->model('sale/customer');
-			return $this->model_sale_customer->getTotalCustomers($data);
-		}
-	}
+	// public function getTotalCustomers($data = array()) {
+	// 	if(VERSION >= '2.1.0.1'){
+	// 		$this->load->model('customer/customer');
+	// 		return $this->model_customer_customer->getTotalCustomers($data);
+	// 	}else{
+	// 		$this->load->model('sale/customer');
+	// 		return $this->model_sale_customer->getTotalCustomers($data);
+	// 	}
+	// }
 
-	public function getTotalLoginAttempts($email) {
-		if(VERSION >= '2.1.0.1'){
-			$this->load->model('customer/customer');
-			return $this->model_customer_customer->getTotalLoginAttempts($email);
-		}else{
-			$this->load->model('sale/customer');
-			return $this->model_sale_customer->getTotalLoginAttempts($email);
-		}
-	}
+	// public function getTotalLoginAttempts($email) {
+	// 	if(VERSION >= '2.1.0.1'){
+	// 		$this->load->model('customer/customer');
+	// 		return $this->model_customer_customer->getTotalLoginAttempts($email);
+	// 	}else{
+	// 		$this->load->model('sale/customer');
+	// 		return $this->model_sale_customer->getTotalLoginAttempts($email);
+	// 	}
+	// }
 
-	public function getCustomerGroups($data = array()) {
-		if(VERSION >= '2.1.0.1'){
-			$this->load->model('customer/customer_group');
-			return $this->model_customer_customer_group->getCustomerGroups($data);
-		}else{
-			$this->load->model('sale/customer_group');
-			return $this->model_sale_customer_group->getCustomerGroups($data);
-		}
-	}
+	// public function getCustomerGroups($data = array()) {
+	// 	if(VERSION >= '2.1.0.1'){
+	// 		$this->load->model('customer/customer_group');
+	// 		return $this->model_customer_customer_group->getCustomerGroups($data);
+	// 	}else{
+	// 		$this->load->model('sale/customer_group');
+	// 		return $this->model_sale_customer_group->getCustomerGroups($data);
+	// 	}
+	// }
 
 	/*
 	*	Return list of stores.

@@ -95,6 +95,12 @@ class ControllerModuleDShopunity extends Controller {
         $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/market');
         $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/backup');
         $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/backup');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/order');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/order');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/invoice');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/invoice');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/transaction');
+        $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/transaction');
 
 		$this->model_module_d_shopunity->installDependencies($this->mbooth);
 

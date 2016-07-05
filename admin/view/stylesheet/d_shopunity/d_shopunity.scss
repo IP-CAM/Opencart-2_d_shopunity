@@ -2,6 +2,7 @@
  * Stylesheet for d_shopunity
  */
 @import "scss/ibox";
+@import "scss/image";
 //
 // Account
 // --------------------------------------------------
@@ -23,6 +24,49 @@
 		margin: 20px auto;
 	}
 	padding: 40px 0px;
+}
+.developer-profile{
+	.ibox-content{
+		padding: 40px 20px;
+	}
+	.image{
+		img{
+			width: 50%;
+			border-radius: 100px;
+			margin: auto;
+		}
+	}
+	.caption{
+		text-align: center;
+		.name{
+			
+		}
+		.balance{
+			color: #999;
+			display: inline-block;
+			.add-to-balance{
+				margin-left: 10px;
+			}
+		}
+		.description{
+			text-align: center;
+			color: #ccc;
+			margin-bottom: 15px;
+		}
+	}
+	.extensions{
+		text-align: center;
+		margin-bottom: 15px;
+		.btn{
+			display: inline-block;
+		}
+	}
+	.links{
+		text-align: center;
+		.btn{
+			display: inline-block;
+		}
+	}
 }
 .account-profile{
 	.ibox-content{

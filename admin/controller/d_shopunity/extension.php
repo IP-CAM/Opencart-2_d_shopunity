@@ -92,11 +92,15 @@ class ControllerDShopunityExtension extends Controller {
 		$data['tab_market'] =  $this->language->get('tab_market');
 		$data['tab_account'] =  $this->language->get('tab_account');
 		$data['tab_backup'] =  $this->language->get('tab_backup');
+		$data['tab_invoice'] =  $this->language->get('tab_invoice');
+		$data['tab_transaction'] =  $this->language->get('tab_transaction');
 
 		$data['href_extension'] =  $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_market'] =  $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_account'] =  $this->url->link('d_shopunity/account', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_backup'] = $this->url->link('d_shopunity/backup', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_invoice'] = $this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_transaction'] = $this->url->link('d_shopunity/transaction', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['button_logout'] =  $this->language->get('button_logout');
 		$data['logout'] = $this->url->link('d_shopunity/account/logout', 'token=' . $this->session->data['token'], 'SSL');
@@ -115,7 +119,10 @@ class ControllerDShopunityExtension extends Controller {
 	}
 
 	public function item(){
-		if(!$this->model_module_d_shopunity->isLogged()){
+		$this->load->language('module/d_shopunity');
+   		$this->load->language('d_shopunity/extension');
+
+		if(!$this->model_d_shopunity_account->isLogged()){
 			$this->response->redirect($this->url->link('module/d_shopunity', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
@@ -124,15 +131,11 @@ class ControllerDShopunityExtension extends Controller {
 			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		
-
 		$extension_id = $this->request->get['extension_id'];
 
-		$data = $this->load->controller('d_shopunity/heading');
-
-   		$this->load->language('d_shopunity/extension');
-   		$this->load->model('module/d_shopunity');
+		$this->load->model('d_shopunity/store');
    		$this->load->model('d_shopunity/extension');
+
 
    		// Breadcrumbs
 		$data['breadcrumbs'] = array(); 
@@ -179,11 +182,17 @@ class ControllerDShopunityExtension extends Controller {
 		$data['href_backup'] = $this->url->link('d_shopunity/backup', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['button_logout'] =  $this->language->get('button_logout');
-		$data['logout'] = $this->url->link('module/d_shopunity/logout', 'token=' . $this->session->data['token'], 'SSL');
-		$data['store_info'] = $this->model_module_d_shopunity->getCurrentStore();
+		$data['logout'] = $this->url->link('d_shopunity/account/logout', 'token=' . $this->session->data['token'], 'SSL');
+		$data['store_info'] = $this->model_d_shopunity_store->getCurrentStore();
+
 		
 		$data['extension'] = $this->model_d_shopunity_extension->getExtension($extension_id);
-
+		if(isset($data['extension']['developer'])){
+			$data['developer'] = $this->load->controller('d_shopunity/developer/profile', $data['extension']['developer']);
+		}else{
+			$data['developer'] = '';
+		}
+		
 		$extension_recurring_price_id = (isset($data['extension']['price'])) ? $data['extension']['price']['extension_recurring_price_id'] : 0;
 
 		$data['purchase'] = $this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL');
@@ -216,8 +225,29 @@ class ControllerDShopunityExtension extends Controller {
 
 		if(!empty($purchase['error'])){
 			$this->session->data['error'] = $purchase['error'];
+
 		}elseif(!empty($purchase['success'])){
 			$this->session->data['success'] = $purchase['success'];
+
+			//create an invoice
+			$this->load->model('d_shopunity/billing');
+	   		$result = $this->model_d_shopunity_billing->addInvoice();
+
+			if(!empty($result['error'])){
+				$this->session->data['error'] = $result['error'];
+			}elseif(!empty($result['invoice_id'])){
+				$this->session->data['success'] = $result['success'];
+
+				//make a purchase
+				$invoice_id = $result['invoice_id'];
+		   		$invoice = $this->model_d_shopunity_billing->payInvoice($invoice_id);
+
+		   		if(!empty($invoice['error'])){
+					$this->session->data['error'] = $invoice['error'];
+				}elseif(!empty($invoice['success'])){
+					$this->session->data['success'] = $invoice['success'];
+				}
+			}
 		}
 
 		$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
@@ -238,14 +268,15 @@ class ControllerDShopunityExtension extends Controller {
 			$this->session->data['error'] = 'Error! We cound not get the download link';
 			$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
 		}
-	
+
 		//download the extension to system/mbooth/download
 		$extension_zip = $this->model_d_shopunity_extension->downloadExtension($download['download']);
 
 		//unzip the downloaded file to system/mbooth/download and remove the zip file
 		$extracted = $this->model_d_shopunity_extension->extractExtension($extension_zip);
 
-		//
+
+
 		$result = array();
 		// if(file_exists(DIR_SYSTEM . 'mbooth/xml/'.$this->request->post['mbooth'])){
 		// 	$result = $this->model_module_mbooth->backup_files_by_mbooth($this->request->post['mbooth'], 'update');

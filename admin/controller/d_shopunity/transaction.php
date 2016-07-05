@@ -3,9 +3,9 @@
  *	location: admin/controller
  */
 
-class ControllerDShopunityAccount extends Controller {
+class ControllerDShopunityTransaction extends Controller {
 	private $id = 'd_shopunity';
-	private $route = 'd_shopunity/account';
+	private $route = 'd_shopunity/transaction';
 	private $sub_versions = array('lite', 'light', 'free');
 	private $mbooth = '';
 	private $config_file = '';
@@ -45,13 +45,12 @@ class ControllerDShopunityAccount extends Controller {
 		
 		$this->load->language('module/d_shopunity');
    		$this->load->language('d_shopunity/account');
+   		$this->load->model('module/d_shopunity');
    		$this->load->model('d_shopunity/billing');
 
    		// $this->load->model('d_shopunity/account');
    		// $this->load->model('d_shopunity/extension');
    		// $this->load->model('d_shopunity/store');
-
-   		
 
    		// Breadcrumbs
 		$data['breadcrumbs'] = array(); 
@@ -105,15 +104,9 @@ class ControllerDShopunityAccount extends Controller {
 		$data['button_logout'] =  $this->language->get('button_logout');
 		$data['logout'] = $this->url->link('d_shopunity/account/logout', 'token=' . $this->session->data['token'], 'SSL');
 
-
-		$data['orders'] = $this->model_d_shopunity_billing->getOrders();
-		$data['profile'] = $this->profile();
-
-		$data['orders_overdue'] = $this->model_d_shopunity_billing->getOrdersOverdue();
-
-		$data['create_invoice'] = $this->url->link('d_shopunity/invoice/create', 'token=' . $this->session->data['token'], 'SSL');
+		$data['transactions'] = $this->model_d_shopunity_billing->getTransactions();
+		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
 		
-
    		$data['header'] = $this->load->controller('common/header');
    		$data['column_left'] = $this->load->controller('common/column_left');
    		$data['footer'] = $this->load->controller('common/footer');
@@ -121,15 +114,5 @@ class ControllerDShopunityAccount extends Controller {
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
 
-	public function profile(){
-		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
-		$data['account'] = $this->model_d_shopunity_account->getAccount();
 
-		return $this->load->view($this->route.'_profile.tpl', $data);
-	}
-
-	public function logout(){
-		$this->model_d_shopunity_account->logout();
-		$this->response->redirect($this->url->link('d_shopunity/login', 'token=' . $this->session->data['token'], 'SSL'));
-	}
 }

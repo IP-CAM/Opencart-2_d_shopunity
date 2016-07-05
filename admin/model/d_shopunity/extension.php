@@ -130,7 +130,6 @@ class ModelDShopunityExtension extends Model {
 	}
 
     public function suspendExtension($store_extension_id){
-
         $result = $this->api->delete('stores/'.$this->store_id.'/extensions/'.$store_extension_id);
 
         return $result;
@@ -470,7 +469,7 @@ class ModelDShopunityExtension extends Model {
     }
 
 
-	private function _extension($data){
+	public function _extension($data){
 		$result = array();
 
 		if(!empty($data)){

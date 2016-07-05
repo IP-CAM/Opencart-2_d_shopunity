@@ -12,6 +12,9 @@ $_['text_edit']					= 'Edit Shopunity settings';
 $_['tab_extension']            = 'Modules';
 $_['tab_market']               = 'Market';
 $_['tab_account']              = 'Account';
+$_['tab_order']                = 'Orders';
+$_['tab_invoice']              = 'Invoices';
+$_['tab_transaction']          = 'Transactions';
 $_['tab_backup']               = 'History';
 
 //buttons
