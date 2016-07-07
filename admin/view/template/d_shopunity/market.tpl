@@ -78,9 +78,9 @@
 						</div>
 					</div>
 				</div>
-				<pre>
+				<!-- <pre>
 					<?php print_r($extensions); ?>
-				</pre> 
+				</pre>  -->
 			</div>
 		</div>
 	</div>
