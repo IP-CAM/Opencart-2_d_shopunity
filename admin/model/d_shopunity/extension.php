@@ -26,13 +26,7 @@ class ModelDShopunityExtension extends Model {
             }  
         }
 
-        json_decode($json);
-        if(json_last_error()===JSON_ERROR_NONE){
-            return $json;
-        }else{
-            return false;
-        }
-	}
+        return $json;	}
 
 
     public function getStoreExtensions($store_id = false){
@@ -47,12 +41,7 @@ class ModelDShopunityExtension extends Model {
             }
         }
         
-        json_decode($json);
-        if(json_last_error()===JSON_ERROR_NONE){
-            return $json;
-        }else{
-            return false;
-        }
+        return $json;
     }
 
     public function getLocalExtensions(){
@@ -72,11 +61,14 @@ class ModelDShopunityExtension extends Model {
         );
 
         $extensions = $this->getExtensions($filter_data);
-        foreach($extensions as $id => $extension){
-            if($extension['store_extension']){
-                unset($extensions[$id]);
+        if($extensions){
+            foreach($extensions as $id => $extension){
+                if($extension['store_extension']){
+                    unset($extensions[$id]);
+                }
             }
         }
+        
         // echo '<pre>';
         // print_r( $result);
         //Collect data from mbooth files.
@@ -552,6 +544,12 @@ class ModelDShopunityExtension extends Model {
             $result['installed'] = true;
             $result['registered'] = false;
             $result['store_extension'] = false;
+
+            $result['installable'] = true;
+            $result['updatable'] = false;
+            $result['downloadable'] = true;
+            $result['purchasable'] = false;
+            $result['suspendable'] = false;
             
             $result['purchase'] = '';
             $result['install'] = '';

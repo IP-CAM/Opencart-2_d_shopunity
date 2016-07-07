@@ -5,7 +5,8 @@ use \Httpful\Request;
 
 class Shopunity {
 
-	private $api = 'http://localhost:8888/shopunity_api/';
+	private $api = 'https://api.shopunity.net/v1/';
+	private $api_local = 'http://localhost:8888/shopunity_api/';
 	private $client_id = 'd_shopunity'; //client_id of your app. Provided by shopunity.net
 	private $library = 'Httpful';
 	private $access_token = '';
@@ -37,6 +38,10 @@ class Shopunity {
 		elseif($this->access_token)
 		{
 			$this->store_id = $this->getStoreId();
+		}
+
+		if(strpos($_SERVER['HTTP_HOST'], 'localhost') !== false){
+			$this->api = $this->api_local;
 		}
 		
 	}
