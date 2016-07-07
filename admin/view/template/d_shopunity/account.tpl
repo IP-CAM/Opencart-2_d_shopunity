@@ -158,9 +158,9 @@
 						</div>
 					</div>
 				</div>
-				<pre>
+				<!-- <pre>
 					<?php print_r($orders); ?>
-				</pre>	
+				</pre> -->	
 			</div>
 		</div>
 	</div>
