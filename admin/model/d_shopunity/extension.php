@@ -102,14 +102,19 @@ class ModelDShopunityExtension extends Model {
         );
 
         $extensions = $this->getExtensions($filter_data);
-
-        foreach( $extensions as $extension ){
-            unset($unregistered_extensions[$extension['codename']]);
-        }
         $result = array();
-        foreach($unregistered_extensions as $extension ){
-            $result[] = $this->_mbooth_extension($extension);
+        
+        if($extensions){
+            foreach( $extensions as $extension ){
+                unset($unregistered_extensions[$extension['codename']]);
+            }
+
+            
+            foreach($unregistered_extensions as $extension ){
+                $result[] = $this->_mbooth_extension($extension);
+            }
         }
+       
 
         return $result;
     }
