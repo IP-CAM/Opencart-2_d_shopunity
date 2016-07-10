@@ -82,7 +82,7 @@
 						<?php if($store_extensions){ ?>
 						<div class="row">
 							<?php foreach($store_extensions as $extension) { ?>
-								<div class="col-md-4 col-sm-6">
+								<div class="col-md-3 col-sm-6">
 									<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
 								</div>
 							<?php } ?>
@@ -103,7 +103,7 @@
 						<?php if($local_extensions){ ?>
 						<div class="row">
 							<?php foreach($local_extensions as $extension) { ?>
-								<div class="col-md-4 col-sm-6">
+								<div class="col-md-3 col-sm-6">
 									<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
 								</div>
 							<?php } ?>
@@ -124,7 +124,7 @@
 						<?php if($unregestered_extensions){ ?>
 						<div class="row">
 							<?php foreach($unregestered_extensions as $extension) { ?>
-								<div class="col-md-4 col-sm-6">
+								<div class="col-md-3 col-sm-6">
 									<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
 								</div>
 							<?php } ?>

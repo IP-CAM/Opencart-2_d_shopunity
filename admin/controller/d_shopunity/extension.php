@@ -282,17 +282,17 @@ class ControllerDShopunityExtension extends Controller {
 		// 	$result = $this->model_module_mbooth->backup_files_by_mbooth($this->request->post['mbooth'], 'update');
 		// }
 
-		$result = $this->model_d_shopunity_extension->moveFiles(DIR_SYSTEM . 'mbooth/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+		$result = $this->model_d_shopunity_extension->installExtension($result);
 
 		$this->session->data['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
 
-		// if(!empty($result['error'])) {
-		// 	$this->session->data['error'] = $this->language->get('error_install') . "<br />" . implode("<br />", $result['error']);
-		// }
+		if(!empty($result['error'])) {
+			$this->session->data['error'] = $this->language->get('error_install') . "<br />" . implode("<br />", $result['error']);
+		}
 
-		// if(!empty($result['success'])) {
-		// 	$this->session->data['success'] .=  "<br />" . implode("<br />", $result['success']);
-		// }
+		if(!empty($result['success'])) {
+			$this->session->data['success'] .=  "<br />" . implode("<br />", $result['success']);
+		}
 
 		$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
 

@@ -1,15 +1,15 @@
 <?php
 /*
- *	location: admin/model
+ *  location: admin/model
  */
 
 class ModelDShopunityExtension extends Model {
 
-	private $store_id = '';
-	private $api = '';
-	private $dir_root = '';
+    private $store_id = '';
+    private $api = '';
+    private $dir_root = '';
 
-	public function __construct($registry){
+    public function __construct($registry){
         parent::__construct($registry);
         $this->api = new Shopunity($registry);
         $this->store_id = $this->api->getStoreId();
@@ -17,8 +17,8 @@ class ModelDShopunityExtension extends Model {
       
     }
 
-	public function getExtensions($filter_data = array()){
-		$json = $this->api->get('extensions', $filter_data);
+    public function getExtensions($filter_data = array()){
+        $json = $this->api->get('extensions', $filter_data);
 
         if($json){
             foreach($json as $key => $value){
@@ -26,7 +26,7 @@ class ModelDShopunityExtension extends Model {
             }  
         }
 
-        return $json;	}
+        return $json;   }
 
 
     public function getStoreExtensions($store_id = false){
@@ -48,13 +48,12 @@ class ModelDShopunityExtension extends Model {
 
         //Return mbooth files.
         $codenames = array();
-        $scripts = glob(DIR_SYSTEM . 'mbooth/xml/*');
-        foreach($scripts as $script){
-            $xml = simplexml_load_string(file_get_contents($script), "SimpleXMLElement", LIBXML_NOCDATA);
-            $json = json_encode($xml);
-            $codenames[] = json_decode($json,TRUE)['id'];
-        }
+        $this->load->model('module/d_mbooth');
 
+        $installed_extensions = $this->model_module_d_mbooth->getExtensions();
+        foreach($installed_extensions as $extension){
+            $codenames[] = $extension['codename'];
+        }
         
         $filter_data = array(
             'codename' => implode(',', $codenames)
@@ -88,12 +87,13 @@ class ModelDShopunityExtension extends Model {
 
     public function getUnregisteredExtensions(){
         $codenames = array();
-        $scripts = glob(DIR_SYSTEM . 'mbooth/xml/*');
-        foreach($scripts as $script){
-            $xml = simplexml_load_string(file_get_contents($script), "SimpleXMLElement", LIBXML_NOCDATA);
-            $json = json_encode($xml);
-            $codenames[] = json_decode($json,TRUE)['id'];
-            $unregistered_extensions[json_decode($json,TRUE)['id']] = json_decode($json,TRUE);
+        $unregistered_extensions = array();
+        $this->load->model('module/d_mbooth');
+
+        $installed_extensions = $this->model_module_d_mbooth->getExtensions();
+        foreach($installed_extensions as $extension){
+            $codenames[] = $extension['codename'];
+            $unregistered_extensions[$extension['codename']] = $extension;
         }
 
         
@@ -114,27 +114,26 @@ class ModelDShopunityExtension extends Model {
                 $result[] = $this->_mbooth_extension($extension);
             }
         }
-       
-
+        
         return $result;
     }
 
-	public function getExtension($extension_id){
+    public function getExtension($extension_id){
 
-		$json = $this->api->get('extensions/'.$extension_id);
+        $json = $this->api->get('extensions/'.$extension_id);
 
-		return $this->_extension($json);
-	}
+        return $this->_extension($json);
+    }
 
-	public function purchaseExtension($extension_id, $extension_recurring_price_id){
-		$data = array(
-			'extension_id' => $extension_id,
-			'extension_recurring_price_id' => $extension_recurring_price_id
-		);
-		$result = $this->api->post('stores/'.$this->store_id.'/extensions', $data);
+    public function purchaseExtension($extension_id, $extension_recurring_price_id){
+        $data = array(
+            'extension_id' => $extension_id,
+            'extension_recurring_price_id' => $extension_recurring_price_id
+        );
+        $result = $this->api->post('stores/'.$this->store_id.'/extensions', $data);
 
-		return $result;
-	}
+        return $result;
+    }
 
     public function suspendExtension($store_extension_id){
         $result = $this->api->delete('stores/'.$this->store_id.'/extensions/'.$store_extension_id);
@@ -142,363 +141,84 @@ class ModelDShopunityExtension extends Model {
         return $result;
     }
 
-	public function getExtensionDownload($extension_id){
-		$data = array(
-			'store_version' => VERSION,
-			'store_id' => $this->store_id);
-		$result = $this->api->get('extensions/'.$extension_id.'/download', $data);
-		return $result;
-	}
+    public function getExtensionDownload($extension_id){
+        $data = array(
+            'store_version' => VERSION,
+            'store_id' => $this->store_id);
+        $result = $this->api->get('extensions/'.$extension_id.'/download', $data);
+        return $result;
+    }
 
-	public function downloadExtension($download_link){
+    public function downloadExtension($download_link){
 
-        $filename = DIR_SYSTEM . 'mbooth/download/extension.zip';
-        $userAgent = 'Googlebot/2.1 (http://www.googlebot.com/bot.html)';
+        $this->load->model('module/d_mbooth');
 
-        $ch = curl_init();
-        $fp = fopen($filename, "w");
-        curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
-        curl_setopt($ch, CURLOPT_URL, $download_link);
-        curl_setopt($ch, CURLOPT_FAILONERROR, true);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 200);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        $page = curl_exec($ch);
-        if (!$page) {
-            exit;
-        }
-        curl_close($ch);
+        $filename = $this->model_module_d_mbooth->downloadExtensionArchive($download_link);
 
         return $filename;
     }
 
-     public function extractExtension($filename = false, $location = false) {
-        if (!$filename) {
-            $filename = DIR_SYSTEM . 'mbooth/download/extension.zip';
-        }
-        if (!$location) {
-            $location = dirname($filename);
-        }
+    public function extractExtension($filename = false, $location = false) {
 
-        $result = array();
-        $zip = new ZipArchive;
-        if (!$zip) {
-            $result['error'][] = 'ZipArchive not working.';
-        }
+        $this->load->model('module/d_mbooth');
 
-        $res = $zip->open($filename, ZipArchive::CHECKCONS);
-        if ($res !== TRUE) {
-            switch($res) {
-                case ZipArchive::ER_NOZIP:
-                    $result['error'][] = 'not a zip archive';
-                case ZipArchive::ER_INCONS :
-                    $result['error'][] = 'consistency check failed';
-                case ZipArchive::ER_CRC :
-                    $result['error'][] = 'checksum failed';
-                default:
-                    $result['error'][] = 'error ' . $res;
-            }
-        }else{
-            if ($zip->open($filename) != "true") {
-                $result['error'][] = $filename;
-            }
-            $zip->extractTo($location);
-            $zip->close();
-        }
-
-        unlink($filename);
-
-        return $result;
+        return $this->model_module_d_mbooth->extractExtensionArchive($filename, $location);
     }
 
-    public function getMboothFileByCodename($codename){
-        $file = DIR_SYSTEM.'mbooth/xml/mbooth_'.$codename.'.xml';
-        if(file_exists($file)){
-            return $file;
-        }
-        $file = DIR_SYSTEM.'mbooth/xml/'.$codename.'.xml';
-        if(file_exists($file)){
-            return $file;
+    public function installExtension($result) {
+        
+        $this->load->model('module/d_mbooth');
+
+        return $this->model_module_d_mbooth->moveFiles(DIR_SYSTEM . 'mbooth/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+    }
+
+    public function getMboothByCodename($codename){
+
+        $this->load->model('module/d_mbooth');
+
+        $extension = $this->model_module_d_mbooth->getExtension($codename);
+
+        return $extension;
+    }
+
+    public function zipExtension($codename){
+        $this->load->model('module/d_mbooth');
+
+        return $this->model_module_d_mbooth->downloadExtension($codename);
+        
+    }
+
+    public function deleteExtension($codename){
+        $this->load->model('module/d_mbooth');
+
+        return $this->model_module_d_mbooth->deleteExtension($codename);
+    }
+
+    public function isInstalled($codename){
+        if(file_exists(DIR_SYSTEM . 'mbooth/extension/'.$codename.'.json')){
+            return true;
         }
         return false;
     }
 
-    public function getMboothByCodename($codename){
-        $mbooth_file = $this->getMboothFileByCodename($codename);
-        if($mbooth_file){
+    public function _extension($data){
+        $result = array();
 
-            $xml = new SimpleXMLElement(file_get_contents($mbooth_file));
-
-            if (isset($xml->id)) {
-                $result['file_name'] = basename($mbooth_file, '');
-                $result['id'] = isset($xml->id) ? (string) $xml->id : '';
-                $result['name'] = isset($xml->name) ? (string) $xml->name : '';
-                $result['description'] = isset($xml->description) ? (string) $xml->description : '';
-                $result['type'] = isset($xml->type) ? (string) $xml->type : '';
-                $result['version'] = isset($xml->version) ? (string) $xml->version : '';
-                $result['mbooth_version'] = isset($xml->mbooth_version) ? (string) $xml->mbooth_version : '';
-                $result['opencart_version'] = isset($xml->opencart_version) ? (string) $xml->opencart_version : '';
-                $result['author'] = isset($xml->author) ? (string) $xml->author : '';
-                $files = $xml->files;
-                $dirs = $xml->dirs;
-                $required = $xml->required;
-                $updates = $xml->update;
-
-                foreach ($files->file as $file) {
-                    $result['files'][] = (string) $file;
-                }
-
-                if (!empty($dirs)) {
-
-                    $dir_files = array();
-
-                    foreach ($dirs->dir as $dir) {
-                        $this->getFiles($this->dir_root . $dir, $dir_files);
-                    }
-
-                    foreach ($dir_files as $file) {
-                        $file = str_replace($this->dir_root, "", $file);
-                        $result['files'][] = (string) $file;
-                    }
-                }
-
-                return $result;
-            } else {
-                return false;
-            }
-        }else{
-            return false;
-        }
-    }
-
-    public function zipExtension($codename){
-        $mbooth = $this->getMboothByCodename($codename);
-        if($mbooth){
-            $temp = tempnam(ini_get('upload_tmp_dir'), 'zip');
-            $zip = new ZipArchive();
-            $zip->open($temp, ZipArchive::OVERWRITE);
-
-            foreach ($mbooth['files'] as $file) {
-
-                if (file_exists($this->dir_root . $file)) {
-
-                    if (is_file($this->dir_root . $file)) {
-                        $zip->addFile($this->dir_root . $file, 'upload/' . $file);
-
-                        $result['success'][] = $file;
-                    } else {
-                        $result['error'][] = $file;
-                    }
-                } else {
-                    $result['error'][] = $file;
-                }
-            }
-
-            //add install.xml file for opencart automatic installer.
-            $file = 'install.xml';
-            $create_install_xml = false;
-            if(file_exists($this->dir_root . 'install_'.$codename. '.xml')){
-                $zip->addFile($this->dir_root . 'install_'.$codename. '.xml', $file);
-            }elseif (file_exists($this->dir_root . $file)) {
-                $zip->addFile($this->dir_root . $file, $file);
-            }else{
-                if ($this->createInstallXml($mbooth)) {
-                    $zip->addFile($this->dir_root . $file, $file);
-                    $result['success'][] = $file;
-                    $create_install_xml = true;
-                } else {
-                    $result['error'][] = "Could not create Install.xml";
-                }
-            }
-         
-            $zip->close();
-
-            if ($create_install_xml) {
-                 if(!$this->deleteInstallXml()){
-                     $result['error'][] = "Could not delete Install.xml";
-                 }
-            }
-
-            if (empty($result['error'])) {
-                header('Pragma: public');
-                header('Expires: 0');
-                header('Content-Description: File Transfer');
-                header('Content-Type: mbooth/xml');
-                header('Content-Disposition: attachment; filename=' . $codename . '_' . date('Y-m-d') . '.ocmod' . '.zip');
-                header('Content-Transfer-Encoding: binary');
-                readfile($temp);
-                unlink($temp);
-            }
-
-            return $result;
-        }else{
-            return false;
-        }
-    }
-
-    public function deleteExtension($codename){
-        $mbooth = $this->getMboothByCodename($codename);
-        if($mbooth){
-            $result = array('success' => array(), 'error' => array());
-            foreach ($mbooth['files'] as $file) {
-                if (is_file(DIR_ROOT . $file)) {
-
-                    if (@unlink(DIR_ROOT . $file)) {
-                        $result['success'][] = $file;
-                    } else {
-                        $result['error'][] = $file;
-                    }
-
-                    $dir = dirname($this->base_dir . $file);
-                    while (strlen($dir) > strlen($this->base_dir)) {
-                        if (is_dir($dir)) {
-                            if ($this->isDirEmpty($dir)) {
-                                if (@rmdir($dir)) {
-                                    $result['success'][] = dirname($dir);
-                                    $dir = dirname($dir);
-                                } else {
-                                    $result['error'][] = dirname($dir);
-                                }
-                            } else {
-                                break;
-                            }
-                        } else {
-                            break;
-                        }
-                    }
-                } else {
-                    $result['error'][] = $file;
-                }
-            }
-        }else{
-            $result = false;
-        }
-        return $result;
-    }
-
-    public function createInstallXml($mbooth){
-
-        $file = fopen($this->dir_root . "install.xml", "wb");
-        $txt = "<modification>
-    <name>" . (!empty($mbooth['name'])) ? $mbooth['name'] : '' . "</name>
-    <code>" . (!empty($mbooth['id'])) ? $mbooth['id'] : '' . "</code>
-    <version>" . (!empty($mbooth['version'])) ? $mbooth['version'] : '' . "</version>
-    <author>" . (!empty($mbooth['author'])) ? $mbooth['author'] : ''. "</author>
-</modification>";
-        fwrite($file, $txt);
-        fclose($file);
-        return 'install.xml';
-    }
-
-    public function deleteInstallXml() {
-        return unlink($this->dir_root . 'install.xml');
-    }
-
-    public function getFiles($dir, &$arr_files) {
-
-        if (is_dir($dir)) {
-            $handle = opendir($dir);
-            while ($file = readdir($handle)) {
-                if ($file == '.' or $file == '..')
-                    continue;
-                if (is_file($file))
-                    $arr_files[] = "$dir/$file";
-                else
-                    $this->getFiles("$dir/$file", $arr_files);
-            }
-            closedir($handle);
-        }else {
-            $arr_files[] = $dir;
-        }
-    }
-
-    public function moveFiles($from, $to, $result) {
-
-        if(file_exists($from)){
-            $files = scandir($from);
-
-            foreach ($files as $file) {
-
-                if ($file == '.' || $file == '..' || $file == '.DS_Store')
-                    continue;
-
-                if (is_dir($from . $file)) {
-                    if (!file_exists($to . $file . '/')) {
-                        mkdir($to . $file . '/', 0777, true);
-                    }
-                    $result = $this->moveFiles($from . $file . '/', $to . $file . '/', $result);
-                } elseif (rename($from . $file, $to . $file)) {
-                    $result['success'][] = str_replace($this->dir_root, '', $to . $file);
-                } else {
-                    $result['error'][] = str_replace($this->dir_root, '', $to . $file);
-                }
-            }
-
-            $this->deleteFiles($from);
-        }else{
-            $result['error'][] = $from;
-        }
-
-        return $result;
-    }
-
-    public function deleteFiles($path){
-    	if (is_dir($path)) {
-            $objects = scandir($path);
-            foreach ($objects as $object) {
-                if ($object != "." && $object != "..") {
-                    if (filetype($path . "/" . $object) == "dir")
-                        $this->delete_dir($path . "/" . $object);
-                    else
-                        unlink($path . "/" . $object);
-                }
-            }
-            reset($objects);
-            rmdir($path);
-        }
-    }
-
-    public function isDirEmpty($dir) {
-        if (!is_readable($dir))
-            return true;
-
-        $handle = opendir($dir);
-        while (false !== ($entry = readdir($handle))) {
-            if ($entry != "." && $entry != "..") {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-	public function _extension($data){
-		$result = array();
-
-		if(!empty($data)){
-			$result = $data;
-			$result['url'] = $this->url->link('d_shopunity/extension/item', 'token='.$this->session->data['token'].'&extension_id='.$data['extension_id'],'SSL');
-			if($data['prices']){
+        if(!empty($data)){
+            $result = $data;
+            $result['url'] = $this->url->link('d_shopunity/extension/item', 'token='.$this->session->data['token'].'&extension_id='.$data['extension_id'],'SSL');
+            if($data['prices']){
                 $result['price'] = array();
-				foreach( $data['prices'] as $price){
-					if($price['recurring_duration'] >= 365){
-						$result['price'] = $price;
-						break;
-					}
-				}
-			}
-            $result['installed'] = false;
-            $result['registered'] = true;
-            
-            if(file_exists(DIR_SYSTEM . 'mbooth/xml/mbooth_'.$data['codename'].'.xml')){
-                $result['installed'] = true;
+                foreach( $data['prices'] as $price){
+                    if($price['recurring_duration'] >= 365){
+                        $result['price'] = $price;
+                        break;
+                    }
+                }
             }
-
-            
+            $result['registered'] = true;
+            $result['installed'] = $this->isInstalled($data['codename']);
+           
             $result['purchase'] = $this->_ajax($this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['install'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['update'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] , 'SSL'));
@@ -511,11 +231,11 @@ class ModelDShopunityExtension extends Model {
             }
             
 
-		}
+        }
 
-		return $result;
+        return $result;
 
-	}
+    }
 
     private function _ajax($url){
         return html_entity_decode($url);
@@ -527,23 +247,24 @@ class ModelDShopunityExtension extends Model {
 
         if(!empty($data)){
             $this->load->model('tool/image');
-
+            $image_thumb = (!empty($data['images']['thumb'])) ? $data['images']['thumb'] : $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 320, 200);
+            $image_main = (!empty($data['images']['main'])) ? $data['images']['main'] : $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 640, 400);
+            
             $result = $data;
-            $result['codename'] = $data['id'];
             $result['name'] = trim($data['name']);
             $result['url'] = '';
             $data['prices'] = '';
-            $result['image'] = $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 320, 200);
+            $result['image'] = $image_main;
             $result['processed_images'] = array(
                 0 => array(
-                    'width' => 160,
-                    'hight' => 100,
-                    'url' => $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 320, 200)
-                    ),
-                1 => array(
                     'width' => 320,
                     'hight' => 200,
-                    'url' => $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 320, 200)
+                    'url' => $image_thumb
+                    ),
+                1 => array(
+                    'width' => 640,
+                    'hight' => 400,
+                    'url' => $image_thumb
                     )
                 );
             $result['installed'] = true;

@@ -17,11 +17,21 @@
         <file>admin/model/module/d_shopunity.php</file>
         <file>admin/language/english/module/d_shopunity.php</file>
         <file>admin/view/template/module/d_shopunity.tpl</file>
+
+        <file>system/library/shopunity.php</file>
 	</files>
 	<dirs>
 		<dir>admin/view/javascript/shopunity</dir>
 		<dir>admin/view/stylesheet/shopunity</dir>
+		<dir>admin/model/d_shopunity</dir>
+		<dir>admin/controller/d_shopunity</dir>
+		<dir>admin/view/template/d_shopunity</dir>
+		<dir>admin/view/stylesheet/d_shopunity</dir>
+		<dir>admin/view/javascript/d_shopunity</dir>
+		<dir>admin/language/english/d_shopunity</dir>
 		<dir>system/library/hyperlight</dir>
+		<dir>system/library/Httpful</dir>
+		<dir>system/library/guzzle</dir>
 		<dir>system/elfinder</dir>
 	</dirs>
 	<required>

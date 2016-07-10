@@ -96,13 +96,22 @@ class ControllerDShopunityMarket extends Controller {
 		$filter_data = array();
 		$data['extensions'] = $this->model_d_shopunity_extension->getExtensions($filter_data);
 		$data['purchase_url'] = $this->model_module_d_shopunity->ajax($this->url->link('d_shopunity/extension/purchase', 'token='.$this->session->data['token'], 'SSL')); 
-
+		$data['categories'] = $this->load->controller('d_shopunity/market/categories'); 
 
    		$data['header'] = $this->load->controller('common/header');
    		$data['column_left'] = $this->load->controller('common/column_left');
    		$data['footer'] = $this->load->controller('common/footer');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
+	}
+
+	public function categories(){
+		$this->load->model('d_shopunity/category');
+
+		$data['categories'] = $this->model_d_shopunity_category->getCategories();
+
+		return $this->load->view('d_shopunity/categories.tpl', $data);
+
 	}
 }
 
