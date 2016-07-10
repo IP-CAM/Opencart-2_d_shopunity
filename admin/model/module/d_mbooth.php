@@ -177,9 +177,9 @@ class ModelModuleDmbooth extends Model {
         if($mbooth){
             $result = array('success' => array(), 'error' => array());
             foreach ($mbooth['files'] as $file) {
-                if (is_file(DIR_ROOT . $file)) {
+                if (is_file($this->dir_root . $file)) {
 
-                    if (@unlink(DIR_ROOT . $file)) {
+                    if (@unlink($this->dir_root . $file)) {
                         $result['success'][] = $file;
                     } else {
                         $result['error'][] = $file;
@@ -294,11 +294,82 @@ class ModelModuleDmbooth extends Model {
         return true;
     }
 
+    public function installDependencies($codename){
+        $result = array();
+        foreach($this->getDependencies($codename) as $require){
+            if(!empty($extension['codename'])){
+
+                $extension = $this->getExtension($require['codename']);
+
+                if(empty($extension) || (isset($extension['version']) && $extension['version'] < $require['version'])){
+                    $download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($extension['codename']);
+                    if(isset($download['download'])){
+                        $this->downloadExtensionArchive($download['download']);
+                        $this->extractExtension(); 
+                        $this->moveFiles(DIR_DOWNLOAD . 'upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+                    }elseif(isset($download['error'])){
+                        $result['error'][] = $download['error'];
+                    }     
+                    
+                }else{
+                    $result['success'][] = $require['codename'] . ' not installed. Already up to date.';
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public function getDependencies($codename){
+        $result = array();
+
+        $extension = $this->getExtension($codename);
+        if($extension){
+            if(!empty($extension['required'])){
+                foreach($extension['required'] as $require => $version){
+                    $result[] = array(
+                        'codename' => (string)$require,
+                        'version' => (string)$version
+                    );
+                }
+            }
+            return $result;
+        }else{
+            return false;
+        }
+    }
+
+    public function getVersion($codename){
+
+        $extension = $this->getExtension($codename);
+
+        if(!empty($extension['version'])){
+            return $extension['version'];
+        }else{
+            return false;
+        }
+    }
+
+
 	public function _extension($data){
 
 		$result = array();
 		if(!empty($data)){
 			$result = $data;
+            if (!empty($data['dirs'])) {
+
+                $dir_files = array();
+
+                foreach ($data['dirs'] as $dir) {
+                    $this->getFiles($this->dir_root . $dir, $dir_files);
+                }
+
+                foreach ($dir_files as $file) {
+                    $file = str_replace($this->dir_root, "", $file);
+                    $result['files'][] = (string) $file;
+                }
+            }
+
 		}
 
 		return $result;

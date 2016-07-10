@@ -5,6 +5,7 @@
 
 class ControllerDShopunityDeveloper extends Controller {
 	private $id = 'd_shopunity';
+	private $codename = 'd_shopunity';
 	private $route = 'd_shopunity/developer';
 	private $sub_versions = array('lite', 'light', 'free');
 	private $mbooth = '';
@@ -16,6 +17,7 @@ class ControllerDShopunityDeveloper extends Controller {
 
 	public function __construct($registry) {
 		parent::__construct($registry);
+		$this->load->model('module/d_mbooth');
 		$this->load->model('module/d_shopunity');
 		$this->load->model('d_shopunity/account');
 
@@ -31,7 +33,7 @@ class ControllerDShopunityDeveloper extends Controller {
 		$this->config_file = $this->model_module_d_shopunity->getConfigFile($this->id, $this->sub_versions);
 
 		//Check if all dependencies are installed
-		$this->model_module_d_shopunity->installDependencies($this->mbooth);
+		//$this->model_module_d_shopunity->installDependencies($this->mbooth);
 
 	}
 

@@ -5,6 +5,7 @@
 
 class ControllerDShopunityExtension extends Controller {
 	private $id = 'd_shopunity';
+	private $codename = 'd_shopunity';
 	private $route = 'd_shopunity/extension';
 	private $sub_versions = array('lite', 'light', 'free');
 	private $mbooth = '';
@@ -16,6 +17,7 @@ class ControllerDShopunityExtension extends Controller {
 
 	public function __construct($registry) {
 		parent::__construct($registry);
+		$this->load->model('module/d_mbooth');
 		$this->load->model('module/d_shopunity');
 		$this->load->model('d_shopunity/account');
 
@@ -31,7 +33,7 @@ class ControllerDShopunityExtension extends Controller {
 		$this->config_file = $this->model_module_d_shopunity->getConfigFile($this->id, $this->sub_versions);
 
 		//Check if all dependencies are installed
-		$this->model_module_d_shopunity->installDependencies($this->mbooth);
+		//$this->model_module_d_shopunity->installDependencies($this->mbooth);
 
 	}
 
@@ -84,7 +86,7 @@ class ControllerDShopunityExtension extends Controller {
    		$this->document->setTitle($this->language->get('heading_title'));
    		$data['heading_title'] = $this->language->get('heading_title');
 		$data['stores'] = $this->model_module_d_shopunity->getStores();
-   		$data['version'] = $this->model_module_d_shopunity->getVersion($this->mbooth);
+   		$data['version'] = $this->model_module_d_mbooth->getVersion($this->codename);
 		$data['text_edit'] = $this->language->get('text_edit');
 
 		//language
@@ -167,7 +169,7 @@ class ControllerDShopunityExtension extends Controller {
    		$this->document->setTitle($this->language->get('heading_title'));
    		$data['heading_title'] = $this->language->get('heading_title');
 		$data['stores'] = $this->model_module_d_shopunity->getStores();
-   		$data['version'] = $this->model_module_d_shopunity->getVersion($this->mbooth);
+   		$data['version'] = $this->model_module_d_mbooth->getVersion($this->codename);
 		$data['text_edit'] = $this->language->get('text_edit');
 
 		//language
@@ -334,7 +336,7 @@ class ControllerDShopunityExtension extends Controller {
 		$mbooth = $this->model_d_shopunity_extension->getMboothByCodename($this->request->get['codename']);
 
 		if(empty($mbooth)){
-			$this->session->data['error'] = 'Error! extension wit this codename does not exist';
+			$this->session->data['error'] = 'Error! extension with this codename does not exist';
 			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
 

@@ -5,6 +5,7 @@
 
 class ControllerModuleDShopunity extends Controller {
 	private $id = 'd_shopunity';
+	private $codename = 'd_shopunity';
 	private $route = 'module/d_shopunity';
 	private $sub_versions = array('lite', 'light', 'free');
 	private $mbooth = '';
@@ -17,6 +18,7 @@ class ControllerModuleDShopunity extends Controller {
 	public function __construct($registry) {
 		parent::__construct($registry);
 		$this->load->model('module/d_shopunity');
+		$this->load->model('module/d_mbooth');
  
 		//Mbooth file (example: mbooth_d_shopunity.xml)
 		$this->mbooth = $this->model_module_d_shopunity->getMboothFile($this->id, $this->sub_versions);
@@ -30,7 +32,7 @@ class ControllerModuleDShopunity extends Controller {
 		$this->config_file = $this->model_module_d_shopunity->getConfigFile($this->id, $this->sub_versions);
 
 		//Check if all dependencies are installed
-		$this->model_module_d_shopunity->installDependencies($this->mbooth);
+		$this->model_module_d_mbooth->installDependencies($this->codename);
 
 	}
 
@@ -82,6 +84,7 @@ class ControllerModuleDShopunity extends Controller {
 
 	public function install() {
 		$this->load->model('module/d_shopunity');
+		$this->load->model('module/d_mbooth');
 		$this->model_module_d_shopunity->setVqmod('a_vqmod_d_shopunity.xml', 1);
 
 		$this->load->model('user/user_group');
@@ -102,64 +105,64 @@ class ControllerModuleDShopunity extends Controller {
         $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'access', $this->id.'/transaction');
         $this->model_user_user_group->addPermission($this->model_module_d_shopunity->getGroupId(), 'modify', $this->id.'/transaction');
 
-		$this->model_module_d_shopunity->installDependencies($this->mbooth);
+		$this->model_module_d_mbooth->installDependencies($this->codename);
 
-		$this->getUpdate(1);	  
+		//$this->getUpdate(1);	  
 	}
 
 	public function uninstall() {
 		$this->load->model('module/d_shopunity');
 		$this->model_module_d_shopunity->setVqmod('a_vqmod_d_shopunity.xml', 0);	
-		$this->getUpdate(0);	  
+		//$this->getUpdate(0);	  
 	}
 
 
 	/*
 	*	Ajax: Get the update information on this module. 
 	*/
-	public function getUpdate($status = 1){
-		if($status !== 0){	$status = 1; }
+	// public function getUpdate($status = 1){
+	// 	if($status !== 0){	$status = 1; }
 
-		$json = array();
+	// 	$json = array();
 
-		$this->load->language($this->route);
-		$this->load->model($this->route);
+	// 	$this->load->language($this->route);
+	// 	$this->load->model($this->route);
 
-		$current_version = $this->model_module_d_shopunity->getVersion($this->mbooth);
-		$info = $this->model_module_d_shopunity->getUpdateInfo($this->mbooth, $status);
+	// 	$current_version = $this->model_module_d_shopunity->getVersion($this->mbooth);
+	// 	$info = $this->model_module_d_shopunity->getUpdateInfo($this->mbooth, $status);
 
-		if ($info['code'] == 200) {
-			$data = simplexml_load_string($info['data']);
+	// 	if ($info['code'] == 200) {
+	// 		$data = simplexml_load_string($info['data']);
 
-			if ((string) $data->version == (string) $current_version 
-				|| (string) $data->version <= (string) $current_version) 
-			{
-				$json['success']   = $this->language->get('success_no_update') ;
-			} 
-			elseif ((string) $data->version > (string) $current_version) 
-			{
-				$json['warning']   = $this->language->get('warning_new_update');
+	// 		if ((string) $data->version == (string) $current_version 
+	// 			|| (string) $data->version <= (string) $current_version) 
+	// 		{
+	// 			$json['success']   = $this->language->get('success_no_update') ;
+	// 		} 
+	// 		elseif ((string) $data->version > (string) $current_version) 
+	// 		{
+	// 			$json['warning']   = $this->language->get('warning_new_update');
 
-				foreach($data->updates->update as $update)
-				{
-					if((string) $update->attributes()->version > (string)$current_version)
-					{
-						$version = (string)$update->attributes()->version;
-						$json['update'][$version] = (string) $update[0];
-					}
-				}
-			} 
-			else 
-			{
-				$json['error']   = $this->language->get('error_update');
-			}
-		} 
-		else 
-		{ 
-			$json['error']   =  $this->language->get('error_failed');
-		}
+	// 			foreach($data->updates->update as $update)
+	// 			{
+	// 				if((string) $update->attributes()->version > (string)$current_version)
+	// 				{
+	// 					$version = (string)$update->attributes()->version;
+	// 					$json['update'][$version] = (string) $update[0];
+	// 				}
+	// 			}
+	// 		} 
+	// 		else 
+	// 		{
+	// 			$json['error']   = $this->language->get('error_update');
+	// 		}
+	// 	} 
+	// 	else 
+	// 	{ 
+	// 		$json['error']   =  $this->language->get('error_failed');
+	// 	}
 
-		$this->response->setOutput(json_encode($json));
-	}
+	// 	$this->response->setOutput(json_encode($json));
+	// }
 }
 ?>

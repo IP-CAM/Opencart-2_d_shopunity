@@ -149,6 +149,14 @@ class ModelDShopunityExtension extends Model {
         return $result;
     }
 
+    public function getExtensionDownloadByCodename($codename){
+        $data = array(
+            'store_version' => VERSION,
+            'store_id' => $this->store_id);
+        $result = $this->api->get('extensions/'.$codename.'/download', $data);
+        return $result;
+    }
+
     public function downloadExtension($download_link){
 
         $this->load->model('module/d_mbooth');
