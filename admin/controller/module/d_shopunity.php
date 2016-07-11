@@ -145,6 +145,8 @@ class ControllerModuleDShopunity extends Controller {
 		$this->load->model('user/user_group');
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'access', $this->id.'/account');
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'modify', $this->id.'/account');
+        $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'access', $this->id.'/developer');
+        $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'modify', $this->id.'/developer');
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'access', $this->id.'/extension');
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'modify', $this->id.'/extension');
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'access', $this->id.'/market');
