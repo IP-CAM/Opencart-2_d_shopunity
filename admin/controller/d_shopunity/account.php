@@ -27,7 +27,7 @@ class ControllerDShopunityAccount extends Controller {
 	public function login(){
 
    		if($this->model_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
