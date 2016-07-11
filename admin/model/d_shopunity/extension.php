@@ -26,7 +26,8 @@ class ModelDShopunityExtension extends Model {
             }  
         }
 
-        return $json;   }
+        return $json;  
+    }
 
 
     public function getStoreExtensions($store_id = false){
@@ -67,21 +68,7 @@ class ModelDShopunityExtension extends Model {
                 }
             }
         }
-        
-        // echo '<pre>';
-        // print_r( $result);
-        //Collect data from mbooth files.
-        //
-        //
-        // $result = array();
-        // if ($path) {
-        //     $scripts = glob(DIR_SYSTEM . 'mbooth/xml/*');
-        //     if (!empty($scripts)) {
-        //         $result = array_merge($result, $scripts);
-        //     }
-        // } else {
-        //     $result = scandir(DIR_SYSTEM . 'mbooth/xml/');
-        // }
+
         return $extensions;
     }
 
@@ -155,51 +142,6 @@ class ModelDShopunityExtension extends Model {
             'store_id' => $this->store_id);
         $result = $this->api->get('extensions/'.$codename.'/download', $data);
         return $result;
-    }
-
-    public function downloadExtension($download_link){
-
-        $this->load->model('module/d_mbooth');
-
-        $filename = $this->model_module_d_mbooth->downloadExtensionArchive($download_link);
-
-        return $filename;
-    }
-
-    public function extractExtension($filename = false, $location = false) {
-
-        $this->load->model('module/d_mbooth');
-
-        return $this->model_module_d_mbooth->extractExtensionArchive($filename, $location);
-    }
-
-    public function installExtension($result) {
-        
-        $this->load->model('module/d_mbooth');
-
-        return $this->model_module_d_mbooth->moveFiles(DIR_SYSTEM . 'mbooth/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
-    }
-
-    public function getMboothByCodename($codename){
-
-        $this->load->model('module/d_mbooth');
-
-        $extension = $this->model_module_d_mbooth->getExtension($codename);
-
-        return $extension;
-    }
-
-    public function zipExtension($codename){
-        $this->load->model('module/d_mbooth');
-
-        return $this->model_module_d_mbooth->downloadExtension($codename);
-        
-    }
-
-    public function deleteExtension($codename){
-        $this->load->model('module/d_mbooth');
-
-        return $this->model_module_d_mbooth->deleteExtension($codename);
     }
 
     public function isInstalled($codename){

@@ -4,37 +4,20 @@
  */
 
 class ControllerDShopunityDeveloper extends Controller {
-	private $id = 'd_shopunity';
+
 	private $codename = 'd_shopunity';
 	private $route = 'd_shopunity/developer';
-	private $sub_versions = array('lite', 'light', 'free');
-	private $mbooth = '';
-	private $config_file = '';
-	private $prefix = '';
-	private $store_id = 0;
-	private $error = array(); 
-	private $client_id = 'd_shopunity';
+	private $extension = array();
 
 	public function __construct($registry) {
 		parent::__construct($registry);
-		$this->load->model('module/d_mbooth');
-		$this->load->model('module/d_shopunity');
-		$this->load->model('d_shopunity/account');
-
+		$this->load->model('d_shopunity/mbooth');
+		
 		//Mbooth file (example: mbooth_d_shopunity.xml)
-		$this->mbooth = $this->model_module_d_shopunity->getMboothFile($this->id, $this->sub_versions);
-
-		//store_id (for multistore)
-		if (isset($this->request->get['store_id'])) { 
-			$this->store_id = $this->request->get['store_id']; 
-		}
-
-		//Config File (example: d_shopunity)
-		$this->config_file = $this->model_module_d_shopunity->getConfigFile($this->id, $this->sub_versions);
+		$this->extension = $this->model_d_shopunity_mbooth->getExtension($this->codename);
 
 		//Check if all dependencies are installed
-		//$this->model_module_d_shopunity->installDependencies($this->mbooth);
-
+		$this->model_d_shopunity_mbooth->installDependencies($this->codename);
 	}
 
 	public function index(){
