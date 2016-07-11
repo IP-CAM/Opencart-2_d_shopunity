@@ -5,8 +5,10 @@
 	</div>
 </div>
 <ul class="list-group">
-	<?php foreach($categories as $category){ ?>
-	<li class="list-group-item"><a href=""><h4><?php echo $category['name']; ?></h4><small><?php echo $category['description']; ?></small></a></li>
+	<?php if($categories){?> 
+		<?php foreach($categories as $category){ ?>
+		<li class="list-group-item"><a href=""><h4><?php echo $category['name']; ?></h4><small><?php echo $category['description']; ?></small></a></li>
+		<?php } ?>
 	<?php } ?>
 </ul>
 
