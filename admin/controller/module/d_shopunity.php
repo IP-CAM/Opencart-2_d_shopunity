@@ -162,13 +162,13 @@ class ControllerModuleDShopunity extends Controller {
         $this->load->model('d_shopunity/mbooth');
 		$this->model_d_shopunity_mbooth->installDependencies($this->codename);
 
-		$this->getUpdate(1);	  
+		//$this->getUpdate(1);	  
 	}
 
 	public function uninstall() {
 		$this->load->model('module/d_shopunity');
 		$this->model_module_d_shopunity->setVqmod('a_vqmod_d_shopunity.xml', 0);	
-		$this->getUpdate(0);	  
+		//$this->getUpdate(0);	  
 	}
 }
 ?>
