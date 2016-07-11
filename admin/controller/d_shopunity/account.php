@@ -33,9 +33,9 @@ class ControllerDShopunityAccount extends Controller {
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
 		
 		$this->load->language('module/d_shopunity');
-   		$this->load->language('d_shopunity/login');
+   		$this->load->language('d_shopunity/account');
    		$this->load->model('user/user');
-   		$route = 'd_shopunity/login';
+
 
    		// Breadcrumbs
 		$data['breadcrumbs'] = array(); 
@@ -51,7 +51,7 @@ class ControllerDShopunityAccount extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link($route, 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link($this->route.'/login', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 		// Notification
