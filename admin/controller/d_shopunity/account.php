@@ -99,7 +99,7 @@ class ControllerDShopunityAccount extends Controller {
    		$data['column_left'] = $this->load->controller('common/column_left');
    		$data['footer'] = $this->load->controller('common/footer');
 
-   		$this->response->setOutput($this->load->view($route.'_login.tpl', $data));
+   		$this->response->setOutput($this->load->view($this->route.'_login.tpl', $data));
    	}
 
    	public function callback(){
