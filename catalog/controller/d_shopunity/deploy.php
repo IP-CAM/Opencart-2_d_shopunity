@@ -8,6 +8,8 @@ class ControllerDShopunityDeploy extends Controller {
 
 	/*
 	 *	Bitbucket diploy script
+	 *
+	 *  /index.php?route=d_shopunity/deploy/bitbucket&owner=dreamvention
 	 */
 	public function bitbucket() {
 
@@ -37,6 +39,8 @@ class ControllerDShopunityDeploy extends Controller {
 
 	/*
 	 *	Github diploy script
+	 *
+	 *  /index.php?route=d_shopunity/deploy/bitbucket&owner=dreamvention
 	 */
 	public function github(){
 
