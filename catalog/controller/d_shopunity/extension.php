@@ -16,9 +16,9 @@ class ControllerDShopunityExtension extends Controller {
 		if(isset($this->request->get['codename']) && isset($this->request->get['secret'])){
 			//validate secret
 			if($this->validateSecret($this->request->get['secret'])){
-				$this->load->model('module/d_mbooth');
+				$this->load->model('d_shopunity/mbooth');
 
-				$json = $this->model_module_d_mbooth->getExtension($this->request->get['codename']);
+				$json = $this->model_d_shopunity_mbooth->getExtension($this->request->get['codename']);
 				if(empty($json)){
 					$json['error'] = "Error! extension not found";
 				}
@@ -43,9 +43,9 @@ class ControllerDShopunityExtension extends Controller {
 
 			//validate secret
 			if($this->validateSecret($this->request->get['secret'])){
-				$this->load->model('module/d_mbooth');
+				$this->load->model('d_shopunity/mbooth');
 
-				$json = $this->model_module_d_mbooth->downloadExtension($this->request->get['codename']);
+				$json = $this->model_d_shopunity_mbooth->downloadExtension($this->request->get['codename']);
 
 			}else{
 				$json['error'] = "Error! Secret is invalid";

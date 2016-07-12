@@ -32,7 +32,7 @@ class ControllerDShopunityDeploy extends Controller {
 			$owner = $this->request->get['owner'];
 		}
 
-		new Deploy($user, $pass, $repo, str_replace("catalog/", "", DIR_APPLICATION), $branch, $owner);
+		new Deploy_Bitbucket($user, $pass, $repo, str_replace("catalog/", "", DIR_APPLICATION), $branch, $owner);
 	}
 
 	/*
@@ -52,7 +52,7 @@ class ControllerDShopunityDeploy extends Controller {
 		if(isset($this->request->get['branch'])){
 			$branch = $this->request->get['branch'];
 		}
-		new GitHub_Deploy($user, $repo, str_replace("catalog/", "", DIR_APPLICATION), $branch );
+		new Deploy_GitHub($user, $repo, str_replace("catalog/", "", DIR_APPLICATION), $branch );
 	}
 
 }

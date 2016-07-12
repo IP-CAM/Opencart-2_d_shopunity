@@ -47,22 +47,17 @@
 
         "admin/controller/module/d_shopunity.php",
         "admin/language/english/module/d_shopunity.php",
-        "admin/model/module/d_shopunity.php",
-        "admin/model/module/d_mbooth.php",
         "admin/view/template/module/d_shopunity.tpl",
-        "admin/view/template/common/d_file_manager.tpl",
-
-        "catalog/controller/module/d_shopunity.php",
 
         "system/library/shopunity.php",
-        "vqmod/xml/a_vqmod_shopunity.xml",
 
-        "admin/model/module/d_mbooth.php",
-        "catalog/model/module/d_mbooth.php",
         "system/mbooth/download/index.php",
         "system/mbooth/backup/index.php",
-        "system/library/deploy.php",
-        "system/library/github_deploy.php"
+        "system/library/deploy_bitbucket.php",
+        "system/library/deploy_github.php",
+
+        "admin/view/template/common/d_file_manager.tpl",
+        "vqmod/xml/a_vqmod_shopunity.xml"
     ],
     "dirs": [
         "admin/controller/d_shopunity",
@@ -71,16 +66,18 @@
 
         "admin/view/template/d_shopunity",
         "admin/view/javascript/d_shopunity",
-        "admin/view/javascript/shopunity",
         "admin/view/stylesheet/d_shopunity",
-        "admin/view/stylesheet/shopunity",
 
         "catalog/controller/d_shopunity",
+        "catalog/model/d_shopunity",
 
         "system/library/hyperlight",
         "system/library/Httpful",
         "system/library/guzzle",
-        "system/elfinder"
+        
+        "system/elfinder",
+        "admin/view/stylesheet/shopunity",
+        "admin/view/javascript/shopunity"
     ],
     "changelog": [
         {
