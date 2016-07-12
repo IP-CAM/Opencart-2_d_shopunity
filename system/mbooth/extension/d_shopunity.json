@@ -44,17 +44,16 @@
         "system/mbooth/install/d_shopunity.php",
         "system/mbooth/install/d_shopunity.sql",
         "system/mbooth/readme/d_shopunity.md",
+        "system/mbooth/download/index.php",
+        "system/mbooth/backup/index.php",
 
         "admin/controller/module/d_shopunity.php",
         "admin/language/english/module/d_shopunity.php",
         "admin/view/template/module/d_shopunity.tpl",
 
-        "system/library/shopunity.php",
-
-        "system/mbooth/download/index.php",
-        "system/mbooth/backup/index.php",
         "system/library/deploy_bitbucket.php",
         "system/library/deploy_github.php",
+        "system/library/shopunity.php",
 
         "admin/view/template/common/d_file_manager.tpl",
         "vqmod/xml/a_vqmod_shopunity.xml"
