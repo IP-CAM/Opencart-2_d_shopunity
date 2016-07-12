@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "3.0.1",
+    "version": "3.0.0",
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease.",
     "readme": "system/mbooth/readme/d_shopunity.md",
