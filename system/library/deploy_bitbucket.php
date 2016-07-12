@@ -14,7 +14,7 @@ class Deploy_Bitbucket{
   private $branch = 'master';
   private $deploy = './'; // directory deploy repository
   private $download_name = 'download.zip'; // name of downloaded zip file
-  private $debug = true;  // false = hide output
+  private $debug = false;  // false = hide output
   private $process = 'deploy'; // deploy or update
  
   // files to ignore in directory
