@@ -7,14 +7,14 @@
 
 class Deploy_Bitbucket{
   
-  private $user = 'dmitriyzhuk'; // Bitbucket username
-  private $pass = 'demo1234'; // Bitbucket password 
-  private $owner = 'dreamvention'; // Bitbucket password 
+  private $user = ''; // Bitbucket username
+  private $pass = ''; // Bitbucket password 
+  private $owner = ''; // Bitbucket owener (usualy username but could be company) 
   private $repo = '2_d_shopunity';  // repository name
   private $branch = 'master';
   private $deploy = './'; // directory deploy repository
   private $download_name = 'download.zip'; // name of downloaded zip file
-  private $debug = true;  // false = hide output
+  private $debug = false;  // false = hide output
   private $process = 'deploy'; // deploy or update
  
   // files to ignore in directory
@@ -76,7 +76,7 @@ class Deploy_Bitbucket{
         }
  
         $node = $this->get_node_from_dir();
-        $message = 'Bitbucket post failed, complete deploy';
+        $message = 'Bitbucket zip retrieved, complete deploy';
         if(!$node){
           $this->log('Node could not be set, no unziped repo');
           return; 

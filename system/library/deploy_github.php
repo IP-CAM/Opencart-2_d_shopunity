@@ -1,19 +1,18 @@
 <?php 
 /**
- * Bitbucket POST Deployment Class
+ * Github POST Deployment Class
  * @author  James Collings <james@jclabs.co.uk>
  * @version 0.0.1
  */
 
 class Deploy_GitHub{
  
-  private $user = 'Dreamvention'; // Bitbucket username
-  //private $pass = ''; // Bitbucket password 
+  private $user = ''; // Github username
   private $repo = '2_d_shopunity';  // repository name
   private $deploy = './'; // directory deploy repository
   private $branch = 'master';
   private $download_name = 'download.zip'; // name of downloaded zip file
-  private $debug = true;  // false = hide output
+  private $debug = false;  // false = hide output
   private $process = 'deploy'; // deploy or update
  
   // files to ignore in directory
