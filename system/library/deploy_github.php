@@ -8,7 +8,7 @@
 class Deploy_GitHub{
  
   private $user = ''; // Github username
-  private $repo = '2_d_shopunity';  // repository name
+  private $repo = '';  // repository name
   private $deploy = './'; // directory deploy repository
   private $branch = 'master';
   private $download_name = 'download.zip'; // name of downloaded zip file
@@ -48,6 +48,7 @@ class Deploy_GitHub{
       $data = json_decode(html_entity_decode($json)); // decode json into php object
       
       $parts = explode("/", $data->repository->full_name);
+      $this->user = $parts[0];
       $this->repo = $parts[1];
       // process all commits
       
