@@ -10,7 +10,7 @@ class Deploy_Bitbucket{
   private $user = 'dmitriyzhuk'; // Bitbucket username
   private $pass = 'demo1234'; // Bitbucket password 
   private $owner = 'dreamvention'; // Bitbucket password 
-  private $repo = '2_mbooth';  // repository name
+  private $repo = '2_d_shopunity';  // repository name
   private $branch = 'master';
   private $deploy = './'; // directory deploy repository
   private $download_name = 'download.zip'; // name of downloaded zip file
@@ -48,8 +48,12 @@ class Deploy_Bitbucket{
     if($owner){
         $this->owner = $owner;
     }
- 
-    $json = isset($_POST['payload']) ? $_POST['payload'] : false;
+
+    $json = file_get_contents('php://input');
+    if(empty($json)){
+      $json = isset($_POST['payload']) ? $_POST['payload'] : false;
+    }
+
     if($json){
 
       $data = json_decode($json); // decode json into php object
@@ -86,7 +90,7 @@ class Deploy_Bitbucket{
       
     }else{
       // no $_POST['payload']
-      $this->log('No Payload' . json_encode($_POST));
+      $this->log('No Payload' . file_get_contents('php://input'));
     }
   }
  

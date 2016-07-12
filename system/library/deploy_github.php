@@ -9,7 +9,7 @@ class Deploy_GitHub{
  
   private $user = 'Dreamvention'; // Bitbucket username
   //private $pass = ''; // Bitbucket password 
-  private $repo = '2_mbooth';  // repository name
+  private $repo = '2_d_shopunity';  // repository name
   private $deploy = './'; // directory deploy repository
   private $branch = 'master';
   private $download_name = 'download.zip'; // name of downloaded zip file
