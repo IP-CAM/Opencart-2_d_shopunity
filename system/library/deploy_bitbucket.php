@@ -10,7 +10,7 @@ class Deploy_Bitbucket{
   private $user = ''; // Bitbucket username
   private $pass = ''; // Bitbucket password 
   private $owner = ''; // Bitbucket owener (usualy username but could be company) 
-  private $repo = '2_d_shopunity';  // repository name
+  private $repo = '';  // repository name
   private $branch = 'master';
   private $deploy = './'; // directory deploy repository
   private $download_name = 'download.zip'; // name of downloaded zip file
@@ -58,6 +58,8 @@ class Deploy_Bitbucket{
 
       $data = json_decode($json); // decode json into php object
       $this->repo = $data->repository->name;
+      $this->owner = $data->owner->username;
+      $this->user = $data->actor->username;
       // process all commits
       
         // if no commits have been posted, deploy latest node
