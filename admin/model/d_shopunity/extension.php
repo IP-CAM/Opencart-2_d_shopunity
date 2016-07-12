@@ -49,9 +49,9 @@ class ModelDShopunityExtension extends Model {
 
         //Return mbooth files.
         $codenames = array();
-        $this->load->model('module/d_mbooth');
+        $this->load->model('d_shopunity/mbooth');
 
-        $installed_extensions = $this->model_module_d_mbooth->getExtensions();
+        $installed_extensions = $this->model_d_shopunity_mbooth->getExtensions();
         foreach($installed_extensions as $extension){
             $codenames[] = $extension['codename'];
         }
@@ -75,9 +75,9 @@ class ModelDShopunityExtension extends Model {
     public function getUnregisteredExtensions(){
         $codenames = array();
         $unregistered_extensions = array();
-        $this->load->model('module/d_mbooth');
+        $this->load->model('d_shopunity/mbooth');
 
-        $installed_extensions = $this->model_module_d_mbooth->getExtensions();
+        $installed_extensions = $this->model_d_shopunity_mbooth->getExtensions();
         foreach($installed_extensions as $extension){
             $codenames[] = $extension['codename'];
             $unregistered_extensions[$extension['codename']] = $extension;

@@ -71,10 +71,9 @@
         "catalog/controller/d_shopunity",
         "catalog/model/d_shopunity",
 
+        "system/library/httpful",
+
         "system/library/hyperlight",
-        "system/library/Httpful",
-        "system/library/guzzle",
-        
         "system/elfinder",
         "admin/view/stylesheet/shopunity",
         "admin/view/javascript/shopunity"
