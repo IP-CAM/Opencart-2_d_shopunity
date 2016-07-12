@@ -14,7 +14,7 @@ class Deploy_Bitbucket{
   private $branch = 'master';
   private $deploy = './'; // directory deploy repository
   private $download_name = 'download.zip'; // name of downloaded zip file
-  private $debug = false;  // false = hide output
+  private $debug = true;  // false = hide output
   private $process = 'deploy'; // deploy or update
  
   // files to ignore in directory
@@ -58,7 +58,7 @@ class Deploy_Bitbucket{
 
       $data = json_decode($json); // decode json into php object
       $this->repo = $data->repository->name;
-      $this->owner = $data->owner->username;
+      $this->owner = $data->repository->owner->username;
       $this->user = $data->actor->username;
       // process all commits
       
