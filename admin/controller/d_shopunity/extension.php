@@ -177,6 +177,57 @@ class ControllerDShopunityExtension extends Controller {
 
 	}
 
+	public function test(){
+		if(!isset($this->request->get['extension_download_link_id'])){
+			$this->session->data['error'] = 'Error! extension_download_link_id missing';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+
+		if(!isset($this->request->get['extension_id'])){
+			$this->session->data['error'] = 'Error! extension_id missing';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+
+		$extension_download_link_id = $this->request->get['extension_download_link_id'];
+		$extension_id = $this->request->get['extension_id'];
+		$this->load->model('d_shopunity/extension');
+		$this->load->model('d_shopunity/mbooth');
+
+		$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkId($extension_id, $extension_download_link_id);
+
+		if(!empty($download['error']) || empty($download['download'])){
+			$this->session->data['error'] = 'Error! We cound not get the download link';
+			$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
+		}
+
+		//download the extension to system/mbooth/download
+		$extension_zip = $this->model_d_shopunity_mbooth->downloadExtensionFromServer($download['download']);
+
+		//unzip the downloaded file to system/mbooth/download and remove the zip file
+		$extracted = $this->model_d_shopunity_mbooth->extractExtension($extension_zip);
+
+		$result = array();
+
+		//BACKUP REFACTOR
+		// if(file_exists(DIR_SYSTEM . 'mbooth/xml/'.$this->request->post['mbooth'])){
+		// 	$result = $this->model_module_mbooth->backup_files_by_mbooth($this->request->post['mbooth'], 'update');
+		// }
+
+		$result = $this->model_d_shopunity_mbooth->installExtension($result);
+
+		if(!empty($result['error'])) {
+			$this->session->data['error'] = $this->language->get('error_install') . "<br />" . implode("<br />", $result['error']);
+		}
+
+		if(!empty($result['success'])) {
+			$this->session->data['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
+			$this->session->data['success'] .=  "<br />" . implode("<br />", $result['success']);
+		}
+
+		$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
+
+	}
+
 	public function uninstall(){
 		if(!isset($this->request->get['codename'])){
 			$this->session->data['error'] = 'Error! codename missing';
