@@ -93,16 +93,23 @@ class ControllerModuleDShopunity extends Controller {
 		$data['tab_billing'] =  $this->language->get('tab_billing');
 		$data['tab_backup'] =  $this->language->get('tab_backup');
 		$data['tab_setting'] =  $this->language->get('tab_setting');
+		$data['tab_tester'] =  $this->language->get('tab_tester');
 
 		$data['href_extension'] =  $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_market'] =  $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_billing'] =  $this->url->link('d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_backup'] = $this->url->link('d_shopunity/backup', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_setting'] = $this->url->link('d_shopunity/setting', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_tester'] = $this->url->link('d_shopunity/tester', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$data['button_logout'] =  $this->language->get('button_logout');
 		$data['logout'] = $this->url->link('d_shopunity/account/logout', 'token=' . $this->session->data['token'], 'SSL');
 
+		$data['tester'] = false;
+		$account = $this->config->get('d_shopunity_account');
+		if(!empty($account['tester'])){
+			$data['tester'] = true;
+		}
 		$data['header'] = $this->load->controller('common/header');
    		$data['column_left'] = $this->load->controller('common/column_left');
 
@@ -160,6 +167,8 @@ class ControllerModuleDShopunity extends Controller {
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'modify', $this->codename.'/transaction');
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'access', $this->codename.'/setting');
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'modify', $this->codename.'/setting');
+        $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'access', $this->codename.'/tester');
+        $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'modify', $this->codename.'/tester');
 
         $this->load->model('d_shopunity/mbooth');
 		$this->model_d_shopunity_mbooth->installDependencies($this->codename);

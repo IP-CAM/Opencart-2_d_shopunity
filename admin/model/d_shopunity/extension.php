@@ -105,6 +105,20 @@ class ModelDShopunityExtension extends Model {
         return $result;
     }
 
+    public function getTastableExtensions($tester_id){
+
+        $json = $this->api->get('testers/'.$tester_id.'/extensions');
+
+        if($json){
+            foreach($json as $key => $value){
+                $json[$key] = $this->_extension($value);
+            }
+        }
+
+        return $json;
+
+    }
+
     public function getExtension($extension_id){
 
         $json = $this->api->get('extensions/'.$extension_id);
@@ -136,12 +150,36 @@ class ModelDShopunityExtension extends Model {
         return $result;
     }
 
+    public function getExtensionDownloadByDownloadLinkId($extension_id, $extension_download_link_id){
+        $data = array(
+            'extension_download_link_id' => $extension_download_link_id,
+            'store_version' => VERSION,
+            'store_id' => $this->store_id);
+        $result = $this->api->get('extensions/'.$extension_id.'/download', $data);
+        return $result;
+    }
+
+    
+
     public function getExtensionDownloadByCodename($codename){
         $data = array(
             'store_version' => VERSION,
             'store_id' => $this->store_id);
         $result = $this->api->get('extensions/'.$codename.'/download', $data);
         return $result;
+    }
+
+    public function submitExtension($extension_id){
+
+        $extension = $this->getExtension($extension_id);
+
+        $this->load->model('d_shopunity/mbooth');
+
+        $data = $this->model_d_shopunity_mbooth->getExtension($extension['codename']);
+
+        $json = $this->api->post('extensions/'.$extension_id.'/submission', json_decode(json_encode($data), true));
+
+        return $json;
     }
 
     public function isInstalled($codename){
@@ -152,6 +190,7 @@ class ModelDShopunityExtension extends Model {
     }
 
     public function _extension($data){
+
         $result = array();
 
         if(!empty($data)){
@@ -174,11 +213,18 @@ class ModelDShopunityExtension extends Model {
             $result['update'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'] . '&codename='.$data['codename'] ));
             $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token=' . $this->session->data['token']  . '&codename='.$data['codename'] , 'SSL'));
+            $result['submit'] = $this->_ajax($this->url->link('d_shopunity/extension/submit', 'token=' . $this->session->data['token']  . '&extension_id='.$data['extension_id'] , 'SSL'));
             if(!empty($data['store_extension'])){
                 $result['suspend'] = $this->_ajax($this->url->link('d_shopunity/extension/suspend', 'token=' . $this->session->data['token']  . '&store_extension_id='.$data['store_extension']['store_extension_id'] , 'SSL'));
             }else{
                 $result['suspend'] = '';
             }
+            if($result['testable']){
+                $result['test'] = $this->_ajax($this->url->link('d_shopunity/extension/test', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] . '&extension_download_link_id=' . $data['extension_download_link_id'] , 'SSL'));
+            }else{
+                $result['test'] = '';
+            }
+            
             
 
         }
@@ -226,6 +272,8 @@ class ModelDShopunityExtension extends Model {
             $result['downloadable'] = true;
             $result['purchasable'] = false;
             $result['suspendable'] = false;
+            $result['submittable'] = false;
+            $result['testable'] = false;
             
             $result['purchase'] = '';
             $result['install'] = '';

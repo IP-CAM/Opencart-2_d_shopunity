@@ -62,6 +62,14 @@
 	            <a class="btn btn-danger show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span></a>
 	        	<?php } ?>
 
+	        	<?php if($extension['submittable']){ ?>
+	                <a class="btn btn-warning show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
+		        <?php } ?>
+	
+				<?php if($extension['testable']){ ?>
+	                <a class="btn btn-warning show-loading test-extension" data-href="<?php echo $extension['test']; ?>" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
+		        <?php } ?>
+		       
 	        </div>
 		</div>
 	</div>

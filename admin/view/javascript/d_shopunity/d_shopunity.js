@@ -119,6 +119,30 @@ d_shopunity = {
 		
 	},
 
+	submitExtension: function($node){
+		var that = this;
+		swal({	
+			title: "Submit extension to shopunity.net",	
+			text: "You are about to start a submission process of this extension!",	
+			type: "warning",	
+			showCancelButton: true, 
+			confirmButtonColor: "#f56b6b",	
+			confirmButtonText: "Yes, submit this extension!",	
+			closeOnConfirm: false,
+			closeOnCancel: true
+		}, 
+		function(isConfirm){  
+			if (isConfirm) {     
+				location.href = $node.data('href');  
+			} else {     
+				that.hideLoading($('.loading'));
+		 	}	
+		});
+
+		return false;
+		
+	},
+
 
 
 	showLoading: function($loading){
@@ -154,6 +178,10 @@ d_shopunity = {
 
 		$(document).on('click', '.suspend-extension', function(){
 			that.suspendExtension($(this));
+		});
+
+		$(document).on('click', '.submit-extension', function(){
+			that.submitExtension($(this));
 		});
 
 		$(document).on('click', '.show-loading', function(){

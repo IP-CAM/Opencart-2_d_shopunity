@@ -143,7 +143,7 @@ class Shopunity {
 		$response = Request::$method($uri)
 			->sendsJson()
 			->body(json_encode($data))
-			->expectsJson()
+			//->expectsJson()
 			->send();
 		return json_decode(json_encode($response->body), true);
 	}

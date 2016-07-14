@@ -98,6 +98,10 @@
 					<?php if($extension['suspendable'] && !$extension['installed']){ ?>
 	                <a class="btn btn-danger show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span></a>
 		        	<?php } ?>
+				
+		        	<?php if($extension['submittable']){ ?>
+	                <a class="btn btn-warning show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
+		        	<?php } ?>	
 
 		        </div>
 

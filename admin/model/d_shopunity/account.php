@@ -20,7 +20,11 @@ class ModelDShopunityAccount extends Model {
 		//validate if settings is avalible.
 		if($this->config->get('d_shopunity_oauth')){
 
-			$json = $this->getAccount();
+			$json = $this->config->get('d_shopunity_account');
+			if(!$json){
+				$json = $this->getAccount();
+			}
+			
 
 			//validate is json returned.
 			if ($json) 
@@ -42,7 +46,9 @@ class ModelDShopunityAccount extends Model {
 						if(!empty($json['access_token']))
 						{
 							$this->login($json);
-							return true;
+
+							$this->config->set('d_shopunity_account', $json);
+							return $json;
 						}else{
 							//access_token is not retunred
 							$this->logout();
@@ -52,7 +58,8 @@ class ModelDShopunityAccount extends Model {
 				}else{
 					
 					//OK. account returned. 
-					return true;
+					$this->config->set('d_shopunity_account', $json);
+					return $json;
 				}
 			}else{
 				//json not returned. logout. 

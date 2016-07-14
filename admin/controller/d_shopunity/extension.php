@@ -246,4 +246,23 @@ class ControllerDShopunityExtension extends Controller {
 		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
 	}
 
+
+	public function submit(){
+		if(!isset($this->request->get['extension_id'])){
+			$this->session->data['error'] = 'Error! extension_id missing';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+
+		$this->load->model('d_shopunity/extension');
+		$result = $this->model_d_shopunity_extension->submitExtension($this->request->get['extension_id']);
+
+		if(!empty($result['error'])){
+			$this->session->data['error'] = $result['error'];
+		}elseif(!empty($result['success'])){
+			$this->session->data['success'] = $result['success'];
+		}
+
+		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+	}
+
 }

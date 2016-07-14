@@ -158,7 +158,7 @@ class ModelDShopunityMbooth extends Model {
                 header('Expires: 0');
                 header('Content-Description: File Transfer');
                 header('Content-Type: mbooth/xml');
-                header('Content-Disposition: attachment; filename=' . $codename . '_' . date('Y-m-d') . '.ocmod' . '.zip');
+                header('Content-Disposition: attachment; filename=' . $codename . '.v' . $mbooth['version'] . '.ocmod' . '.zip');
                 header('Content-Transfer-Encoding: binary');
                 readfile($temp);
                 unlink($temp);
