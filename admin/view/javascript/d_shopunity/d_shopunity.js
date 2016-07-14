@@ -164,6 +164,10 @@ d_shopunity = {
 			that.installExtension($(this));
 		});
 
+		$(document).on('click', '.test-extension', function(){
+			that.installExtension($(this));
+		});
+
 		$(document).on('click', '.download-extension', function(){
 			that.downloadExtension($(this));
 		});

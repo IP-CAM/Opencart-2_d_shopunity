@@ -7,6 +7,7 @@
 		</div>
 		<div class="col-md-4">
 			<?php echo $extension['name']; ?>
+			<?php echo $extension['version']; ?>
 		</div>
 		<div class="col-md-3">
 			<div class="rating">
