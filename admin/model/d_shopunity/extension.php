@@ -142,6 +142,18 @@ class ModelDShopunityExtension extends Model {
         return $result;
     }
 
+    public function approveExtension($tester_id, $extension_id, $data) {
+        //not to copy
+        // $data = array(
+        //     'extension_download_link_id' => $data['extension_download_link_id'],
+        //     'status' => $data['status'],
+        //     'tester_comment' => $data['tester_comment'],
+        // );
+        $result = $this->api->post('testers/'. $tester_id. '/extensions/'. $extension_id .'/approve', $data);
+
+        return $result;
+    }
+
     public function getExtensionDownload($extension_id){
         $data = array(
             'store_version' => VERSION,
@@ -221,8 +233,13 @@ class ModelDShopunityExtension extends Model {
             }
             if($result['testable']){
                 $result['test'] = $this->_ajax($this->url->link('d_shopunity/extension/test', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] . '&extension_download_link_id=' . $data['extension_download_link_id'] , 'SSL'));
+                $result['approve'] = $this->_ajax($this->url->link('d_shopunity/tester/approve', 'token=' . $this->session->data['token'] . '&extension_id=' . $data['extension_id'] . '&extension_download_link_id=' . $data['extension_download_link_id'] . '&status=1', 'SSL'));
+                $result['disapprove'] = $this->_ajax($this->url->link('d_shopunity/tester/approve', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] . '&extension_download_link_id=' . $data['extension_download_link_id']. '&status=0', 'SSL'));
+           
             }else{
                 $result['test'] = '';
+                $result['approve'] = '';
+                $result['disapprove'] = '';
             }
             
             
@@ -281,6 +298,9 @@ class ModelDShopunityExtension extends Model {
             $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'].'&codename='.$result['codename'] ));
             $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token='.$this->session->data['token'].'&codename='.$result['codename'] ));
             $result['suspend'] = '';
+            $result['test'] = '';
+            $result['approve'] = '';
+            $result['disapprove'] = '';
         }
 
         return $result;

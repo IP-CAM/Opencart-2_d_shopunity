@@ -143,6 +143,68 @@ d_shopunity = {
 		
 	},
 
+	approveExtension: function($node){
+		var that = this;
+		swal({	
+			title: "Approve this extension",	
+			text: "You are about to approve this extension!",	
+			type: "warning",	
+			showCancelButton: true, 
+			confirmButtonColor: "#f56b6b",	
+			confirmButtonText: "Yes, approve this extension!",	
+			closeOnConfirm: false,
+			closeOnCancel: true
+		}, 
+		function(isConfirm){  
+			if (isConfirm) {     
+				location.href = $node.data('href');  
+			} else {     
+				that.hideLoading($('.loading'));
+		 	}	
+		});
+
+		return false;
+		
+	},
+
+	disapproveExtension: function($node){
+
+		var that = this;
+		swal({	
+			title: "Disapprove this extension",	
+			text: "You are about to disapprove this extension!",	
+			type: "input", 	
+			inputPlaceholder: "Tester comment",
+			showCancelButton: true, 
+			confirmButtonColor: "#f56b6b",	
+			confirmButtonText: "Yes, disapprove this extension!",	
+			closeOnConfirm: false,
+			closeOnCancel: true
+		}, 
+		function(inputValue){   
+			if (inputValue === false) return false;      
+			if (inputValue === "") {     
+				swal.showInputError("You need to write something!");     
+				return false 
+			}      
+
+			$.ajax({
+				url: $node.data('href'),
+				dataType: 'html',
+				data: 'tester_comment='+inputValue,
+				method: 'post',
+				success: function(html) {
+					console.log(html)
+					location.reload();
+				}
+			});
+		});
+	
+
+		return false;
+
+	},
+
 
 
 	showLoading: function($loading){
@@ -186,6 +248,14 @@ d_shopunity = {
 
 		$(document).on('click', '.submit-extension', function(){
 			that.submitExtension($(this));
+		});
+
+		$(document).on('click', '.approve-extension', function(){
+			that.approveExtension($(this));
+		});
+
+		$(document).on('click', '.disapprove-extension', function(){
+			that.disapproveExtension($(this));
 		});
 
 		$(document).on('click', '.show-loading', function(){
