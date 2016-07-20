@@ -60,7 +60,7 @@ class ModelDShopunityMbooth extends Model {
         curl_setopt($ch, CURLOPT_FILE, $fp);
         $page = curl_exec($ch);
         if (!$page) {
-            exit;
+            throw new Exception('Error! downloadExtensionFromServer we could not download '.htmlspecialchars_decode($download_link));
         }
         curl_close($ch);
 
@@ -99,6 +99,11 @@ class ModelDShopunityMbooth extends Model {
             }
             $zip->extractTo($location);
             $zip->close();
+        }
+
+
+        if(isset($result['error'])){
+            throw new Exception('Error! extractExtension failed: filename: '. $filename. ', message: '.json_encode($result['error']));
         }
 
         unlink($filename);
