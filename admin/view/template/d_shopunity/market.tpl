@@ -41,10 +41,12 @@
 		</div>
 		
 		<div class="row">
-			<?php foreach($extensions as $extension) { ?>
-				<div class="col-md-3 col-sm-6">
-					<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
-				</div>
+			<?php if($extensions) { ?>
+				<?php foreach($extensions as $extension) { ?>
+					<div class="col-md-3 col-sm-6">
+						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+					</div>
+				<?php } ?>
 			<?php } ?>
 		</div>
 	</div>

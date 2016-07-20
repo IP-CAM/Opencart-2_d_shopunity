@@ -5,11 +5,14 @@
 			   <img class="img-responsive" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
 			</a>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<?php echo $extension['name']; ?>
 			<?php echo $extension['version']; ?>
+			<?php if($extension['tester_status_id']){?>
+				<div class="alert alert-warning"><?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?></div>
+			<?php } ?>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<div class="rating">
 	    		<span class="fa fa-star"></span>
 	    		<span class="fa fa-star"></span>
@@ -19,7 +22,10 @@
 	    	</div>
 	    	
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
+			<?php echo $extension['tester_comment']; ?>
+		</div>
+		<div class="col-md-3">
 			<div class="pull-right">
 				
 	            

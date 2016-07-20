@@ -38,7 +38,8 @@ class ControllerDShopunityMarket extends Controller {
    		$this->load->model('d_shopunity/extension');
 
 		//REFACTOR
-		$filter_data = array();
+		$filter_data = array(
+			'status' => 1);
 		$data['extensions'] = $this->model_d_shopunity_extension->getExtensions($filter_data);
 		$data['categories'] = $this->load->controller('d_shopunity/market/categories'); 
 

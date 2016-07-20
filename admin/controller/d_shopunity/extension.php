@@ -31,6 +31,13 @@ class ControllerDShopunityExtension extends Controller {
    		$this->load->language('d_shopunity/extension');
    		$this->load->model('d_shopunity/extension');
 
+   		$data['text_tester_status_1'] = $this->language->get('text_tester_status_1');
+   		$data['text_tester_status_2'] = $this->language->get('text_tester_status_2');
+   		$data['text_tester_status_3'] = $this->language->get('text_tester_status_3');
+   		$data['text_tester_status_4'] = $this->language->get('text_tester_status_4');
+   		$data['text_tester_status_5'] = $this->language->get('text_tester_status_5');
+   		$data['text_tester_status_6'] = $this->language->get('text_tester_status_6');
+
 		$data['store_extensions'] = $this->model_d_shopunity_extension->getStoreExtensions();
 		$data['local_extensions'] = $this->model_d_shopunity_extension->getLocalExtensions();
 		$data['unregestered_extensions'] = $this->model_d_shopunity_extension->getUnregisteredExtensions();
@@ -200,6 +207,7 @@ class ControllerDShopunityExtension extends Controller {
 			$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
 		}
 
+		//start testing
 		//download the extension to system/mbooth/download
 		$extension_zip = $this->model_d_shopunity_mbooth->downloadExtensionFromServer($download['download']);
 

@@ -171,8 +171,6 @@ class ModelDShopunityExtension extends Model {
         return $result;
     }
 
-    
-
     public function getExtensionDownloadByCodename($codename){
         $data = array(
             'store_version' => VERSION,
@@ -226,6 +224,7 @@ class ModelDShopunityExtension extends Model {
             $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'] . '&codename='.$data['codename'] ));
             $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token=' . $this->session->data['token']  . '&codename='.$data['codename'] , 'SSL'));
             $result['submit'] = $this->_ajax($this->url->link('d_shopunity/extension/submit', 'token=' . $this->session->data['token']  . '&extension_id='.$data['extension_id'] , 'SSL'));
+            
             if(!empty($data['store_extension'])){
                 $result['suspend'] = $this->_ajax($this->url->link('d_shopunity/extension/suspend', 'token=' . $this->session->data['token']  . '&store_extension_id='.$data['store_extension']['store_extension_id'] , 'SSL'));
             }else{
@@ -240,9 +239,7 @@ class ModelDShopunityExtension extends Model {
                 $result['test'] = '';
                 $result['approve'] = '';
                 $result['disapprove'] = '';
-            }
-            
-            
+            }  
 
         }
 
@@ -283,6 +280,7 @@ class ModelDShopunityExtension extends Model {
             $result['installed'] = true;
             $result['registered'] = false;
             $result['store_extension'] = false;
+            $result['tester_status_id'] = false;
 
             $result['installable'] = true;
             $result['updatable'] = false;
@@ -291,6 +289,7 @@ class ModelDShopunityExtension extends Model {
             $result['suspendable'] = false;
             $result['submittable'] = false;
             $result['testable'] = false;
+            $result['tester_status'] = false;
             
             $result['purchase'] = '';
             $result['install'] = '';
