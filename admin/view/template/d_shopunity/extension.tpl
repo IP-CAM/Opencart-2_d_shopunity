@@ -75,14 +75,14 @@
 			<?php }else{ ?>
 				<div class="bs-callout bs-callout-info">No local modules to display</div>
 			<?php } ?>
-	 <pre>
+	 <!-- <pre>
 
 			
 		<?php print_r($store_extensions );?>
 	</pre>  
 	<pre>
 		<?php print_r($local_extensions );?>
-	</pre>   
+	</pre>    -->
 		</div>
 	</div>
 </div>
