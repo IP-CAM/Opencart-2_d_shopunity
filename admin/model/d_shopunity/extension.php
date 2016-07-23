@@ -187,6 +187,8 @@ class ModelDShopunityExtension extends Model {
 
         $data = $this->model_d_shopunity_mbooth->getExtension($extension['codename']);
 
+        $data['store_version'] = VERSION;
+
         $json = $this->api->post('extensions/'.$extension_id.'/submission', json_decode(json_encode($data), true));
 
         return $json;
