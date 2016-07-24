@@ -153,7 +153,7 @@ class ControllerDShopunityExtension extends Controller {
 			$download = $this->model_d_shopunity_extension->getExtensionDownload($extension_id);
 
 			if(!empty($download['error']) || empty($download['download'])){
-				$this->session->data['error'] = 'Error! We cound not get the download link';
+				$this->session->data['error'] = 'Error! We cound not get the download link: '.$download['error'];
 				$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
 			}
 
@@ -327,14 +327,17 @@ class ControllerDShopunityExtension extends Controller {
 			$this->session->data['error'] = 'Error! extension_id missing';
 			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
+		try{
+			$this->load->model('d_shopunity/extension');
+			$result = $this->model_d_shopunity_extension->submitExtension($this->request->get['extension_id']);
 
-		$this->load->model('d_shopunity/extension');
-		$result = $this->model_d_shopunity_extension->submitExtension($this->request->get['extension_id']);
-
-		if(!empty($result['error'])){
-			$this->session->data['error'] = $result['error'];
-		}elseif(!empty($result['success'])){
-			$this->session->data['success'] = $result['success'];
+			if(!empty($result['error'])){
+				$this->session->data['error'] = $result['error'];
+			}elseif(!empty($result['success'])){
+				$this->session->data['success'] = $result['success'];
+			}
+		}catch(Exception $e){
+			$this->session->data['error'] = $e->getMessage();
 		}
 
 		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
