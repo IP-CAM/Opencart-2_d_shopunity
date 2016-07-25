@@ -40,7 +40,7 @@ class ControllerDShopunityDeploy extends Controller {
 	/*
 	 *	Github diploy script
 	 *
-	 *  /index.php?route=d_shopunity/deploy/bitbucket&owner=dreamvention
+	 *  /index.php?route=d_shopunity/deploy/github&owner=dreamvention
 	 */
 	public function github(){
 

@@ -283,6 +283,8 @@ class ModelDShopunityExtension extends Model {
             $result['registered'] = false;
             $result['store_extension'] = false;
             $result['tester_status_id'] = false;
+            $result['tester_comment'] = false;
+            
 
             $result['installable'] = true;
             $result['updatable'] = false;
@@ -291,7 +293,6 @@ class ModelDShopunityExtension extends Model {
             $result['suspendable'] = false;
             $result['submittable'] = false;
             $result['testable'] = false;
-            $result['tester_status'] = false;
             
             $result['purchase'] = '';
             $result['install'] = '';
