@@ -66,11 +66,11 @@ class Shopunity {
 				$json = json_decode($result,true);
 
 				if (json_last_error() === JSON_ERROR_NONE) {
-					$this->load->model('setting/setting');
-					$data = array('d_shopunity_store_info' => $json[0]);
-					$data += $this->model_setting_setting->getSetting('d_shopunity');
-					$this->model_setting_setting->editSetting('d_shopunity', $data);
-					return $json[0];
+					if($json){
+						return $json[0];
+					}else{
+						return false;
+					}
 				}
 			}
 		}
