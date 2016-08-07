@@ -205,7 +205,19 @@ d_shopunity = {
 
 	},
 
+	showExtensionJson: function($node){
 
+		$("#myModal").modal('show');
+		$.ajax({
+			url: $node.data('href'),
+			dataType: 'json',
+			success: function(json) {
+				$("#myModal").find(".modal-body").html(syntaxHighlight(json));
+	
+			}
+		});
+		
+	},
 
 	showLoading: function($loading){
 		$loading.addClass('show');
@@ -262,6 +274,9 @@ d_shopunity = {
 			that.showLoading($(this).parents('.extension-thumb').find('.loading'));
 		});
 
+		$(document).on('click', '.show-extension-json', function(){
+			that.showExtensionJson($(this));
+		});
 
 
 	}

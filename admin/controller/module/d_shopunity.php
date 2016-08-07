@@ -51,6 +51,8 @@ class ControllerModuleDShopunity extends Controller {
 		//documentation http://t4t5.github.io/sweetalert/
 		$this->document->addStyle('view/javascript/d_shopunity/library/sweetalert/sweetalert.css');
 		$this->document->addScript('view/javascript/d_shopunity/library/sweetalert/sweetalert.min.js');
+		$this->document->addStyle('view/javascript/d_shopunity/library/syntaxhighlight/syntaxhighlight.css');
+		$this->document->addScript('view/javascript/d_shopunity/library/syntaxhighlight/syntaxhighlight.js');
 
 		$this->document->addStyle('view/stylesheet/shopunity/bootstrap.css');
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');

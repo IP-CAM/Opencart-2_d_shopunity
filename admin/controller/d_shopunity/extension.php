@@ -216,7 +216,7 @@ class ControllerDShopunityExtension extends Controller {
 			$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkId($extension_id, $extension_download_link_id);
 
 			if(!empty($download['error']) || empty($download['download'])){
-				$this->session->data['error'] = 'Error! We cound not get the download link';
+				$this->session->data['error'] = 'Error! We cound not get the download link: '.$download['error'];
 				$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
 			}
 
@@ -341,6 +341,27 @@ class ControllerDShopunityExtension extends Controller {
 		}
 
 		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+	}
+
+	public function json(){
+		$this->load->language('d_shopunity/extension');
+		if(!isset($this->request->get['codename'])){
+			$this->session->data['error'] = 'Error! codename missing';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+
+		try{
+			$this->load->model('d_shopunity/mbooth');
+			$json = $this->model_d_shopunity_mbooth->getExtensionJson($this->request->get['codename']);
+
+			if(empty($json)){
+				$json['error'] = 'Error! extension.json not found';
+			}
+		}catch(Exception $e){
+			$json['error'] = $e->getMessage();
+		}
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 }

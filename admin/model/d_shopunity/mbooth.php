@@ -24,22 +24,28 @@ class ModelDShopunityMbooth extends Model {
 	}
 
 	public function getExtension($codename){
-		$result = array();
 
-		$file = DIR_SYSTEM . 'mbooth/extension/'.$codename.'.json';
+        $file = $this->getExtensionJson($codename);
+		return $this->_extension($file);
+	}
 
-		if(file_exists($file)){
-			return $this->_extension(json_decode(file_get_contents($file), true));
-		}else{
+    public function getExtensionJson($codename){
+        $result = array();
+
+        $file = DIR_SYSTEM . 'mbooth/extension/'.$codename.'.json';
+
+        if(file_exists($file)){
+            return json_decode(file_get_contents($file), true);
+        }else{
             foreach ($this->subversions as $subversion){
                 $file = DIR_SYSTEM . 'mbooth/extension/'.$codename.'_'.$subversion.'.json';
                 if (file_exists($file)) {
-                    return $this->_extension(json_decode(file_get_contents($file), true));
+                    return json_decode(file_get_contents($file), true);
                 }
             }
-		}
+        }
         return false;
-	}
+    }
 
 	public function downloadExtensionFromServer($download_link){
 

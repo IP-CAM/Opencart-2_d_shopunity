@@ -217,6 +217,7 @@ class ModelDShopunityExtension extends Model {
                     }
                 }
             }
+
             $result['registered'] = true;
             $result['installed'] = $this->isInstalled($data['codename']);
            
@@ -226,6 +227,7 @@ class ModelDShopunityExtension extends Model {
             $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'] . '&codename='.$data['codename'] ));
             $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token=' . $this->session->data['token']  . '&codename='.$data['codename'] , 'SSL'));
             $result['submit'] = $this->_ajax($this->url->link('d_shopunity/extension/submit', 'token=' . $this->session->data['token']  . '&extension_id='.$data['extension_id'] , 'SSL'));
+            $result['json'] = $this->_ajax($this->url->link('d_shopunity/extension/json', 'token=' . $this->session->data['token']  . '&codename='.$data['codename'] , 'SSL'));
             
             if(!empty($data['store_extension'])){
                 $result['suspend'] = $this->_ajax($this->url->link('d_shopunity/extension/suspend', 'token=' . $this->session->data['token']  . '&store_extension_id='.$data['store_extension']['store_extension_id'] , 'SSL'));
@@ -299,6 +301,7 @@ class ModelDShopunityExtension extends Model {
             $result['update'] = '';
             $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'].'&codename='.$result['codename'] ));
             $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token='.$this->session->data['token'].'&codename='.$result['codename'] ));
+            $result['json'] = $this->_ajax($this->url->link('d_shopunity/extension/json', 'token=' . $this->session->data['token']  . '&codename='.$result['codename'] , 'SSL'));
             $result['suspend'] = '';
             $result['test'] = '';
             $result['approve'] = '';

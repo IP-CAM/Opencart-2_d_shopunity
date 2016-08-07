@@ -53,6 +53,8 @@
 				</div>
 				<?php } ?>
 
+				<a class="btn btn-info show-extension-json" data-href="<?php echo $extension['json']; ?>" data-toggle="tooltip" data-original-title="mbooth.json"><span class="fa fa-code"></span></a>
+
 				<?php if($extension['downloadable'] ){ ?>
 	        		<a class="btn btn-default download-extension" data-href="<?php echo $extension['download']; ?>"  data-toggle="tooltip" data-original-title="Download"><span class="fa fa-download"></span></a>
 		        <?php } ?>
