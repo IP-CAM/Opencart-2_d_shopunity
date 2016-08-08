@@ -379,6 +379,9 @@ class ModelDShopunityMbooth extends Model {
 		$result = array();
 		if(!empty($data)){
 			$result = $data;
+            if(!isset($data['index'])){
+                $result['index'] = 'module/'.$data['codename'];
+            }
             if (!empty($data['dirs'])) {
 
                 $dir_files = array();

@@ -220,7 +220,14 @@ class ModelDShopunityExtension extends Model {
 
             $result['registered'] = true;
             $result['installed'] = $this->isInstalled($data['codename']);
-           
+            $result['view'] = false;
+
+            if($result['installed']){
+                $mbooth = $this->model_d_shopunity_mbooth->getExtension($data['codename']);
+                $result['view'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
+            }
+            
+
             $result['purchase'] = $this->_ajax($this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['install'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['update'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] , 'SSL'));

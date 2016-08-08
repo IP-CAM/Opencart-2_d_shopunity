@@ -61,6 +61,9 @@
 				-->
 
 				<div class="pull-right">
+					<?php if($extension['view']){ ?>
+						<a class="btn btn-info show-loading" href="<?php echo $extension['view']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-cog"></span></a>
+					<?php } ?>
 					<?php if($extension['installable']){ ?>
 						<?php if($extension['installed']){ ?>
 							<a class="btn btn-danger show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	

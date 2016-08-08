@@ -11,7 +11,7 @@
         <h4 class="modal-title" id="myModalLabel">Mbooth json file</h4>
       </div>
       <pre class="modal-body">
-        ...
+        <code class="json"></code>
       </pre>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
