@@ -59,7 +59,8 @@
         "system/library/shopunity.php",
 
         "admin/view/template/common/d_file_manager.tpl",
-        "vqmod/xml/a_vqmod_shopunity.xml"
+        "vqmod/xml/a_vqmod_shopunity.xml",
+        "vqmod/xml/a_vqmod_d_compatibilty_fix_230.xml"
     ],
     "dirs": [
         "admin/controller/d_shopunity",
