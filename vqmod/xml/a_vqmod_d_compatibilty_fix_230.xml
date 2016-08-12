@@ -186,4 +186,23 @@
 			]]></add>
 		</operation>
 	</file> -->
+	<file name="system/config/catalog.php">
+        <operation>
+            <search position="after"><![CDATA[$_['action_event'] = array(]]></search>
+            <ignoreif><![CDATA[//d_compatibilty_fix_230.xml]]></ignoreif>
+            <add><![CDATA[
+            //d_compatibilty_fix_230.xml
+            'controller/extension/analytics/*/before' => 'event/compatibility/controller',
+            'controller/extension/captcha/*/before'   => 'event/compatibility/controller',
+            'controller/extension/feed/*/before'      => 'event/compatibility/controller',
+            'controller/extension/fraud/*/before'     => 'event/compatibility/controller',
+            'controller/extension/module/*/before'    => 'event/compatibility/controller',
+            'controller/extension/payment/*/before'   => 'event/compatibility/controller',
+            'controller/extension/recurring/*/before' => 'event/compatibility/controller',
+            'controller/extension/shipping/*/before'  => 'event/compatibility/controller',
+            'controller/extension/theme/*/before'     => 'event/compatibility/controller',
+            'controller/extension/total/*/before'     => 'event/compatibility/controller',
+            ]]></add>
+        </operation>
+    </file>
 </modification>
