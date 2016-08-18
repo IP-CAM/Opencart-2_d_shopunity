@@ -187,7 +187,7 @@
 		</operation>
 	</file> -->
 	<file name="system/config/catalog.php">
-        <operation>
+         <operation error="skip" info="fix for 2.3.0.x">
             <search position="after"><![CDATA[$_['action_event'] = array(]]></search>
             <ignoreif><![CDATA[//d_compatibilty_fix_230.xml]]></ignoreif>
             <add><![CDATA[
