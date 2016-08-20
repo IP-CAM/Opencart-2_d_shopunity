@@ -291,7 +291,7 @@ class ModelDShopunityExtension extends Model {
             $result['installed'] = true;
             $result['registered'] = false;
             $result['view'] = false;
-            if(isset($data['index']))
+            if(isset($data['index'])){
                 $result['view'] =  $this->_ajax($this->url->link($data['index'], 'token=' . $this->session->data['token'] , 'SSL'));
             }
             $result['store_extension'] = false;
