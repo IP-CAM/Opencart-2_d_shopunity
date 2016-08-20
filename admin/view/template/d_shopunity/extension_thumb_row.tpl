@@ -61,12 +61,12 @@
 	        		<a class="btn btn-default download-extension" data-href="<?php echo $extension['download']; ?>"  data-toggle="tooltip" data-original-title="Download"><span class="fa fa-download"></span></a>
 		        <?php } ?>
 
-				<?php if($extension['installable']){ ?>
-					<?php if($extension['installed']){ ?>
-						<a class="btn btn-danger show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
-	            	<?php }else{ ?>
-	            		<a class="btn btn-info show-loading install-extension" data-href="<?php echo $extension['install']; ?>"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-plus"></span></a>
-					<?php } ?>
+				<?php if($extension['installable'] && !$extension['installed']){ ?>
+	            	<a class="btn btn-info show-loading install-extension" data-href="<?php echo $extension['install']; ?>"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-plus"></span></a>
+	            <?php } ?>
+
+	            <?php if($extension['installed']){ ?>
+					<a class="btn btn-danger show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
 	            <?php } ?>
 
 				<?php if($extension['suspendable'] && !$extension['installed']){ ?>
