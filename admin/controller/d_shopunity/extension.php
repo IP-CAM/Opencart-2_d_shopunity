@@ -296,11 +296,9 @@ class ControllerDShopunityExtension extends Controller {
 
 		if(!empty($result['error'])) {
 			$this->session->data['error'] = $this->language->get('error_download') . "<br />" . implode("<br />", $result['error']);
-		}else if(!empty($result['success'])) {
-			$this->session->data['success'] = $this->language->get('success_download');
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL')); 
 		}
 
-		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL')); 
 	}
 
 	public function suspend(){
