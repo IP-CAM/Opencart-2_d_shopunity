@@ -317,8 +317,7 @@ class ModelDShopunityMbooth extends Model {
         return true;
     }
 
-    public function installDependencies($codename){
-        $result = array();
+    public function installDependencies($codename, $result = array()){
         foreach($this->getDependencies($codename) as $require){
             if(!empty($extension['codename'])){
 
@@ -330,6 +329,7 @@ class ModelDShopunityMbooth extends Model {
                         $this->downloadExtensionFromServer($download['download']);
                         $this->extractExtension(); 
                         $this->moveFiles(DIR_DOWNLOAD . 'upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+                        $result['success'][] = $require['codename'] . ' installed. Already up to date.';
                     }elseif(isset($download['error'])){
                         $result['error'][] = $download['error'];
                     }     
