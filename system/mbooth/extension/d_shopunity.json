@@ -34,7 +34,7 @@
         "sql": "system/mbooth/install/d_shopunity.sql"
     },
     "uninstall": {
-        "url": "extension/module/uninstall&extension=d_shopunity",
+        "url": "extension/module/uninstall&extension=d_shopunity"
     },
     "support": {
         "email": "support@shopunity.com",
