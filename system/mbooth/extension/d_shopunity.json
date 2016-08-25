@@ -53,8 +53,8 @@
         "system/library/deploy_bitbucket.php",
         "system/library/deploy_github.php",
         "system/library/shopunity.php",
+        "system/library/semver.php",
 
-        "admin/view/template/common/d_file_manager.tpl",
         "vqmod/xml/a_vqmod_d_compatibilty_fix_230.xml"
     ],
     "dirs": [
@@ -70,16 +70,16 @@
         "catalog/model/d_shopunity",
 
         "system/library/httpful",
+        "system/library/semver",
 
         "system/library/hyperlight",
-        "system/elfinder",
         "admin/view/stylesheet/shopunity",
         "admin/view/javascript/shopunity"
     ],
     "changelog": [
         {
             "varsion":"3.0.10",
-            "change": "1. install dependencies added"
+            "change": "1. install dependencies added \r\n 2. Removed elfinder - separate extension. \r\n 3. Semver added"
         },
         {
             "varsion":"3.0.9",
