@@ -352,6 +352,8 @@ class ModelDShopunityMbooth extends Model {
                     $result['success'][] = '----------------------------------------------------------';
                 }
            
+            }else{
+                $result['error'][] = 'Error: requied parse for '. json_encode( $require);
             }
         }
         return $result;
