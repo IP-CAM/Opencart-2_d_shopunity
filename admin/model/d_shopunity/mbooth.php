@@ -333,8 +333,6 @@ class ModelDShopunityMbooth extends Model {
                     echo 'Error: version:'.$require['version'].', message: '.$e->getMessage();
                 }
 
-                  $result['success'][] = '$extension: ' . json_encode($extension) . ', $satisfies:' .$satisfies;
-        
                 if(empty($extension) || !$satisfies){
                     $download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($require['codename'], $require['version']);
                     if(isset($download['download'])){
@@ -348,6 +346,7 @@ class ModelDShopunityMbooth extends Model {
                     
                 }else{
                     $result['success'][] = $require['codename'] . ' not installed. Already up to date.';
+                    $result['success'][] = '----------------------------------------------------------';
                 }
            
             }
