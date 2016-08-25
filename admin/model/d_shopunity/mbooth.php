@@ -343,7 +343,9 @@ class ModelDShopunityMbooth extends Model {
                         $result['success'][] = '----------------------------------------------------------';
                     }elseif(isset($download['error'])){
                         $result['error'][] = $download['error'];
-                    }     
+                    }else{
+                        $result['error'][] = 'Error! We could not install ' .$require['codename'] . ', message: '. json_encode($download);
+                    }   
                     
                 }else{
                     $result['success'][] = $require['codename'] . ' not installed. Already up to date.';
