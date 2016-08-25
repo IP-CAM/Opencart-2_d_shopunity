@@ -404,10 +404,9 @@ class ModelDShopunityMbooth extends Model {
                     );
                 }
             }
-            return $result;
-        }else{
-            return false;
         }
+
+        return $result;
     }
 
     public function getVersion($codename){
