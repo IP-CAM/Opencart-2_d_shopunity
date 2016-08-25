@@ -226,7 +226,7 @@ class ControllerDShopunityExtension extends Controller {
 		try{
 
 			$extension = $this->model_d_shopunity_extension->getExtension($extension_id);
-			
+
 			$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkId($extension_id, $extension_download_link_id);
 
 			if(!empty($download['error']) || empty($download['download'])){
@@ -250,10 +250,7 @@ class ControllerDShopunityExtension extends Controller {
 
 			$result = $this->model_d_shopunity_mbooth->installExtension($result);
 
-			if(!empty($result['error'])) {
-				$this->session->data['error'] = $this->language->get('error_install') . "<br />" . implode("<br />", $result['error']);
-			}
-
+			
 			if(!empty($result['success'])) {
 
 				$result = $this->model_d_shopunity_mbooth->installDependencies($extension['codename'], $result);
@@ -261,6 +258,11 @@ class ControllerDShopunityExtension extends Controller {
 				$this->session->data['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
 				$this->session->data['success'] .=  "<br />" . implode("<br />", $result['success']);
 			}
+
+			if(!empty($result['error'])) {
+				$this->session->data['error'] = $this->language->get('error_install') . "<br />" . implode("<br />", $result['error']);
+			}
+
 		}catch(Exception $e){
 			$this->session->data['error'] = $e->getMessage();
 		}
