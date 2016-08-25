@@ -193,6 +193,38 @@ class ModelDShopunityMbooth extends Model {
         return $this->moveFiles(DIR_SYSTEM . 'mbooth/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
     }
 
+    public function uninstallExtension($codename) {
+        $result = array();
+        $extension = $this->getExtensionJson($codename);
+        if(isset($extension['uninstall'])){
+            if(isset($extension['uninstall']['url'])){
+                $parts = explode('&', $extension['uninstall']['url']);
+                $route = array_shift($parts);
+            }
+
+        }elseif(isset($extension['install'])){
+            if(isset($extension['install']['url'])){
+                $parts = explode('&', $extension['uninstall']['url']);
+                $route = str_replace("/install", "/uninstall", array_shift($parts));
+            }
+        }
+
+        if(isset($route) && isset($parts)){
+            try{
+                $content = file_get_contents($this->url->link($route, $parts.'&token='.$this->session->get['token'], 'SSL'));
+                if($content){
+                    $result['success'] = 'Extension uninstalled';
+                }else{
+                    $result['error'] = 'Extension not uninstalled';
+                }
+                
+            }catch(Exception $e){
+                $result['error'] = 'Extension not uninstalled message: '. $e->message;
+            }
+        }
+        return $result;
+    }
+
 	public function deleteExtension($codename){
 
 		$mbooth = $this->getExtension($codename);

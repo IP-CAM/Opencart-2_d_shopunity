@@ -279,8 +279,11 @@ class ControllerDShopunityExtension extends Controller {
 
 		$this->load->model('d_shopunity/mbooth');
 
-		$result = $this->model_d_shopunity_mbooth->deleteExtension($this->request->get['codename']);
-
+		$result = $this->model_d_shopunity_mbooth->uninstallExtension($this->request->get['codename']);
+		if(empty($result['error'])){
+			$result = $this->model_d_shopunity_mbooth->deleteExtension($this->request->get['codename']);
+		}
+		
 		if(!empty($result['error'])) {
 			$this->session->data['error'] = $this->language->get('error_delete') . "<br />" . implode("<br />", $result['error']);
 		}
