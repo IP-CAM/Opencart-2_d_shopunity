@@ -154,10 +154,15 @@ class ModelDShopunityExtension extends Model {
         return $result;
     }
 
-    public function getExtensionDownload($extension_id){
+    public function getExtensionDownload($extension_id, $version = false){
         $data = array(
             'store_version' => VERSION,
             'store_id' => $this->store_id);
+
+        if($version){
+            $data['version'] = $version;
+        }
+
         $result = $this->api->get('extensions/'.$extension_id.'/download', $data);
         return $result;
     }
@@ -171,10 +176,14 @@ class ModelDShopunityExtension extends Model {
         return $result;
     }
 
-    public function getExtensionDownloadByCodename($codename){
+    public function getExtensionDownloadByCodename($codename, $version = false){
         $data = array(
             'store_version' => VERSION,
             'store_id' => $this->store_id);
+
+        if($version){
+            $data['version'] = $version;
+        }
         $result = $this->api->get('extensions/'.$codename.'/download', $data);
         return $result;
     }

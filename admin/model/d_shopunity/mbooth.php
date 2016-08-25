@@ -1,5 +1,4 @@
 <?php
-
 class ModelDShopunityMbooth extends Model {
     private $dir_root = '';
     private $subversions = array('lite', 'light', 'free');
@@ -319,12 +318,24 @@ class ModelDShopunityMbooth extends Model {
 
     public function installDependencies($codename, $result = array()){
         foreach($this->getDependencies($codename) as $require){
-            if(!empty($extension['codename'])){
+            if(!empty($require['codename'])){
 
                 $extension = $this->getExtension($require['codename']);
+                
+                $satisfies = false;
+                try{
+                    $semver = new Semver;
+                    if(!empty($extension['version'])){
+                        $satisfies = $semver->expression($require['version'])->satisfiedBy($semver->version($extension['version']));
+                    }
+                  
+                }catch(Exception $e){
+                    echo 'Error: version:'.$require['version'].', message: '.$e->getMessage();
+                }
 
-                if(empty($extension) || (isset($extension['version']) && $extension['version'] < $require['version'])){
-                    $download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($extension['codename']);
+        
+                if(empty($extension) || !$satisfies){
+                    $download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($require['codename'], $require['version']);
                     if(isset($download['download'])){
                         $this->downloadExtensionFromServer($download['download']);
                         $this->extractExtension(); 
@@ -337,9 +348,9 @@ class ModelDShopunityMbooth extends Model {
                 }else{
                     $result['success'][] = $require['codename'] . ' not installed. Already up to date.';
                 }
+           
             }
         }
-
         return $result;
     }
 

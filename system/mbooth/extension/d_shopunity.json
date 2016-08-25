@@ -37,10 +37,6 @@
         "email": "support@shopunity.com",
         "url": "https://shopunity.net/"
     },
-    "required": {
-        "d_mbooth": ">= 3.0.0",
-        "d_file_manager": ">= 3.0.0"
-    },
     "files": [
         "system/mbooth/extension/d_shopunity.json",
         "system/mbooth/install/d_shopunity.xml",
