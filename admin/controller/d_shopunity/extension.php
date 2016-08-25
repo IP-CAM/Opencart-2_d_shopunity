@@ -224,6 +224,9 @@ class ControllerDShopunityExtension extends Controller {
 		$this->load->model('d_shopunity/mbooth');
 
 		try{
+
+			$extension = $this->model_d_shopunity_extension->getExtension($extension_id);
+			
 			$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkId($extension_id, $extension_download_link_id);
 
 			if(!empty($download['error']) || empty($download['download'])){
@@ -252,6 +255,9 @@ class ControllerDShopunityExtension extends Controller {
 			}
 
 			if(!empty($result['success'])) {
+
+				$result = $this->model_d_shopunity_mbooth->installDependencies($extension['codename'], $result);
+
 				$this->session->data['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
 				$this->session->data['success'] .=  "<br />" . implode("<br />", $result['success']);
 			}
