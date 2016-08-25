@@ -338,9 +338,9 @@ class ModelDShopunityMbooth extends Model {
                 if(empty($extension) || !$satisfies){
                     $download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($require['codename'], $require['version']);
                     if(isset($download['download'])){
-                        $this->downloadExtensionFromServer($download['download']);
-                        $this->extractExtension(); 
-                        $this->moveFiles(DIR_DOWNLOAD . 'upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+                        $extension_zip = $this->downloadExtensionFromServer($download['download']);
+                        $extracted = $this->extractExtension($extension_zip); 
+                        $result = $this->installExtension($result);
                         $result['success'][] = $require['codename'] . ' installed.';
                     }elseif(isset($download['error'])){
                         $result['error'][] = $download['error'];
