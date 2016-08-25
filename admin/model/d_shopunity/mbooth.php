@@ -340,6 +340,7 @@ class ModelDShopunityMbooth extends Model {
                         $extracted = $this->extractExtension($extension_zip); 
                         $result = $this->installExtension($result);
                         $result['success'][] = $require['codename'] . ' installed.';
+                        $result['success'][] = '----------------------------------------------------------';
                     }elseif(isset($download['error'])){
                         $result['error'][] = $download['error'];
                     }     
