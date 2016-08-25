@@ -330,7 +330,7 @@ class ModelDShopunityMbooth extends Model {
                     }
                   
                 }catch(Exception $e){
-                    echo 'Error: version:'.$require['version'].', message: '.$e->getMessage();
+                    $result['error'][] = 'Error: version:'.$require['version'].', message: '.$e->getMessage();
                 }
 
                 if(empty($extension) || !$satisfies){
@@ -342,7 +342,7 @@ class ModelDShopunityMbooth extends Model {
                         $result['success'][] = $require['codename'] . ' installed.';
                         $result['success'][] = '----------------------------------------------------------';
                     }elseif(isset($download['error'])){
-                        $result['error'][] = $download['error'];
+                        $result['error'][] = 'Error: '. $download['error'];
                     }else{
                         $result['error'][] = 'Error! We could not install ' .$require['codename'] . ', message: '. json_encode($download);
                     }   
