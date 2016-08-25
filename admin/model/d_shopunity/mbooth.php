@@ -341,7 +341,7 @@ class ModelDShopunityMbooth extends Model {
                         $this->downloadExtensionFromServer($download['download']);
                         $this->extractExtension(); 
                         $this->moveFiles(DIR_DOWNLOAD . 'upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
-                        $result['success'][] = $require['codename'] . ' installed. Already up to date.';
+                        $result['success'][] = $require['codename'] . ' installed.';
                     }elseif(isset($download['error'])){
                         $result['error'][] = $download['error'];
                     }     
