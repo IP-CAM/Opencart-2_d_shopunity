@@ -37,7 +37,7 @@
 	        	
 		       
 				<?php if($extension['purchasable'] ){ ?>
-		        <div class="purchase-extension">
+		        <div class="purchase-extension btn-group btn-group-sm">
 				
 						<?php if(!empty($extension['price'])){ ?>
 			             <select class="form-control">
