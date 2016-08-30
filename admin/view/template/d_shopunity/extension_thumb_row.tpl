@@ -49,7 +49,7 @@
 			            <?php } ?>
 			           
 			            <a class="btn btn-primary pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
-			       	<div>
+			       	</div>
 			
 				</div>
 				<?php } ?>
