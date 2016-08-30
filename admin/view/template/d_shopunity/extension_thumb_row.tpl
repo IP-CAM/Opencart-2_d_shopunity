@@ -28,8 +28,8 @@
 			<?php } ?>
 		</div>
 		<div class="col-md-3">
-			<div class="pull-right">
-				
+			<div class="pull-right ">
+				<div class="form-inline">
 	            
 	        	<?php if($extension['updatable'] && $extension['installed']){ ?>
 	        	<a class="btn btn-success show-loading update-extension" data-href="<?php echo $extension['update']; ?>"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
@@ -37,12 +37,12 @@
 	        	
 		       
 				<?php if($extension['purchasable'] ){ ?>
-		        <div class="purchase-extension btn-group btn-group-sm">
+		        <div class="purchase-extension btn-group">
 				
 						<?php if(!empty($extension['price'])){ ?>
 			             <select class="form-control">
 							<?php foreach($extension['prices'] as $price){ ?>
-							<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price']; ?></option>
+							<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price_format']; ?></option>
 							<?php } ?>
 						</select>
 			          
@@ -86,7 +86,7 @@
 				<?php if($extension['testable']){ ?>
 	                <a class="btn btn-warning show-loading test-extension" data-href="<?php echo $extension['test']; ?>" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
 		        <?php } ?>
-		       
+		       	</div>
 	        </div>
 		</div>
 	</div>
