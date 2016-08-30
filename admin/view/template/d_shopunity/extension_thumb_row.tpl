@@ -42,7 +42,7 @@
 						<?php if(!empty($extension['price'])){ ?>
 			             <select class="form-control">
 							<?php foreach($extension['prices'] as $price){ ?>
-							<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price_format']; ?></option>
+							<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price_format']; ?> / <?php echo $price['recurring_duration']; ?> days</option>
 							<?php } ?>
 						</select>
 			          
