@@ -9,7 +9,7 @@ $_['heading_title_main']		= 'Shopunity';
 $_['text_edit']					= 'Edit Shopunity settings';
 $_['text_module']				= 'Modules';
 //tabs
-$_['tab_extension']				= 'Modules';
+$_['tab_extension']				= 'Extensions';
 $_['tab_market']				= 'Market';
 $_['tab_billing']				= 'Billing';
 $_['tab_order']					= 'Orders';

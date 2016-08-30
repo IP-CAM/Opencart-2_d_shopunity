@@ -14,22 +14,22 @@
 				<h4>Search for extensions</h4>
 				<p>
 					<div class="input-group input-group-lg">
-						<input type="text" class="form-control" placeholder="Search for...">
+						<input type="text" name="search" class="form-control" value="<?php echo $search; ?>" placeholder="Search for...">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="button">Go!</button>
+							<button class="btn btn-default search" data-href="<?php echo $search_href; ?>" type="button">Search</button>
 						</span>
 					</div><!-- /input-group -->
 				</p>
-				<p>
+				<!-- <p>
 					<span class="label label-primary">Primary</span>
 					<span class="label label-primary">Primary</span>
 					<span class="label label-primary">Primary</span>
 					<span class="label label-primary">Primary</span>
 					<span class="label label-primary">Primary</span>
-				</p>
+				</p> -->
 			</div>
 		</div>
-		<div class="ibox clearfix">
+		<!-- <div class="ibox clearfix">
 			<div class="btn-group pull-right" data-toggle="buttons">
 			  <label class="btn btn-primary active">
 			    <input type="radio" name="options" id="option1" autocomplete="off" checked> Latest
@@ -38,7 +38,7 @@
 			    <input type="radio" name="options" id="option2" autocomplete="off"> Popular
 			  </label>
 			</div>
-		</div>
+		</div> -->
 		
 		<div class="row">
 			<?php if($extensions) { ?>
@@ -47,6 +47,14 @@
 						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
 					</div>
 				<?php } ?>
+			<?php } ?>
+		</div>
+		<div>
+			<?php if($page > 1) {?>
+			<a class="btn btn-default" href="<?php echo $prev; ?>"><span class="fa fa-chevron-left"></span> Prev</a>
+			<?php } ?>
+			<?php if($extensions) { ?>
+			<a class="btn btn-default pull-right" href="<?php echo $next; ?>">Next <span class="fa fa-chevron-right"></span></a>
 			<?php } ?>
 		</div>
 	</div>

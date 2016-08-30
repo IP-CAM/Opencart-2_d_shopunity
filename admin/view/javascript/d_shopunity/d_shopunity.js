@@ -227,6 +227,10 @@ d_shopunity = {
 		$loading.removeClass('show');
 	},
 
+	search: function($node){
+		location.href = $node.data('href') + '&search=' + $('input[name=search]').val();
+	},
+
 	render: function(){
 		var that = this;
 
@@ -278,7 +282,9 @@ d_shopunity = {
 			that.showExtensionJson($(this));
 		});
 
-
+		$(document).on('click', '.search', function(){
+			that.search($(this));
+		});
 	}
 
 };

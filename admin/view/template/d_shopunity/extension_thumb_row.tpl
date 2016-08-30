@@ -6,24 +6,26 @@
 			</a>
 		</div>
 		<div class="col-md-3">
-			<?php echo $extension['name']; ?>
+			<span class="name"><?php echo $extension['name']; ?></span>
 			<?php echo $extension['version']; ?>
-			<?php if($extension['tester_status_id']){?>
-				<div class="alert alert-warning"><?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?></div>
+			<?php if($extension['downloadable'] && $extension['tester_status_id']){?>
+				<div class="alert alert-warning m-t"><?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?></div>
 			<?php } ?>
 		</div>
 		<div class="col-md-2">
-			<div class="rating">
+			<!-- <div class="rating">
 	    		<span class="fa fa-star"></span>
 	    		<span class="fa fa-star"></span>
 	    		<span class="fa fa-star"></span>
 	    		<span class="fa fa-star"></span>
 	    		<span class="fa fa-star"></span>
-	    	</div>
+	    	</div> -->
 	    	
 		</div>
 		<div class="col-md-3">
-			<?php echo $extension['tester_comment']; ?>
+			<?php if($extension['downloadable'] && $extension['tester_comment']){ ?>
+			<div class="alert alert-info"><?php echo $extension['tester_comment']; ?></div>
+			<?php } ?>
 		</div>
 		<div class="col-md-3">
 			<div class="pull-right">
@@ -62,7 +64,7 @@
 		        <?php } ?>
 
 				<?php if($extension['installable'] && !$extension['installed']){ ?>
-	            	<a class="btn btn-info show-loading install-extension" data-href="<?php echo $extension['install']; ?>"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-plus"></span></a>
+	            	<a class="btn btn-info show-loading install-extension" data-href="<?php echo $extension['install']; ?>"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
 	            <?php } ?>
 
 	            <?php if($extension['installed']){ ?>

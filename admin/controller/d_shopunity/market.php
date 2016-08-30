@@ -33,11 +33,36 @@ class ControllerDShopunityMarket extends Controller {
    		$this->load->language('d_shopunity/extension');
    		$this->load->model('d_shopunity/extension');
 
+   		$url = array();
 		//REFACTOR
 		$filter_data = array(
 			'status' => 1);
+
+		$data['search'] = '';
+		if(isset($this->request->get['search'])){
+			$filter_data['search'] = $this->request->get['search'];
+			$data['search'] = $this->request->get['search'];
+			$url['category_id'] = $this->request->get['search'];
+		}
+		$data['page'] = 1;
+		if(isset($this->request->get['page'])){
+			$filter_data['page'] = $this->request->get['page'];
+			$data['page'] = $this->request->get['page'];
+		}
+		$data['category_id'] = '';
+		if(isset($this->request->get['category_id'])){
+			$filter_data['category_id'] = $this->request->get['category_id'];
+			$url['category_id'] =  $this->request->get['category_id'];
+		}
+
+		
+
 		$data['extensions'] = $this->model_d_shopunity_extension->getExtensions($filter_data);
 		$data['categories'] = $this->load->controller('d_shopunity/market/categories'); 
+		$data['search_href'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
+
+		$data['prev'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&'.http_build_query($url).'&page='.($data['page']-1), 'SSL');
+		$data['next'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&'.http_build_query($url).'&page='.($data['page']+1), 'SSL');
 
    		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
@@ -49,8 +74,11 @@ class ControllerDShopunityMarket extends Controller {
 		$this->load->model('d_shopunity/category');
 
 		$data['categories'] = $this->model_d_shopunity_category->getCategories();
+		foreach($data['categories'] as $key => $category){
+			$data['categories'][$key]['href'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&category_id='. $category['category_id'], 'SSL');
+		}
 
-		return $this->load->view('d_shopunity/categories.tpl', $data);
+		return $this->load->view($this->route.'_categories.tpl', $data);
 
 	}
 }
