@@ -55,11 +55,18 @@ class ControllerDShopunityMarket extends Controller {
 			$url['category_id'] =  $this->request->get['category_id'];
 		}
 
-		
+		if(isset($this->request->get['commercial'])){
+			$filter_data['commercial'] = $this->request->get['commercial'];
+			$url['commercial'] =  $this->request->get['commercial'];
+		}
 
 		$data['extensions'] = $this->model_d_shopunity_extension->getExtensions($filter_data);
 		$data['categories'] = $this->load->controller('d_shopunity/market/categories'); 
 		$data['search_href'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
+
+		$url['all'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
+		$url['commercial'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&commercial=1', 'SSL');
+		$url['free'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&commercial=0', 'SSL');
 
 		$data['prev'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&'.http_build_query($url).'&page='.($data['page']-1), 'SSL');
 		$data['next'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&'.http_build_query($url).'&page='.($data['page']+1), 'SSL');
