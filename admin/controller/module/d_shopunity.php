@@ -171,6 +171,8 @@ class ControllerModuleDShopunity extends Controller {
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'modify', $this->codename.'/setting');
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'access', $this->codename.'/tester');
         $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'modify', $this->codename.'/tester');
+        $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'access', $this->codename.'/dependency');
+        $this->model_user_user_group->addPermission($this->model_d_shopunity_setting->getGroupId(), 'modify', $this->codename.'/dependency');
 
         $this->load->model('d_shopunity/mbooth');
 		$this->model_d_shopunity_mbooth->installDependencies($this->codename);

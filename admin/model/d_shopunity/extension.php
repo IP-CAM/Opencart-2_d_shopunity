@@ -18,6 +18,11 @@ class ModelDShopunityExtension extends Model {
     }
 
     public function getExtensions($filter_data = array()){
+
+        if(isset($filter_data['codename']) && is_array($filter_data['codename'])){
+            $filter_data['codename'] = implode(',', $filter_data['codename']);
+        }
+        
         $json = $this->api->get('extensions', $filter_data);
 
         if($json){

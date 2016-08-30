@@ -81,6 +81,32 @@ class ModelDShopunitySetting extends Model {
 		return $result;
 	}
 
+	public function getSetting($codename, $prefix = '_setting'){
+
+		$store_id = (isset($this->request->get['store_id'])) ? $this->request->get['store_id'] : 0;
+		$config_file = $this->getConfigFileName($codename);
+		$this->config->load($config_file);
+
+		$result = ($this->config->get($codename.$prefix)) ? $this->config->get($codename.$prefix) : array();
+
+		if(!isset($this->request->post['config'])){
+
+			$this->load->model('setting/setting');
+			if (isset($this->request->post[$codename.$prefix])) {
+				$setting = $this->request->post;
+			} elseif ($this->model_setting_setting->getSetting($codename, $store_id)) { 
+				$setting = $this->model_setting_setting->getSetting($codename, $store_id);
+			}
+			if(isset($setting[$codename.$prefix])){
+				foreach($setting[$codename.$prefix] as $key => $value){
+					$result[$key] = $value;
+				}
+			}
+			
+		}
+		return $result;
+	}
+
 	public function getStores(){
 		$this->load->model('setting/store');
 		$stores = $this->model_setting_store->getStores();

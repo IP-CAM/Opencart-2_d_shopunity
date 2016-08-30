@@ -349,6 +349,7 @@ class ModelDShopunityMbooth extends Model {
     }
 
     public function installDependencies($codename, $result = array()){
+
         foreach($this->getDependencies($codename) as $require){
             if(!empty($require['codename'])){
 
@@ -366,7 +367,9 @@ class ModelDShopunityMbooth extends Model {
                 }
 
                 if(empty($extension) || !$satisfies){
+                    $this->load->model('d_shopunity/extension');
                     $download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($require['codename'], $require['version']);
+
                     if(isset($download['download'])){
                         $extension_zip = $this->downloadExtensionFromServer($download['download']);
                         $extracted = $this->extractExtension($extension_zip); 
@@ -378,7 +381,7 @@ class ModelDShopunityMbooth extends Model {
                     }else{
                         $result['error'][] = 'Error! We could not install ' .$require['codename'] . ', message: '. json_encode($download);
                     }   
-                    
+                 
                 }else{
                     $result['success'][] = $require['codename'] . ' not installed. Already up to date.';
                     $result['success'][] = '----------------------------------------------------------';
@@ -389,6 +392,20 @@ class ModelDShopunityMbooth extends Model {
             }
         }
         return $result;
+    }
+
+    public function validateDependencies($codename){
+
+        $extension = json_decode(file_get_contents(DIR_SYSTEM.'mbooth/extension/'.$codename.'.json'), true);
+        if(isset($extension['required'])){
+            foreach($extension['required'] as $extension_codename => $version){
+                if(!file_exists(DIR_SYSTEM.'mbooth/extension/'.$extension_codename.'.json')){
+                    $this->response->redirect($this->url->link('d_shopunity/dependency', 'codename='.$codename.'&token='.$this->session->data['token'], 'SSL'));
+                }
+            }
+        }
+        return true;
+
     }
 
     public function getDependencies($codename){
@@ -444,7 +461,6 @@ class ModelDShopunityMbooth extends Model {
             }
 
 		}
-
 		return $result;
 
 	}

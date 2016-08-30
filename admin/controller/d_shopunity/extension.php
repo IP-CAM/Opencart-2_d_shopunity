@@ -165,6 +165,12 @@ class ControllerDShopunityExtension extends Controller {
 				$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
 			}
 
+			$error_download = json_decode(file_get_contents($download['download']),true);
+			if(isset($error_download['error'])){
+				$this->session->data['error'] = 'Error! getExtensionDownload failed: '.json_encode($error_download['error']);
+				$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			}
+
 			//download the extension to system/mbooth/download
 			$extension_zip = $this->model_d_shopunity_mbooth->downloadExtensionFromServer($download['download']);
 			if(isset($extension_zip['error'])){
@@ -232,6 +238,12 @@ class ControllerDShopunityExtension extends Controller {
 			if(!empty($download['error']) || empty($download['download'])){
 				$this->session->data['error'] = 'Error! We cound not get the download link: '.$download['error'];
 				$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
+			}
+
+			$error_download = json_decode(file_get_contents($download['download']),true);
+			if(isset($error_download['error'])){
+				$this->session->data['error'] = 'Error! getExtensionDownload failed: '.json_encode($error_download['error']);
+				$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 			}
 
 			//start testing
