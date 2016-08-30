@@ -38,20 +38,19 @@
 		       
 				<?php if($extension['purchasable'] ){ ?>
 		        <div class="purchase-extension">
-					<div class="row ">
+					<div class="form-inline">
 						<?php if(!empty($extension['price'])){ ?>
-			            <div class="col-xs-12 col-md-6">
-			                <select class="form-control">
-								<?php foreach($extension['prices'] as $price){ ?>
-								<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price']; ?></option>
-								<?php } ?>
-							</select>
-			            </div>
+			             <select class="form-control input-sm">
+							<?php foreach($extension['prices'] as $price){ ?>
+							<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price']; ?></option>
+							<?php } ?>
+						</select>
+			          
 			            <?php } ?>
-			            <div class="col-xs-12 col-md-6">
-			                <a class="btn btn-primary pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
-			            </div>
-			        </div>
+			           
+			            <a class="btn btn-primary pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
+			       	<div>
+			
 				</div>
 				<?php } ?>
 
