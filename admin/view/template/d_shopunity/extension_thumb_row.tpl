@@ -40,7 +40,7 @@
 		        <div class="purchase-extension">
 					<div class="form-inline">
 						<?php if(!empty($extension['price'])){ ?>
-			             <select class="form-control input-sm">
+			             <select class="form-control">
 							<?php foreach($extension['prices'] as $price){ ?>
 							<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price']; ?></option>
 							<?php } ?>
