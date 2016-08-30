@@ -37,7 +37,7 @@
 	        	
 		       
 				<?php if($extension['purchasable'] ){ ?>
-		        <div class="form-inline purchase-extension">
+		        <div class="purchase-extension pull-right">
 				
 						<?php if(!empty($extension['price'])){ ?>
 			             <select class="form-control">
