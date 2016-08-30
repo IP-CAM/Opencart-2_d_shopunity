@@ -15,7 +15,6 @@ class ControllerDShopunityDependency extends Controller {
 		$this->load->model('d_shopunity/account');
 		$this->load->model('d_shopunity/extension');
 
-		//Mbooth file (example: mbooth_d_shopunity.xml)
 		$this->extension = $this->model_d_shopunity_mbooth->getExtension($this->codename);
 
 	}

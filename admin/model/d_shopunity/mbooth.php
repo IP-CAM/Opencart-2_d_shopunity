@@ -204,14 +204,14 @@ class ModelDShopunityMbooth extends Model {
 
         }elseif(isset($extension['install'])){
             if(isset($extension['install']['url'])){
-                $parts = explode('&', $extension['uninstall']['url']);
+                $parts = explode('&', $extension['install']['url']);
                 $route = str_replace("/install", "/uninstall", array_shift($parts));
             }
         }
 
         if(isset($route) && isset($parts)){
             try{
-                $content = file_get_contents($this->url->link($route, $parts.'&token='.$this->session->get['token'], 'SSL'));
+                $content = file_get_contents($this->url->link($route, http_build_query($parts).'&token='.$this->session->data['token'], 'SSL'));
                 if($content){
                     $result['success'] = 'Extension uninstalled';
                 }else{

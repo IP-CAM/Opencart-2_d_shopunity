@@ -50,10 +50,10 @@
 						<span class="fa fa-undo"></span> 
 						<?php echo $tab_backup; ?>
 					</a></li> -->
-					<li <?php if ($route == 'd_shopunity/setting') { ?>class="active" <?php } ?>><a href="<?php echo $href_setting; ?>" >
+					<!-- <li <?php if ($route == 'd_shopunity/setting') { ?>class="active" <?php } ?>><a href="<?php echo $href_setting; ?>" >
 						<span class="fa fa-cog"></span> 
 						<?php echo $tab_setting; ?>
-					</a></li>
+					</a></li> -->
 				</ul>
 			</div>
 			<div class="panel-body">

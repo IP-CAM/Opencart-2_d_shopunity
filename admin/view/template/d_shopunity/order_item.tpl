@@ -55,7 +55,7 @@
 										<?php echo $order_history['description'] ?>
 									</td>
 									<td>
-										<?php echo $order_history['order_status_id'] ?>
+										<?php echo ($order_history['order_status_id']) ? '<span class="label label-success">active</span>' : '<span class="label label-danger">inactive</span>'; ?>
 									</td>
 								</tr>
 							<?php } ?>

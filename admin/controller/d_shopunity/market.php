@@ -14,11 +14,7 @@ class ControllerDShopunityMarket extends Controller {
 		$this->load->model('d_shopunity/mbooth');
 		$this->load->model('d_shopunity/account');
 
-		//Mbooth file (example: mbooth_d_shopunity.xml)
 		$this->extension = $this->model_d_shopunity_mbooth->getExtension($this->codename);
-
-		//Check if all dependencies are installed
-		$this->model_d_shopunity_mbooth->installDependencies($this->codename);
 	}
 
 	public function index(){

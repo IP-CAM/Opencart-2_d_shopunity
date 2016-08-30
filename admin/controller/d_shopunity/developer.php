@@ -12,12 +12,8 @@ class ControllerDShopunityDeveloper extends Controller {
 	public function __construct($registry) {
 		parent::__construct($registry);
 		$this->load->model('d_shopunity/mbooth');
-		
-		//Mbooth file (example: mbooth_d_shopunity.xml)
-		$this->extension = $this->model_d_shopunity_mbooth->getExtension($this->codename);
 
-		//Check if all dependencies are installed
-		$this->model_d_shopunity_mbooth->installDependencies($this->codename);
+		$this->extension = $this->model_d_shopunity_mbooth->getExtension($this->codename);
 	}
 
 	public function index(){
