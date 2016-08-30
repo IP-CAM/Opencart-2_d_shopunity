@@ -37,8 +37,8 @@
 	        	
 		       
 				<?php if($extension['purchasable'] ){ ?>
-		        <div class="purchase-extension">
-					<div class="form-inline">
+		        <div class="form-inline purchase-extension">
+				
 						<?php if(!empty($extension['price'])){ ?>
 			             <select class="form-control">
 							<?php foreach($extension['prices'] as $price){ ?>
@@ -49,7 +49,7 @@
 			            <?php } ?>
 			           
 			            <a class="btn btn-primary pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
-			       	</div>
+			   
 			
 				</div>
 				<?php } ?>
