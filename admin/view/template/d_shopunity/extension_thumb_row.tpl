@@ -12,7 +12,7 @@
 				<div class="alert alert-warning m-t"><?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?></div>
 			<?php } ?>
 		</div>
-		<div class="col-md-2">
+		<div class="col-md-1">
 			<!-- <div class="rating">
 	    		<span class="fa fa-star"></span>
 	    		<span class="fa fa-star"></span>
@@ -27,7 +27,7 @@
 			<div class="alert alert-info"><?php echo $extension['tester_comment']; ?></div>
 			<?php } ?>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<div class="pull-right ">
 				<div class="form-inline">
 	            
