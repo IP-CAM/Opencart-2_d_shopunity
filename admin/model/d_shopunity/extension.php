@@ -62,7 +62,7 @@ class ModelDShopunityExtension extends Model {
         }
         
         $filter_data = array(
-            'codename' => implode(',', $codenames)
+            'codename' => implode(',', $codenames),
         );
 
         $extensions = $this->getExtensions($filter_data);

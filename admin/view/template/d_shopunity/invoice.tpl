@@ -71,6 +71,8 @@
 						        <div class="pull-right">
 					                <?php if(!$invoice['invoice_status_id']){ ?>
 					                <a class="btn btn-success" href="<?php echo $invoice['pay']; ?>" data-toggle="tooltip" data-original-title="Pay"><span class="fa fa-money"></span></a>
+						       		<?php }elseif($invoice['refundable']){ ?>
+						       		<a class="btn btn-success" href="<?php echo $invoice['refund']; ?>" data-toggle="tooltip" data-original-title="Refund"><span class="fa fa-repeat"></span></a>
 						       		<?php } ?>
 					                <a class="btn btn-info	" href="<?php echo $invoice['url']; ?>" data-toggle="tooltip" data-original-title="View"><span class="fa fa-eye"></span></a>
 

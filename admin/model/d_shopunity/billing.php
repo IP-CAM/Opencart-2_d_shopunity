@@ -112,6 +112,13 @@ class ModelDShopunityBilling extends Model {
 		
 	}
 
+	public function payInvoice($invoice_id){
+
+		$result = $this->api->post('account/invoices/'.$invoice_id.'/refund');
+		return $result;
+		
+	}
+
 	private function _invoice($data){
 		$result = array();
 		if(!empty($data)){
@@ -119,6 +126,7 @@ class ModelDShopunityBilling extends Model {
 			$result['date_added'] = date($this->language->get('date_format_short'), strtotime($data['date_added']));
 			$result['url'] = $this->url->link('d_shopunity/invoice/item', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
 			$result['pay'] = $this->url->link('d_shopunity/invoice/pay', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
+			$result['refund'] = $this->url->link('d_shopunity/invoice/refund', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
 		}
 		return $result;
 	}

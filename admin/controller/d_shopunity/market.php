@@ -35,8 +35,7 @@ class ControllerDShopunityMarket extends Controller {
 
    		$url = array();
 		//REFACTOR
-		$filter_data = array(
-			'status' => 1);
+		$filter_data = array();
 
 		$data['search'] = '';
 		if(isset($this->request->get['search'])){
@@ -60,6 +59,9 @@ class ControllerDShopunityMarket extends Controller {
 			$url['commercial'] =  $this->request->get['commercial'];
 		}
 
+		$filter_data['status'] = 1;
+		$filter_data['published'] = 1;
+		
 		$data['extensions'] = $this->model_d_shopunity_extension->getExtensions($filter_data);
 		$data['categories'] = $this->load->controller('d_shopunity/market/categories'); 
 		$data['search_href'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
