@@ -122,6 +122,8 @@ class ControllerDShopunityAccount extends Controller {
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
 		$data['account'] = $this->model_d_shopunity_account->getAccount();
 
+		$data['add_money'] = 'https://shopunity.net/index.php?route=billing/transaction';
+
 		return $this->load->view($this->route.'_profile.tpl', $data);
 	}
 
