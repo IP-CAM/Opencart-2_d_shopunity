@@ -29,6 +29,12 @@ class ControllerDShopunityInvoice extends Controller {
 		$data['tab_order'] =  $this->language->get('tab_order');
 		$data['tab_invoice'] =  $this->language->get('tab_invoice');
 		$data['tab_transaction'] =  $this->language->get('tab_transaction');
+
+		$data['text_invoice_status_0'] =  $this->language->get('text_invoice_status_0');
+		$data['text_invoice_status_1'] =  $this->language->get('text_invoice_status_1');
+		$data['text_invoice_status_2'] =  $this->language->get('text_invoice_status_2');
+		$data['text_invoice_status_3'] =  $this->language->get('text_invoice_status_3');
+		$data['text_invoice_status_4'] =  $this->language->get('text_invoice_status_4');
 		
 		$data['href_order'] =  $this->url->link('d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_invoice'] = $this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
