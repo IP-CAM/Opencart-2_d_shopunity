@@ -153,4 +153,36 @@ class ControllerDShopunityInvoice extends Controller {
 		$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 
 	}
+
+	public function cancel(){
+
+		if(!$this->model_d_shopunity_account->isLogged()){
+			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+
+		if(!isset($this->request->get['invoice_id'])){
+
+			$this->session->data['error'] = 'order_id missing!';
+			$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+
+		}
+
+		$invoice_id = $this->request->get['invoice_id'];
+
+   		$this->load->model('d_shopunity/billing');
+
+   		$invoice = $this->model_d_shopunity_billing->cancelInvoice($invoice_id);
+
+   		if(!empty($invoice['error'])){
+			$this->session->data['error'] = $invoice['error'];
+		}elseif(!empty($invoice['success'])){
+			$this->session->data['success'] = $invoice['success'];
+		}
+
+		$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+
+	}
+
+
+	
 }

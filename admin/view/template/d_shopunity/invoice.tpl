@@ -69,10 +69,12 @@
 							<td>
 								
 						        <div class="pull-right">
-					                <?php if(!$invoice['invoice_status_id']){ ?>
+					                <?php if($invoice['invoice_status_id'] == 0){ ?>
 					                <a class="btn btn-success" href="<?php echo $invoice['pay']; ?>" data-toggle="tooltip" data-original-title="Pay"><span class="fa fa-money"></span></a>
 						       		<?php }elseif($invoice['refundable']){ ?>
 						       		<a class="btn btn-success" href="<?php echo $invoice['refund']; ?>" data-toggle="tooltip" data-original-title="Refund"><span class="fa fa-repeat"></span></a>
+						       		<?php }elseif(){ ?> 
+									<a class="btn btn-success" href="<?php echo $invoice['cancel']; ?>" data-toggle="tooltip" data-original-title="Cancel"><span class="fa fa-repeat"></span></a>
 						       		<?php } ?>
 					                <a class="btn btn-info	" href="<?php echo $invoice['url']; ?>" data-toggle="tooltip" data-original-title="View"><span class="fa fa-eye"></span></a>
 
