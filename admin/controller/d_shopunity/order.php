@@ -33,11 +33,21 @@ class ControllerDShopunityOrder extends Controller {
 		$data['href_invoice'] = $this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_transaction'] = $this->url->link('d_shopunity/transaction', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['orders'] = $this->model_d_shopunity_billing->getOrders();
+		$filter_data = array();
+		$data['page'] = 1;
+		if(isset($this->request->get['page'])){
+			$filter_data['page'] = $this->request->get['page'];
+			$data['page'] = $this->request->get['page'];
+		}
+
+		$data['orders'] = $this->model_d_shopunity_billing->getOrders($filter_data);
 		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
 		$data['orders_overdue'] = $this->model_d_shopunity_billing->getOrdersOverdue();
 		$data['create_invoice'] = $this->url->link('d_shopunity/invoice/create', 'token=' . $this->session->data['token'], 'SSL');
-	
+
+		$data['prev'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&page='.($data['page']-1), 'SSL');
+		$data['next'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&page='.($data['page']+1), 'SSL');
+
    		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
 

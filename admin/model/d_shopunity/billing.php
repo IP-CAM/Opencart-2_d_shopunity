@@ -18,9 +18,9 @@ class ModelDShopunityBilling extends Model {
 		$this->dir_root = substr_replace(DIR_SYSTEM, '/', -8);
 	}
 
-	public function getOrders($data = array()){
+	public function getOrders($filter_data = array()){
 		$result = array();
-		$orders = $this->api->get('account/orders');
+		$orders = $this->api->get('account/orders', $filter_data);
 		if(is_array($orders)){
 			foreach($orders as $order){
 				$result[] = $this->_order($order);
@@ -78,9 +78,9 @@ class ModelDShopunityBilling extends Model {
 /**
  * Invoices
  */
-	public function getInvoices($data = array()){
+	public function getInvoices($filter_data = array()){
 		$result = array();
-		$invoices = $this->api->get('account/invoices');
+		$invoices = $this->api->get('account/invoices', $filter_data);
 		if(is_array($invoices)){
 			foreach($invoices as $invoice){
 				$result[] = $this->_invoice($invoice);
@@ -145,9 +145,9 @@ class ModelDShopunityBilling extends Model {
 /**
  * Transactions
  */
-	public function getTransactions($data = array()){
+	public function getTransactions($filter_data = array()){
 		$result = array();
-		$transactions = $this->api->get('account/transactions');
+		$transactions = $this->api->get('account/transactions', $filter_data);
 		if(is_array($transactions)){
 			foreach($transactions as $transaction){
 				$result[] = $this->_transaction($transaction);

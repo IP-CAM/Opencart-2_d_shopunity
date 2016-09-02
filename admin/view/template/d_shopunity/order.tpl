@@ -92,6 +92,14 @@
 					</tbody>
 				</table>
 				<?php } ?>
+				<div>
+					<?php if($page > 1) {?>
+					<a class="btn btn-default" href="<?php echo $prev; ?>"><span class="fa fa-chevron-left"></span> Prev</a>
+					<?php } ?>
+					<?php if($orders) { ?>
+					<a class="btn btn-default pull-right" href="<?php echo $next; ?>">Next <span class="fa fa-chevron-right"></span></a>
+					<?php } ?>
+				</div>
 			</div>
 		</div>
 	</div>

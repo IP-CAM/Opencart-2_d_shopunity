@@ -72,10 +72,10 @@
 					                <?php if($invoice['invoice_status_id'] == 0){ ?>
 					                <a class="btn btn-success" href="<?php echo $invoice['pay']; ?>" data-toggle="tooltip" data-original-title="Pay"><span class="fa fa-money"></span></a>
 						       		<?php }elseif($invoice['refundable']){ ?>
-						       		<a class="btn btn-success" href="<?php echo $invoice['refund']; ?>" data-toggle="tooltip" data-original-title="Refund"><span class="fa fa-repeat"></span></a>
+						       		<a class="btn btn-warning" href="<?php echo $invoice['refund']; ?>" data-toggle="tooltip" data-original-title="Refund"><span class="fa fa-repeat"></span></a>
 						       		<?php } ?>
 						       		<?php if($invoice['cancelable']){ ?> 
-									<a class="btn btn-success" href="<?php echo $invoice['cancel']; ?>" data-toggle="tooltip" data-original-title="Cancel"><span class="fa fa-repeat"></span></a>
+									<a class="btn btn-danger" href="<?php echo $invoice['cancel']; ?>" data-toggle="tooltip" data-original-title="Cancel"><span class="fa fa-ban"></span></a>
 						       		<?php } ?>
 					                <a class="btn btn-info	" href="<?php echo $invoice['url']; ?>" data-toggle="tooltip" data-original-title="View"><span class="fa fa-eye"></span></a>
 
@@ -87,6 +87,14 @@
 					</tbody>
 				</table>
 				<?php } ?>
+				<div>
+					<?php if($page > 1) {?>
+					<a class="btn btn-default" href="<?php echo $prev; ?>"><span class="fa fa-chevron-left"></span> Prev</a>
+					<?php } ?>
+					<?php if($invoices) { ?>
+					<a class="btn btn-default pull-right" href="<?php echo $next; ?>">Next <span class="fa fa-chevron-right"></span></a>
+					<?php } ?>
+				</div>
 			</div>
 		</div>
 	</div>
