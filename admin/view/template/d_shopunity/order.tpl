@@ -92,7 +92,7 @@
 					</tbody>
 				</table>
 				<?php } ?>
-				<div>
+				<div class="clearfix">
 					<?php if($page > 1) {?>
 					<a class="btn btn-default" href="<?php echo $prev; ?>"><span class="fa fa-chevron-left"></span> Prev</a>
 					<?php } ?>

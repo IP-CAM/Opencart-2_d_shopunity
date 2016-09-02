@@ -45,8 +45,8 @@ class ControllerDShopunityOrder extends Controller {
 		$data['orders_overdue'] = $this->model_d_shopunity_billing->getOrdersOverdue();
 		$data['create_invoice'] = $this->url->link('d_shopunity/invoice/create', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['prev'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&page='.($data['page']-1), 'SSL');
-		$data['next'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&page='.($data['page']+1), 'SSL');
+		$data['prev'] = $this->url->link('d_shopunity/order', 'token=' . $this->session->data['token'].'&page='.($data['page']-1), 'SSL');
+		$data['next'] = $this->url->link('d_shopunity/order', 'token=' . $this->session->data['token'].'&page='.($data['page']+1), 'SSL');
 
    		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
