@@ -37,7 +37,33 @@ d_shopunity = {
 	},
 
 	installExtension: function($node){
-		location.href = $node.data('href');  
+
+		$.ajax({
+			url: $node.data('href'),
+			dataType: 'json',
+			method: 'get',
+			success: function(json) {
+				if(json['installed']){
+					swal({	
+						title: "Installed",	
+						text: json['text'],	
+						type: "success",	
+						showCancelButton: true, 
+						confirmButtonColor: "#AEDEF4",	
+						confirmButtonText: "View",	
+						closeOnConfirm: false,
+						closeOnCancel: true
+					},
+					function(isConfirm){  
+						if (isConfirm) {
+							location.href = json['view'];
+						} else {     
+							that.hideLoading($('.loading'));
+					 	}	
+					});
+				}
+			}
+		}); 
 		return false;
 		
 	},
