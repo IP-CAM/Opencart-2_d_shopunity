@@ -47,7 +47,7 @@
 		        	<a class="btn btn-default btn-sm download-extension" data-href="<?php echo $extension['download']; ?>"  data-toggle="tooltip" data-original-title="Download"><span class="fa fa-download"></span></a>
 			        <?php } ?>
 			        -->
-					<?php if($extension['purchasable'] ){ ?>
+					<?php if($extension['purchasable']){ ?>
 			        <div class="purchase-extension">
 						<div class="form-inline">
 							<?php if(!empty($extension['price'])){ ?>
@@ -71,7 +71,9 @@
 		        	<?php if($extension['submittable']){ ?>
 	                <a class="btn btn-warning btn-sm  show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
 		        	<?php } ?> -->	
-
+		        	<?php if($extension['commercial'] && !$extension['purchasable'] && !$extension['installable']){ ?>
+					<span class="alert alert-danger alert-sm">Please pay invoice</span>
+		        	<?php } ?>
 		        </div>
 
 
