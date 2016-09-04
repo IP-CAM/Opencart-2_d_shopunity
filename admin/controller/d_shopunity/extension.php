@@ -382,7 +382,7 @@ class ControllerDShopunityExtension extends Controller {
 				$this->load->model('d_shopunity/extension');
 				$extension_id = $this->request->get['extension_id'];
 				
-				$json['codename'] = $extension['codename'];
+				$json['codename'] = $codename;
 				$json['view'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
 				
 				$data['extension'] = $this->model_d_shopunity_extension->getExtension($this->request->get['extension_id']);
