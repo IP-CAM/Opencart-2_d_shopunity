@@ -256,7 +256,7 @@ class ControllerDShopunityExtension extends Controller {
 				$result = $this->model_d_shopunity_mbooth->installDependencies($extension['codename'], $result);
 				$json['installed'] = true;
 				$json['text'] = "Extension ".$extension['codename']." has been successfuly installed";
-				$json['view'] = $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL');
+				$json['view'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
 				$json['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
 				$json['success'] .=  "<br />" . implode("<br />", $result['success']);
 			}
