@@ -22,8 +22,6 @@ class ModelDShopunityExtension extends Model {
         if(isset($filter_data['codename']) && is_array($filter_data['codename'])){
             $filter_data['codename'] = implode(',', $filter_data['codename']);
         }
-
-        $filter_data['limit'] = 12;
         
         $json = $this->api->get('extensions', $filter_data);
 

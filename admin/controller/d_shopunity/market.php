@@ -58,7 +58,8 @@ class ControllerDShopunityMarket extends Controller {
 			$filter_data['commercial'] = $this->request->get['commercial'];
 			$url['commercial'] =  $this->request->get['commercial'];
 		}
-
+		
+		$filter_data['limit'] = 12;
 		$filter_data['status'] = 1;
 		$filter_data['published'] = 1;
 		
