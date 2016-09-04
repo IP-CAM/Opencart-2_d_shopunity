@@ -503,6 +503,15 @@ class ModelDShopunityMbooth extends Model {
             if(!isset($data['index'])){
                 $result['index'] = 'module/'.$data['codename'];
             }
+
+            if(VERSION < '2.3.0.0' && strpos($result['index'], 'extension/module/') !== false) {
+                $route = str_replace('extension/module/', "module/", $result['index']);
+            }
+
+            if(VERSION >= '2.3.0.0' && strpos($result['index'], 'extension/module/') === false) {
+                $route = str_replace('module/', 'extension/module/', $result['index']);
+            }
+
             if (!empty($data['dirs'])) {
 
                 $dir_files = array();
