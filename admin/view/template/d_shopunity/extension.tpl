@@ -6,7 +6,7 @@
 <?php echo $content_top; ?>
 <div class="row">
 	
-	<div id="list_search" class="col-md-12">
+	<div class="col-md-12">
 		<div class="ibox">
 			<div class="ibox-title">
 				<h4>Search for extensions</h4>
@@ -19,7 +19,7 @@
 			</div>
 		</div>
 
-		<div class="ibox">
+		<div id="list_search_1" class="ibox">
 			<div class="ibox-title">
 				<h4>Purchased modules.</h4>
 				<p>These modules have been purchased. You can use them only for this webshop.</p>
@@ -39,7 +39,7 @@
 			</div>
 		</div>
 			
-		<div class="ibox"> 
+		<div id="list_search_2" class="ibox"> 
 			<div class="ibox-title">
 				<h4>Expired or Free licenses.</h4>
 			<p>These modules do not have a license, or their lisence has been expired. </p>
@@ -59,7 +59,7 @@
 			</div>
 		</div>
 	
-		<div class="ibox">
+		<div  id="list_search_3" class="ibox">
 			<div class="ibox-title">
 				<h4>Unknown Modules.</h4>
 				<p>These modules are not regestered with the shopunity network.</p>
@@ -90,7 +90,17 @@
 </div>
 <script>
 	
-	var monkeyList = new List('list_search', { 
+	var monkeyList1 = new List('list_search_1', { 
+	  valueNames: ['name'], 
+	  plugins: [ ListFuzzySearch() ] 
+	});
+
+	var monkeyList2 = new List('list_search_2', { 
+	  valueNames: ['name'], 
+	  plugins: [ ListFuzzySearch() ] 
+	});
+
+	var monkeyList3 = new List('list_search_3', { 
 	  valueNames: ['name'], 
 	  plugins: [ ListFuzzySearch() ] 
 	});
