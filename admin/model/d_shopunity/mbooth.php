@@ -206,9 +206,9 @@ class ModelDShopunityMbooth extends Model {
         if(isset($route) && isset($parts)){
 
             try{
-                $content = file_get_contents($this->url->link($route, http_build_query($parts).'&token='.$this->session->data['token'], 'SSL'));
+                $content = file_get_contents($this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
                 if($content){
-                    $result['success'][] = 'Extension activated => '.$route.'&'.http_build_query($parts);
+                    $result['success'][] = 'Extension activated => '.$route.'&'.implode('&',$parts);
                 }else{
                     $result['error'][] = 'Extension not activated';
                 }
@@ -233,7 +233,7 @@ class ModelDShopunityMbooth extends Model {
         if(isset($route) && isset($parts)){
 
             try{
-                $content = file_get_contents($this->url->link($route, http_build_query($parts).'&token='.$this->session->data['token'], 'SSL'));
+                $content = file_get_contents($this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
                 if($content){
                     $result['success'][] = 'Extension deactivated';
                 }else{
