@@ -269,6 +269,7 @@ class ModelDShopunityMbooth extends Model {
                 }
             }
             @unlink($this->dir_root.'vqmod/mods.cache');
+            @unlink($this->dir_root.'vqmod/checked.cache');
         }else{
             $result = false;
         }
