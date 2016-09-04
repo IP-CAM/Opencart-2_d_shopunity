@@ -228,10 +228,18 @@ class ModelDShopunityMbooth extends Model {
 	public function deleteExtension($codename){
 
 		$mbooth = $this->getExtension($codename);
+        $this->load->model('d_shopunity/vqmod');
         if($mbooth){
             $result = array('success' => array(), 'error' => array());
             foreach ($mbooth['files'] as $file) {
                 if (is_file($this->dir_root . $file)) {
+
+                    //if vqmod
+                    if(strpos($file, 'vqmod') !== false && strpos($file, '.xml_') !== false){
+                        $this->model_d_shopunity_vqmod->setVqmod(basename($file, '.xml_').'.xml', 0);
+                    }elseif(strpos($file, 'vqmod') !== false && strpos($file, '.xml') !== false){
+                        $this->model_d_shopunity_vqmod->setVqmod(basename($file), 1);
+                    }
 
                     if (@unlink($this->dir_root . $file)) {
                         $result['success'][] = $file;
