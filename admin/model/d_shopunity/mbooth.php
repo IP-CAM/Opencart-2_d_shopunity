@@ -242,12 +242,13 @@ class ModelDShopunityMbooth extends Model {
                     }
 
                     if (@unlink($this->dir_root . $file)) {
-                        if(strpos($file, 'vqmod') !== false){
-                            @unlink($this->dir_root.'vqmod/mods.cache');
-                        }
                         $result['success'][] = $file;
                     } else {
                         $result['error'][] = $file;
+                    }
+
+                    if(strpos($file, 'vqmod') !== false){
+                        @unlink($this->dir_root.'vqmod/mods.cache');
                     }
 
                     $dir = dirname($this->base_dir . $file);
