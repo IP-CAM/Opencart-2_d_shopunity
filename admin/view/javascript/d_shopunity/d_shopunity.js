@@ -50,9 +50,7 @@ d_shopunity = {
 						type: "success",	
 						showCancelButton: true, 
 						confirmButtonColor: "#AEDEF4",	
-						confirmButtonText: "View",	
-						closeOnConfirm: false,
-						closeOnCancel: true
+						confirmButtonText: "View"
 					},
 					function(isConfirm){  
 						if (isConfirm) {
