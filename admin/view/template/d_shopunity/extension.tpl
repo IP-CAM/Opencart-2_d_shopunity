@@ -59,7 +59,7 @@
 			</div>
 		</div>
 	
-		<div  id="list_search_3" class="ibox">
+		<div id="list_search_3" class="ibox">
 			<div class="ibox-title">
 				<h4>Unknown Modules.</h4>
 				<p>These modules are not regestered with the shopunity network.</p>
@@ -97,12 +97,12 @@
 
 	var userList1 = new List('list_search_1', options);
 	var userList2 = new List('list_search_2', options);
-	// var userList3 = new List('list_search_3', options);
+	var userList3 = new List('list_search_3', options);
 
 	$('.fuzzy-search').on("keyup",function(){
         userList1.search($(this).val());
         userList2.search($(this).val());
-        // userList3.search($(this).val());
+        userList3.search($(this).val());
     }); 
 
 </script>
