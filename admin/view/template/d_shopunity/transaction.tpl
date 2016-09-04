@@ -68,7 +68,7 @@
 		</div>
 	</div>
 </div>
-<pre>
+<!-- <pre>
 	<?php print_r($transactions); ?>
-</pre> 
+</pre>  -->
 <?php echo $content_bottom; ?>
