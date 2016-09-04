@@ -12,7 +12,7 @@
 				<div class="alert alert-warning m-t"><?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?></div>
 			<?php } ?>
 			<?php if($extension['update_available']){?>
-				<div class="alert alert-info m-t"><?php echo $'text_new_version_available'; ?> <?php echo $extension['version']; ?></div>
+				<div class="alert alert-info m-t"><?php echo $text_new_version_available; ?> <?php echo $extension['version']; ?></div>
 			<?php } ?>
 			
 		</div>
