@@ -193,8 +193,32 @@ class ModelDShopunityMbooth extends Model {
         return $this->moveFiles(DIR_SYSTEM . 'mbooth/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
     }
 
-    public function uninstallExtension($codename) {
-        $result = array();
+    public function activateExtension($codename, $result = array()) {
+        $extension = $this->getExtensionJson($codename);
+        if(isset($extension['install'])){
+            if(isset($extension['install']['url'])){
+                $parts = explode('&', $extension['install']['url']);
+                $route = array_shift($parts);
+            }
+        }
+
+        if(isset($route) && isset($parts)){
+            try{
+                $content = file_get_contents($this->url->link($route, http_build_query($parts).'&token='.$this->session->data['token'], 'SSL'));
+                if($content){
+                    $result['success'][] = 'Extension activated';
+                }else{
+                    $result['error'][] = 'Extension not activated';
+                }
+                
+            }catch(Exception $e){
+                $result['error'][] = 'Extension not activated message: '. $e->message;
+            }
+        }
+        return $result;
+    }
+
+    public function deactivateExtension($codename, $result = array()) {
         $extension = $this->getExtensionJson($codename);
         if(isset($extension['uninstall'])){
             if(isset($extension['uninstall']['url'])){
@@ -213,13 +237,13 @@ class ModelDShopunityMbooth extends Model {
             try{
                 $content = file_get_contents($this->url->link($route, http_build_query($parts).'&token='.$this->session->data['token'], 'SSL'));
                 if($content){
-                    $result['success'] = 'Extension uninstalled';
+                    $result['success'][] = 'Extension deactivated';
                 }else{
-                    $result['error'] = 'Extension not uninstalled';
+                    $result['error'][] = 'Extension not deactivated';
                 }
                 
             }catch(Exception $e){
-                $result['error'] = 'Extension not uninstalled message: '. $e->message;
+                $result['error'][] = 'Extension not deactivated message: '. $e->message;
             }
         }
         return $result;
