@@ -496,11 +496,11 @@ class ModelDShopunityMbooth extends Model {
             }
 
             if(VERSION < '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') !== false) {
-                $result['uninstall']['url'] = str_replace('extension/extension/', "extension/", $result['uninstall']['url']);
+                $result['install']['url'] = str_replace('extension/extension/', "extension/", $result['install']['url']);
             }
 
             if(VERSION >= '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') === false) {
-                $result['uninstall']['url'] = str_replace('extension/', 'extension/extension/', $result['uninstall']['url']);
+                $result['install']['url'] = str_replace('extension/', 'extension/extension/', $result['install']['url']);
             }
 
             if(!isset($result['uninstall'])){
