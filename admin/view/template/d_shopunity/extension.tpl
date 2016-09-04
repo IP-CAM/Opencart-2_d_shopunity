@@ -19,7 +19,7 @@
 			</div>
 		</div>
 
-		<div id="list_search_1" class="ibox">
+		<div  id="list_search_1" class="ibox">
 			<div class="ibox-title">
 				<h4>Purchased modules.</h4>
 				<p>These modules have been purchased. You can use them only for this webshop.</p>
@@ -39,7 +39,7 @@
 			</div>
 		</div>
 			
-		<div id="list_search_2" class="ibox"> 
+		<div  id="list_search_2" class="ibox"> 
 			<div class="ibox-title">
 				<h4>Expired or Free licenses.</h4>
 			<p>These modules do not have a license, or their lisence has been expired. </p>
@@ -90,19 +90,19 @@
 </div>
 <script>
 	
-	var monkeyList1 = new List('list_search_1', { 
-	  valueNames: ['name'], 
-	  plugins: [ ListFuzzySearch() ] 
-	});
+	var options = {
+	  valueNames: [ 'name' ]
+	};
 
-	var monkeyList2 = new List('list_search_2', { 
-	  valueNames: ['name'], 
-	  plugins: [ ListFuzzySearch() ] 
-	});
+	var userList1 = new List('list_search_1', options);
+	var userList2 = new List('list_search_2', options);
+	var userList3 = new List('list_search_3', options);
 
-	var monkeyList3 = new List('list_search_3', { 
-	  valueNames: ['name'], 
-	  plugins: [ ListFuzzySearch() ] 
-	});
+	$('.fuzzy-search').on("keyup",function(){
+        userList1.search($(this).val());
+        userList2.search($(this).val());
+        userList3.search($(this).val());
+    }); 
+
 </script>
 <?php echo $content_bottom; ?>
