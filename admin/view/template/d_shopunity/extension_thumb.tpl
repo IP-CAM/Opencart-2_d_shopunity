@@ -72,7 +72,7 @@
 	                <a class="btn btn-warning btn-sm  show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
 		        	<?php } ?> -->	
 		        	<?php if($extension['commercial'] && !$extension['purchasable'] && !$extension['installable']){ ?>
-					<span class="alert alert-danger alert-sm">Please pay invoice</span>
+					<a class="btn btn-danger btn-sm">Pay invoice</span>
 		        	<?php } ?>
 		        </div>
 
