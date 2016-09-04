@@ -7,10 +7,14 @@
 		</div>
 		<div class="col-md-3">
 			<span class="name"><?php echo $extension['name']; ?></span>
-			<?php echo $extension['version']; ?>
+			<span class="label label-info"><?php echo $extension['current_version']; ?></span>
 			<?php if($extension['downloadable'] && $extension['tester_status_id']){?>
 				<div class="alert alert-warning m-t"><?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?></div>
 			<?php } ?>
+			<?php if($extension['update_available']){?>
+				<div class="alert alert-info m-t"><?php echo $'text_new_version_available'; ?> <?php echo $extension['version']; ?></div>
+			<?php } ?>
+			
 		</div>
 		<div class="col-md-1">
 			<!-- <div class="rating">

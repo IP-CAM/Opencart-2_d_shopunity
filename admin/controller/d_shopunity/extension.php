@@ -36,6 +36,7 @@ class ControllerDShopunityExtension extends Controller {
    		$data['text_tester_status_4'] = $this->language->get('text_tester_status_4');
    		$data['text_tester_status_5'] = $this->language->get('text_tester_status_5');
    		$data['text_tester_status_6'] = $this->language->get('text_tester_status_6');
+   		$data['text_new_version_available'] = $this->language->get('text_new_version_available');
 
 		$data['store_extensions'] = $this->model_d_shopunity_extension->getStoreExtensions();
 		$data['local_extensions'] = $this->model_d_shopunity_extension->getLocalExtensions();

@@ -235,7 +235,8 @@ class ModelDShopunityExtension extends Model {
             $result['registered'] = true;
             $result['installed'] = $this->isInstalled($data['codename']);
             $result['admin'] = false;
-            $result['new_version'] = false;
+            $result['update_available'] = false;
+            $result['current_version'] = $result['version'];
 
             if($result['installed']){
                 $mbooth = $this->model_d_shopunity_mbooth->getExtension($data['codename']);
@@ -243,14 +244,14 @@ class ModelDShopunityExtension extends Model {
                 try{
                     $semver = new Semver;
                     if(!empty($result['version']) && !empty($mbooth['version'])){
-                        $result['new_version'] = $semver->gt($result['version'], $mbooth['version']);
+                        $result['update_available'] = $semver->gt($result['version'], $mbooth['version']);
+                        $result['current_version'] = $mbooth['version'];
                     }
                   
                 }catch(Exception $e){
                     //nothing;
                 }
 
-                $result['new_version'] = false;
                 if(isset($mbooth['index'])){
                     $result['admin'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
                 }
@@ -326,8 +327,8 @@ class ModelDShopunityExtension extends Model {
             $result['store_extension'] = false;
             $result['tester_status_id'] = false;
             $result['tester_comment'] = false;
-            $result['new_version'] = false;
-            
+            $result['update_available'] = false;
+            $result['current_version'] = $result['version'];
 
             $result['installable'] = true;
             $result['updatable'] = false;
