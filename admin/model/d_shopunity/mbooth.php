@@ -194,7 +194,7 @@ class ModelDShopunityMbooth extends Model {
     }
 
     public function activateExtension($codename, $result = array()) {
-        $result = array()
+        $result = array();
         $extension = $this->getExtension($codename);
         if(isset($extension['install'])){
             if(isset($extension['install']['url'])){
