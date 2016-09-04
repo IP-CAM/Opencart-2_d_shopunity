@@ -199,7 +199,6 @@ class ControllerDShopunityExtension extends Controller {
 		}
 
 		$extension_id = $this->request->get['extension_id'];
-		$json['extension_id'] = $extension_id;
 		$this->load->model('d_shopunity/extension');
 		$this->load->model('d_shopunity/mbooth');
 
@@ -262,8 +261,13 @@ class ControllerDShopunityExtension extends Controller {
 				$json['text'] = "Extension ".$extension['codename']." has been successfuly installed";
 				$json['view'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
 				
+				$json['codename'] = $extension['codename'];
 				$data['extension'] = $this->model_d_shopunity_extension->getExtension($extension_id);
-				$json['extension'] = $this->load->view('d_shopunity/extension_thumb.tpl', $data);
+				$theme = 'extension_thumb';
+				if(isset($this->request->get['theme'])){
+					$theme = $this->request->get['theme'];
+				}
+				$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
 
 				$json['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
 				$json['success'] .=  "<br />" . implode("<br />", $result['success']);
@@ -371,7 +375,6 @@ class ControllerDShopunityExtension extends Controller {
 		}
 
 		if(!empty($result['success'])) {
-
 			$json['uninstalled'] = true;
 			$json['text'] = "Extension ".$codename." has been successfuly uninstalled";
 
@@ -379,11 +382,15 @@ class ControllerDShopunityExtension extends Controller {
 				$this->load->model('d_shopunity/extension');
 				$extension_id = $this->request->get['extension_id'];
 				
-				$json['extension_id'] = $extension_id;
+				$json['codename'] = $extension['codename'];
 				$json['view'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
 				
 				$data['extension'] = $this->model_d_shopunity_extension->getExtension($this->request->get['extension_id']);
-				$json['extension'] = $this->load->view('d_shopunity/extension_thumb.tpl', $data);
+				$theme = 'extension_thumb';
+				if(isset($this->request->get['theme'])){
+					$theme = $this->request->get['theme'];
+				}
+				$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
 			}
 
 			$json['success'] = 'Extension #' . $codename .' uninstalled';

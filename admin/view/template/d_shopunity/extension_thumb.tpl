@@ -1,4 +1,4 @@
-<div class="extension-thumb" id="extension_id_<?php echo $extension['extension_id']; ?>">
+<div class="extension-thumb" id="extension_<?php echo $extension['codename']; ?>">
 	<div class="ibox">
 		<!-- <?php if(!empty($extension['description_short'])) {?>
         <p class="absolute-description">
@@ -30,7 +30,7 @@
 					<?php } ?>
 					
 	                <?php if($extension['installable'] && !$extension['installed']){ ?>
-		            	<a class="btn btn-info btn-sm show-loading install-extension" data-href="<?php echo $extension['install']; ?>"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
+		            	<a class="btn btn-info btn-sm show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
 		            <?php } ?>
 
 		            <?php if($extension['updatable'] && $extension['installed']){ ?>
@@ -38,7 +38,7 @@
 		        	<?php } ?>
 
 		            <?php if($extension['installed']){ ?>
-						<a class="btn btn-danger btn-sm show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
+						<a class="btn btn-danger btn-sm show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
 		            <?php } ?>
 	                
 		        	

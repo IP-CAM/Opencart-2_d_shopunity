@@ -1,4 +1,4 @@
-<div class="extension-thumb-row">
+<div class="extension-thumb-row"  id="extension_<?php echo $extension['codename']; ?>">
 	<div class="row">
 		<div class="col-md-1">
 			<a href="<?php echo $extension['url']; ?>">
@@ -63,11 +63,11 @@
 		        <?php } ?>
 
 				<?php if($extension['installable'] && !$extension['installed']){ ?>
-	            	<a class="btn btn-info show-loading install-extension" data-href="<?php echo $extension['install']; ?>"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
+	            	<a class="btn btn-info show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
 	            <?php } ?>
 
 	            <?php if($extension['installed']){ ?>
-					<a class="btn btn-danger show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
+					<a class="btn btn-danger show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
 	            <?php } ?>
 
 				<?php if($extension['suspendable'] && !$extension['installed']){ ?>

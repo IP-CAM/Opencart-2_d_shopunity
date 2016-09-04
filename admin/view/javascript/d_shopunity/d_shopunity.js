@@ -64,7 +64,7 @@ d_shopunity = {
 				}
 
 				if(json['extension']){
-					$('#extension_id_'+json['extension_id']).replaceWith(json['extension']);
+					$('#extension_'+json['codename']).replaceWith(json['extension']);
 				}
 			}
 		}); 
