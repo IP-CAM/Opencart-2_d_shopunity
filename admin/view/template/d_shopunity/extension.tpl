@@ -91,7 +91,8 @@
 <script>
 	
 	var options = {
-	  valueNames: [ 'name' ]
+	  valueNames: [ 'name' ], 
+	  plugins: [ ListFuzzySearch() ]
 	};
 
 	var userList1 = new List('list_search_1', options);
