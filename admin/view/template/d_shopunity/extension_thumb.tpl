@@ -72,7 +72,7 @@
 	                <a class="btn btn-warning btn-sm  show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
 		        	<?php } ?> -->	
 		        	<?php if($extension['commercial'] && !$extension['purchasable'] && !$extension['installable']){ ?>
-					<a class="btn btn-danger btn-sm" href="<?php echo $extension['billing']; ?>" data-toggle="tooltip" data-original-title="Suspend">Pay invoice</a>
+					<a class="btn btn-danger btn-sm" href="<?php echo $extension['billing']; ?>" data-toggle="tooltip" data-original-title="Billing">Pay invoice</a>
 		        	<?php } ?>
 		        </div>
 

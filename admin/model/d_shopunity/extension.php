@@ -235,14 +235,26 @@ class ModelDShopunityExtension extends Model {
             $result['registered'] = true;
             $result['installed'] = $this->isInstalled($data['codename']);
             $result['admin'] = false;
+            $result['new_version'] = false;
 
             if($result['installed']){
                 $mbooth = $this->model_d_shopunity_mbooth->getExtension($data['codename']);
+
+                try{
+                    $semver = new Semver;
+                    if(!empty($result['version']) && !empty($mbooth['version'])){
+                        $result['new_version'] = $semver->gt($result['version'], $mbooth['version']);
+                    }
+                  
+                }catch(Exception $e){
+                    //nothing;
+                }
+
+                $result['new_version'] = false;
                 if(isset($mbooth['index'])){
                     $result['admin'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
                 }
             }
-            
 
             $result['purchase'] = $this->_ajax($this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['install'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] , 'SSL'));
@@ -252,7 +264,7 @@ class ModelDShopunityExtension extends Model {
             $result['submit'] = $this->_ajax($this->url->link('d_shopunity/extension/submit', 'token=' . $this->session->data['token']  . '&extension_id='.$data['extension_id'] , 'SSL'));
             $result['json'] = $this->_ajax($this->url->link('d_shopunity/extension/json', 'token=' . $this->session->data['token']  . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['billing'] = $this->_ajax($this->url->link('d_shopunity/order', 'token=' . $this->session->data['token']  . '&codename='.$result['codename'] , 'SSL'));
-            
+
             if(!empty($data['store_extension'])){
                 $result['suspend'] = $this->_ajax($this->url->link('d_shopunity/extension/suspend', 'token=' . $this->session->data['token']  . '&store_extension_id='.$data['store_extension']['store_extension_id'] , 'SSL'));
             }else{
@@ -314,6 +326,7 @@ class ModelDShopunityExtension extends Model {
             $result['store_extension'] = false;
             $result['tester_status_id'] = false;
             $result['tester_comment'] = false;
+            $result['new_version'] = false;
             
 
             $result['installable'] = true;
