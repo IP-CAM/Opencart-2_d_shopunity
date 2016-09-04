@@ -20,6 +20,7 @@ class ModelDShopunityBilling extends Model {
 
 	public function getOrders($filter_data = array()){
 		$result = array();
+		$filter_data['limit'] = 12;
 		$orders = $this->api->get('account/orders', $filter_data);
 		if(is_array($orders)){
 			foreach($orders as $order){
@@ -80,6 +81,7 @@ class ModelDShopunityBilling extends Model {
  */
 	public function getInvoices($filter_data = array()){
 		$result = array();
+		$filter_data['limit'] = 12;
 		$invoices = $this->api->get('account/invoices', $filter_data);
 		if(is_array($invoices)){
 			foreach($invoices as $invoice){
@@ -147,6 +149,7 @@ class ModelDShopunityBilling extends Model {
  */
 	public function getTransactions($filter_data = array()){
 		$result = array();
+		$filter_data['limit'] = 12;
 		$transactions = $this->api->get('account/transactions', $filter_data);
 		if(is_array($transactions)){
 			foreach($transactions as $transaction){
