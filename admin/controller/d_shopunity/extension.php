@@ -194,13 +194,12 @@ class ControllerDShopunityExtension extends Controller {
 		$json = array();
 		$json['installed'] = false;
 		if(!isset($this->request->get['extension_id'])){
-			$json['extension_id'] = $this->request->get['extension_id'];
-
 			$json['error'] = 'Error! extension_id missing';
 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
 
 		$extension_id = $this->request->get['extension_id'];
+		$json['extension_id'] = $extension_id;
 		$this->load->model('d_shopunity/extension');
 		$this->load->model('d_shopunity/mbooth');
 
