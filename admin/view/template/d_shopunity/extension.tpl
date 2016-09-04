@@ -25,17 +25,17 @@
 				<p>These modules have been purchased. You can use them only for this webshop.</p>
 			</div>
 			<div class="ibox-content">
-			<?php if($store_extensions){ ?>
 				<ul class="list list-unstyled">
+				<?php if($store_extensions){ ?>
 					<?php foreach($store_extensions as $extension) { ?>
-						<li>
+					<li>
 						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?>
-						</li>
+					</li>
 					<?php } ?>
+				<?php }else{ ?>
+					<div class="alert alert-warning">You haven't purchased any modules yet</div>
+				<?php } ?>
 				</ul>
-			<?php }else{ ?>
-				<div class="alert alert-warning">You haven't purchased any modules yet</div>
-			<?php } ?>
 			</div>
 		</div>
 			
@@ -45,17 +45,19 @@
 			<p>These modules do not have a license, or their lisence has been expired. </p>
 			</div>
 			<div class="ibox-content">
-			<?php if($local_extensions){ ?>
 				<ul class="list list-unstyled">
+				<?php if($local_extensions){ ?>\
 					<?php foreach($local_extensions as $extension) { ?>
-						<li>
+					<li>
 						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?>
-						</li>
+					</li>
 					<?php } ?>
+				<?php }else{ ?>
+					<li>
+						<div class="alert alert-warning">There are no expired or free modules installed</div>
+					</li>
+				<?php } ?>
 				</ul>
-			<?php }else{ ?>
-				<div class="alert alert-warning">There are no expired or free modules installed</div>
-			<?php } ?>
 			</div>
 		</div>
 	
@@ -66,19 +68,17 @@
 			</div>
 			<div class="ibox-content">
 				<ul class="list list-unstyled">
-			<?php if($unregestered_extensions){ ?>
-				
+				<?php if($unregestered_extensions){ ?>
 					<?php foreach($unregestered_extensions as $extension) { ?>
 					<li>
 						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?>
 					</li>
 					<?php } ?>
-				
-			<?php }else{ ?>
+				<?php }else{ ?>
 				<li>
-				<div class="alert alert-warning">You don't have any unregestered modules installed</div>
+					<div class="alert alert-warning">You don't have any unregestered modules installed</div>
 				</li>
-			<?php } ?>
+				<?php } ?>
 			</ul>
 			</div>
 	 <!-- <pre>
