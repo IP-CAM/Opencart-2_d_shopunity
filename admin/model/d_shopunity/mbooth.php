@@ -200,9 +200,21 @@ class ModelDShopunityMbooth extends Model {
                 $parts = explode('&', $extension['install']['url']);
                 $route = array_shift($parts);
             }
+        }else{
+            $parts = array('extension' => $codename);
+            $route = 'extension/extension/module/install';
         }
 
         if(isset($route) && isset($parts)){
+
+            if(VERSION < '2.3.0.0' && strpos($route, 'extension/extension/') !== false) {
+                $route = str_replace('extension/extension/', "extension/", $route);
+            }
+
+            if(VERSION >= '2.3.0.0' && strpos($route, 'extension/extension/') === false) {
+                $route = str_replace('extension/', 'extension/extension/', $route);
+            }
+
             try{
                 $content = file_get_contents($this->url->link($route, http_build_query($parts).'&token='.$this->session->data['token'], 'SSL'));
                 if($content){
