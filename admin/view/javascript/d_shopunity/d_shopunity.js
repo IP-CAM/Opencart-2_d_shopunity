@@ -46,7 +46,7 @@ d_shopunity = {
 				if(json['installed']){
 					swal({	
 						title: "Installed",	
-						text: json['text'],	
+						text: json['text']+'<div class="alert alert-success">'+json['success']+'</div><div class="alert alert-danger">'+json['error']+'</div>',	
 						type: "success",	
 						showCancelButton: true, 
 						confirmButtonColor: "#AEDEF4",	
@@ -123,7 +123,7 @@ d_shopunity = {
 						if(json['uninstalled']){
 							swal({	
 								title: "Uninstalled",	
-								text: json['text'],	
+								text: json['text']+'<div class="alert alert-success">'+json['success']+'</div><div class="alert alert-danger">'+json['error']+'</div>',	
 								type: "success",	
 								showCancelButton: true, 
 								confirmButtonColor: "#AEDEF4",	
