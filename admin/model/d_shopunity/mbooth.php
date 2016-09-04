@@ -208,7 +208,7 @@ class ModelDShopunityMbooth extends Model {
             try{
                 $content = file_get_contents($this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
                 if($content){
-                    $result['success'][] = 'Extension activated => '.$route.'&'.implode('&',$parts);
+                    $result['success'][] = 'Extension activated => '.$content;
                 }else{
                     $result['error'][] = 'Extension not activated';
                 }
