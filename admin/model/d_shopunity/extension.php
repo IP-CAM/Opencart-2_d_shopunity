@@ -238,7 +238,9 @@ class ModelDShopunityExtension extends Model {
 
             if($result['installed']){
                 $mbooth = $this->model_d_shopunity_mbooth->getExtension($data['codename']);
-                $result['view'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
+                if(isset($mbooth['index'])){
+                    $result['view'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
+                }
             }
             
 
