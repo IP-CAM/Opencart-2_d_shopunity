@@ -374,7 +374,11 @@ class ControllerDShopunityExtension extends Controller {
 
 			if(isset($this->request->get['extension_id'])){
 				$this->load->model('d_shopunity/extension');
-				$json['extension_id'] = $this->request->get['extension_id'];
+				$extension_id = $this->request->get['extension_id'];
+				
+				$json['extension_id'] = $extension_id;
+				$json['view'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
+				
 				$data['extension'] = $this->model_d_shopunity_extension->getExtension($this->request->get['extension_id']);
 				$json['extension'] = $this->load->view('d_shopunity/extension_thumb.tpl', $data);
 			}
