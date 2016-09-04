@@ -65,17 +65,21 @@
 				<p>These modules are not regestered with the shopunity network.</p>
 			</div>
 			<div class="ibox-content">
-			<?php if($unregestered_extensions){ ?>
 				<ul class="list list-unstyled">
+			<?php if($unregestered_extensions){ ?>
+				
 					<?php foreach($unregestered_extensions as $extension) { ?>
 					<li>
 						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?>
 					</li>
 					<?php } ?>
-				</ul>
+				
 			<?php }else{ ?>
+				<li>
 				<div class="alert alert-warning">You don't have any unregestered modules installed</div>
+				</li>
 			<?php } ?>
+			</ul>
 			</div>
 	 <!-- <pre>
 
