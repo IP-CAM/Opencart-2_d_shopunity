@@ -115,7 +115,36 @@ d_shopunity = {
 		}, 
 		function(isConfirm){  
 			if (isConfirm) {     
-				location.href = $node.data('href');  
+				$.ajax({
+					url: $node.data('href'),
+					dataType: 'json',
+					method: 'get',
+					success: function(json) {
+						if(json['uninstalled']){
+							swal({	
+								title: "Uninstalled",	
+								text: json['text'],	
+								type: "success",	
+								showCancelButton: true, 
+								confirmButtonColor: "#AEDEF4",	
+								confirmButtonText: "View",	
+								closeOnConfirm: false,
+								closeOnCancel: true
+							},
+							function(isConfirm){  
+								if (isConfirm) {
+									location.href = json['view'];
+								} else {     
+									that.hideLoading($('.loading'));
+							 	}	
+							});
+						}
+
+						if(json['extension']){
+							$('#extension_id_'+json['extension_id']).replaceWith(json['extension']);
+						}
+					}
+				});  
 			} else {     
 				that.hideLoading($('.loading'));
 		 	}	

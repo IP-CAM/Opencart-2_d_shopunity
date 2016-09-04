@@ -344,9 +344,12 @@ class ControllerDShopunityExtension extends Controller {
 	}
 
 	public function uninstall(){
+		$json = array();
+		$json['uninstalled'] = false;
+
 		if(!isset($this->request->get['codename'])){
-			$this->session->data['error'] = 'Error! codename missing';
-			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$json['error'] = 'Error! codename missing';
+			$json['redirect'] =  str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
 
 		$this->load->model('d_shopunity/mbooth');
@@ -357,15 +360,25 @@ class ControllerDShopunityExtension extends Controller {
 		}
 		
 		if(!empty($result['error'])) {
-			$this->session->data['error'] = $this->language->get('error_delete') . "<br />" . implode("<br />", $result['error']);
+			$json['error'] = $this->language->get('error_delete') . "<br />" . implode("<br />", $result['error']);
 		}
 
 		if(!empty($result['success'])) {
-			$this->session->data['success'] = 'Extension #' . $this->request->get['codename'].' uninstalled';
-			$this->session->data['success'] .=  "<br />" . implode("<br />", $result['success']);
-		}
 
-		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$json['uninstalled'] = true;
+			$json['text'] = "Extension ".$extension['codename']." has been successfuly uninstalled";
+
+			if(isset($this->request->get['extension_id'])){
+				$this->load->model('d_shopunity/extension');
+				$data['extension'] = $this->model_d_shopunity_extension->getExtension($this->request->get['extension_id']);
+				$json['extension'] = $this->load->view('d_shopunity/extension_thumb.tpl', $data);
+			}
+			
+			$json['success'] = 'Extension #' . $this->request->get['codename'].' uninstalled';
+			$json['success'] .=  "<br />" . implode("<br />", $result['success']);
+
+		}
+		$this->response->setOutput(json_encode($json));
 
 	}
 
