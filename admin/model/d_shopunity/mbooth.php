@@ -237,20 +237,17 @@ class ModelDShopunityMbooth extends Model {
                     //if vqmod
                     if(strpos($file, 'vqmod') !== false && strpos($file, '.xml_') !== false){
                         $this->model_d_shopunity_vqmod->setVqmod(basename($file, '.xml_').'.xml', 0);
-                        @unlink($this->dir_root.'vqmod/mods.cache');
                     }elseif(strpos($file, 'vqmod') !== false && strpos($file, '.xml') !== false){
                         $this->model_d_shopunity_vqmod->setVqmod(basename($file), 1);
-                        @unlink($this->dir_root.'vqmod/mods.cache');
                     }
 
                     if (@unlink($this->dir_root . $file)) {
                         $result['success'][] = $file;
+                        if(strpos($file, 'vqmod') !== false){
+                            @unlink($this->dir_root.'vqmod/mods.cache');
+                        }
                     } else {
                         $result['error'][] = $file;
-                    }
-
-                    if(strpos($file, 'vqmod') !== false){
-                        $content = file_get_contents(HTTP_CATALOG);
                     }
 
                     $dir = dirname($this->base_dir . $file);
