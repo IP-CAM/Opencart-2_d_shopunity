@@ -21,8 +21,8 @@
 			</div>
 			<div class="ibox-content">
 				
-				<?php if($extension['view']){ ?>
-					<a class="btn btn-info btn-block show-loading" href="<?php echo $extension['view']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-cog"></span> Admin</a>
+				<?php if($extension['admin']){ ?>
+					<a class="btn btn-info btn-block show-loading" href="<?php echo $extension['admin']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-pencil"></span> Admin</a>
 				<?php } ?>
 
 				<?php if($extension['updatable'] && $extension['installed']){ ?>
