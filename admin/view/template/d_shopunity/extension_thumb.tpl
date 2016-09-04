@@ -1,4 +1,4 @@
-<div class="extension-thumb">
+<div class="extension-thumb" id="extension_id_<?php echo $extension['extension_id']; ?>">
 	<div class="ibox">
 		<!-- <?php if(!empty($extension['description_short'])) {?>
         <p class="absolute-description">

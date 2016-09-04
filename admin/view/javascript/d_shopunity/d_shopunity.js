@@ -62,6 +62,10 @@ d_shopunity = {
 					 	}	
 					});
 				}
+
+				if(json['extension']){
+					$('#extension_id_'+json['extension_id']).replaceWith(json['extension']);
+				}
 			}
 		}); 
 		return false;

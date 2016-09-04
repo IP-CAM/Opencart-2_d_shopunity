@@ -194,6 +194,8 @@ class ControllerDShopunityExtension extends Controller {
 		$json = array();
 		$json['installed'] = false;
 		if(!isset($this->request->get['extension_id'])){
+			$json['extension_id'] = $this->request->get['extension_id'];
+
 			$json['error'] = 'Error! extension_id missing';
 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
@@ -257,6 +259,10 @@ class ControllerDShopunityExtension extends Controller {
 				$json['installed'] = true;
 				$json['text'] = "Extension ".$extension['codename']." has been successfuly installed";
 				$json['view'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
+				
+				$data['extension'] = $this->model_d_shopunity_extension->getExtension($extension_id);
+				$json['extension'] = $this->load->view('d_shopunity/extension_thumb.tpl', $data);
+
 				$json['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
 				$json['success'] .=  "<br />" . implode("<br />", $result['success']);
 			}
