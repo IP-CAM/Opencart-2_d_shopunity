@@ -37,7 +37,7 @@ d_shopunity = {
 	},
 
 	installExtension: function($node){
-
+		var that = this;
 		$.ajax({
 			url: $node.data('href'),
 			dataType: 'json',
@@ -52,7 +52,7 @@ d_shopunity = {
 						confirmButtonColor: "#AEDEF4",	
 						confirmButtonText: "View",	
 						closeOnConfirm: false,
-						closeOnCancel: false
+						closeOnCancel: true
 					},
 					function(isConfirm){  
 						if (isConfirm) {
