@@ -194,26 +194,15 @@ class ModelDShopunityMbooth extends Model {
     }
 
     public function activateExtension($codename, $result = array()) {
-        $extension = $this->getExtensionJson($codename);
+        $extension = $this->getExtension($codename);
         if(isset($extension['install'])){
             if(isset($extension['install']['url'])){
                 $parts = explode('&', $extension['install']['url']);
                 $route = array_shift($parts);
             }
-        }else{
-            $parts = array('extension' => $codename);
-            $route = 'extension/extension/module/install';
         }
 
         if(isset($route) && isset($parts)){
-
-            if(VERSION < '2.3.0.0' && strpos($route, 'extension/extension/') !== false) {
-                $route = str_replace('extension/extension/', "extension/", $route);
-            }
-
-            if(VERSION >= '2.3.0.0' && strpos($route, 'extension/extension/') === false) {
-                $route = str_replace('extension/', 'extension/extension/', $route);
-            }
 
             try{
                 $content = file_get_contents($this->url->link($route, http_build_query($parts).'&token='.$this->session->data['token'], 'SSL'));
@@ -231,30 +220,16 @@ class ModelDShopunityMbooth extends Model {
     }
 
     public function deactivateExtension($codename, $result = array()) {
-        $extension = $this->getExtensionJson($codename);
+        $extension = $this->getExtension($codename);
         if(isset($extension['uninstall'])){
             if(isset($extension['uninstall']['url'])){
                 $parts = explode('&', $extension['uninstall']['url']);
                 $route = array_shift($parts);
             }
 
-        }elseif(isset($extension['install'])){
-            if(isset($extension['install']['url'])){
-                $parts = explode('&', $extension['install']['url']);
-                $route = str_replace("/install", "/uninstall", array_shift($parts));
-            }
         }
 
         if(isset($route) && isset($parts)){
-
-
-            if(VERSION < '2.3.0.0' && strpos($route, 'extension/extension/') !== false) {
-                $route = str_replace('extension/extension/', "extension/", $route);
-            }
-
-            if(VERSION >= '2.3.0.0' && strpos($route, 'extension/extension/') === false) {
-                $route = str_replace('extension/', 'extension/extension/', $route);
-            }
 
             try{
                 $content = file_get_contents($this->url->link($route, http_build_query($parts).'&token='.$this->session->data['token'], 'SSL'));
@@ -510,6 +485,38 @@ class ModelDShopunityMbooth extends Model {
 
             if(VERSION >= '2.3.0.0' && strpos($result['index'], 'extension/module/') === false) {
                 $result['index'] = str_replace('module/', 'extension/module/', $result['index']);
+            }
+
+            if(!isset($result['install'])){
+                $result['install'] = array();
+            }
+
+            if(!isset($result['install']['url'])){
+                $result['install']['url'] = 'extension/module/install&extension='.$data['codename'];
+            }
+
+            if(VERSION < '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') !== false) {
+                $result['uninstall']['url'] = str_replace('extension/extension/', "extension/", $result['uninstall']['url']);
+            }
+
+            if(VERSION >= '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') === false) {
+                $result['uninstall']['url'] = str_replace('extension/', 'extension/extension/', $result['uninstall']['url']);
+            }
+
+            if(!isset($result['uninstall'])){
+                $result['uninstall'] = array();
+            }
+
+            if(!isset($result['uninstall']['url'])){
+                $result['uninstall']['url'] = 'extension/module/uninstall&extension='.$data['codename'];
+            }
+
+            if(VERSION < '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') !== false) {
+                $result['uninstall']['url'] = str_replace('extension/extension/', "extension/", $result['uninstall']['url']);
+            }
+
+            if(VERSION >= '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') === false) {
+                $result['uninstall']['url'] = str_replace('extension/', 'extension/extension/', $result['uninstall']['url']);
             }
 
             if (!empty($data['dirs'])) {
