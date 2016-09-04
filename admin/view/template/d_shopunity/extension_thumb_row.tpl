@@ -32,7 +32,7 @@
 				<div class="form-inline">
 	            
 	        	<?php if($extension['updatable'] && $extension['installed']){ ?>
-	        	<a class="btn btn-success show-loading update-extension" data-href="<?php echo $extension['update']; ?>"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
+	        	<a class="btn btn-success show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
 	        	<?php } ?>
 	        	
 		       
