@@ -352,11 +352,15 @@ class ControllerDShopunityExtension extends Controller {
 			$json['redirect'] =  str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
 
-		$this->load->model('d_shopunity/mbooth');
+		if(empty($json['error'])){
+			$codename = $this->request->get['codename'];
+			$this->load->model('d_shopunity/mbooth');
 
-		$result = $this->model_d_shopunity_mbooth->uninstallExtension($this->request->get['codename']);
+			$result = $this->model_d_shopunity_mbooth->uninstallExtension($codename);
+		}
+		
 		if(empty($result['error'])){
-			$result = $this->model_d_shopunity_mbooth->deleteExtension($this->request->get['codename']);
+			$result = $this->model_d_shopunity_mbooth->deleteExtension($codename);
 		}
 		
 		if(!empty($result['error'])) {
@@ -366,15 +370,15 @@ class ControllerDShopunityExtension extends Controller {
 		if(!empty($result['success'])) {
 
 			$json['uninstalled'] = true;
-			$json['text'] = "Extension ".$extension['codename']." has been successfuly uninstalled";
+			$json['text'] = "Extension ".$codename." has been successfuly uninstalled";
 
 			if(isset($this->request->get['extension_id'])){
 				$this->load->model('d_shopunity/extension');
 				$data['extension'] = $this->model_d_shopunity_extension->getExtension($this->request->get['extension_id']);
 				$json['extension'] = $this->load->view('d_shopunity/extension_thumb.tpl', $data);
 			}
-			
-			$json['success'] = 'Extension #' . $this->request->get['codename'].' uninstalled';
+
+			$json['success'] = 'Extension #' . $codename .' uninstalled';
 			$json['success'] .=  "<br />" . implode("<br />", $result['success']);
 
 		}
