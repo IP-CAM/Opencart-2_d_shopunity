@@ -269,7 +269,6 @@ class ModelDShopunityMbooth extends Model {
                 }
             }
             @unlink($this->dir_root.'vqmod/mods.cache');
-            $content = file_get_contents(HTTP_CATALOG);
         }else{
             $result = false;
         }
