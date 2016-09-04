@@ -234,12 +234,12 @@ class ModelDShopunityExtension extends Model {
 
             $result['registered'] = true;
             $result['installed'] = $this->isInstalled($data['codename']);
-            $result['view'] = false;
+            $result['admin'] = false;
 
             if($result['installed']){
                 $mbooth = $this->model_d_shopunity_mbooth->getExtension($data['codename']);
                 if(isset($mbooth['index'])){
-                    $result['view'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
+                    $result['admin'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
                 }
             }
             

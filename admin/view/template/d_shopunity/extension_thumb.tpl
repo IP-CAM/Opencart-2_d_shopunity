@@ -25,8 +25,8 @@
 		        </p>
 
 				<div class="pull-right">
-					<?php if($extension['view']){ ?>
-						<a class="btn btn-info btn-sm show-loading" href="<?php echo $extension['view']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-cog"></span></a>
+					<?php if($extension['admin']){ ?>
+						<a class="btn btn-info btn-sm show-loading" href="<?php echo $extension['admin']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-pencil"></span></a>
 					<?php } ?>
 					
 	                <?php if($extension['installable'] && !$extension['installed']){ ?>
