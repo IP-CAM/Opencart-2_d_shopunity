@@ -133,7 +133,7 @@ class ModelDShopunityExtension extends Model {
 
     public function getTestableExtension($tester_id, $extension_id, $extension_download_link_id){
 
-         $data = array(
+        $data = array(
             'extension_download_link_id' => $extension_download_link_id
         );
 
