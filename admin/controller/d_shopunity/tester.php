@@ -25,7 +25,7 @@ class ControllerDShopunityTester extends Controller {
 		}
 
 		$account = $this->config->get('d_shopunity_account');
-print_r($account);
+
 		if(empty($account['tester'])){
 			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
