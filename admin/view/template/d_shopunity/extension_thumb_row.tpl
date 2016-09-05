@@ -87,7 +87,7 @@
 		        <?php } ?>
 	
 				<?php if($extension['testable']){ ?>
-	                <a class="btn btn-warning show-loading test-extension" data-href="<?php echo $extension['test']; ?>" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
+	                <a class="btn btn-warning show-loading test-extension" data-href="<?php echo $extension['test']; ?>&theme=extension_thumb_row" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
 		        <?php } ?>
 		       	</div>
 	        </div>
