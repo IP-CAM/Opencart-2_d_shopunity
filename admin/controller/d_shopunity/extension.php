@@ -368,6 +368,7 @@ class ControllerDShopunityExtension extends Controller {
 				$json['codename'] = $extension['codename'];
 				$data['extension'] = $this->model_d_shopunity_extension->getTestableExtension($tester_id, $extension_id, $extension_download_link_id);
 				if($data['extension']){
+					$this->load->language('d_shopunity/tester');
 					$theme = 'extension_thumb';
 					if(isset($this->request->get['theme'])){
 						$theme = $this->request->get['theme'];
@@ -378,7 +379,7 @@ class ControllerDShopunityExtension extends Controller {
 			   		$data['text_tester_status_4'] = $this->language->get('text_tester_status_4');
 			   		$data['text_tester_status_5'] = $this->language->get('text_tester_status_5');
 			   		$data['text_tester_status_6'] = $this->language->get('text_tester_status_6');
-   		
+
 					$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
 				}
 				
