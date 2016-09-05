@@ -131,6 +131,17 @@ class ModelDShopunityExtension extends Model {
         return $this->_extension($json);
     }
 
+    public function getTestableExtension($extension_id, $extension_download_link_id){
+
+         $data = array(
+            'extension_recurring_price_id' => $extension_recurring_price_id
+        );
+         
+        $json = $this->api->get('testers/'.$tester_id.'/extensions/'.$extension_id, $data);
+
+        return $this->_extension($json);
+    }
+
     public function purchaseExtension($extension_id, $extension_recurring_price_id){
         $data = array(
             'extension_id' => $extension_id,
