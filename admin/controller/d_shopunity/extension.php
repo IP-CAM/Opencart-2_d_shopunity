@@ -285,6 +285,10 @@ class ControllerDShopunityExtension extends Controller {
 		$json = array();
 		$json['installed'] = false;
 
+		if(!$this->model_d_shopunity_account->isLogged()){
+			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+
 		if(!isset($this->request->get['extension_download_link_id'])){
 			$json['error'] = 'Error! extension_download_link_id missing';
 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
@@ -296,7 +300,7 @@ class ControllerDShopunityExtension extends Controller {
 		}
 
 		$account = $this->config->get('d_shopunity_account');
-		$json['tester'] = $account;
+
 		if(empty($account['tester'])){
 			$json['error'] = 'Error! you must be a tester';
 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
