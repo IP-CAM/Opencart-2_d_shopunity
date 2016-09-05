@@ -362,13 +362,15 @@ class ControllerDShopunityExtension extends Controller {
 				$json['view'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
 				
 				$json['codename'] = $extension['codename'];
-				$json['extension'] = $this->model_d_shopunity_extension->getTestableExtension($tester_id, $extension_id, $extension_download_link_id);
-				$theme = 'extension_thumb';
-				if(isset($this->request->get['theme'])){
-					$theme = $this->request->get['theme'];
+				$data['extension'] = $this->model_d_shopunity_extension->getTestableExtension($tester_id, $extension_id, $extension_download_link_id);
+				if($data['extension']){
+					$theme = 'extension_thumb';
+					if(isset($this->request->get['theme'])){
+						$theme = $this->request->get['theme'];
+					}
+					$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
 				}
-				//$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
-
+				
 				$json['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
 				$json['success'] .=  "<br />" . implode("<br />", $result['success']);
 			}
