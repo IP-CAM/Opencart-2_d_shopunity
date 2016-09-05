@@ -295,6 +295,15 @@ class ControllerDShopunityExtension extends Controller {
 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
 
+		$account = $this->config->get('d_shopunity_account');
+
+		if(empty($account['tester'])){
+			$json['error'] = 'Error! you must be a tester';
+			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+
+		$tester_id = $account['tester']['tester_id'];
+
 		$extension_download_link_id = $this->request->get['extension_download_link_id'];
 		$extension_id = $this->request->get['extension_id'];
 		$this->load->model('d_shopunity/extension');
@@ -353,7 +362,7 @@ class ControllerDShopunityExtension extends Controller {
 				$json['view'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
 				
 				$json['codename'] = $extension['codename'];
-				$data['extension'] = $this->model_d_shopunity_extension->getTestableExtension($extension_id, $extension_download_link_id);
+				$data['extension'] = $this->model_d_shopunity_extension->getTestableExtension($tester_id, $extension_id, $extension_download_link_id);
 				$theme = 'extension_thumb';
 				if(isset($this->request->get['theme'])){
 					$theme = $this->request->get['theme'];

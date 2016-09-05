@@ -131,12 +131,12 @@ class ModelDShopunityExtension extends Model {
         return $this->_extension($json);
     }
 
-    public function getTestableExtension($extension_id, $extension_download_link_id){
+    public function getTestableExtension($tester_id, $extension_id, $extension_download_link_id){
 
          $data = array(
             'extension_download_link_id' => $extension_download_link_id
         );
-         
+
         $json = $this->api->get('testers/'.$tester_id.'/extensions/'.$extension_id, $data);
 
         return $this->_extension($json);
