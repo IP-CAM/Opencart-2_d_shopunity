@@ -62,6 +62,7 @@ class ControllerDShopunityMarket extends Controller {
 		$filter_data['limit'] = 12;
 		$filter_data['status'] = 1;
 		$filter_data['published'] = 1;
+		$filter_data['store_version'] = VERSION;
 		
 		$data['extensions'] = $this->model_d_shopunity_extension->getExtensions($filter_data);
 		$data['categories'] = $this->load->controller('d_shopunity/market/categories'); 
