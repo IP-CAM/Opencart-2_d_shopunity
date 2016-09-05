@@ -372,6 +372,13 @@ class ControllerDShopunityExtension extends Controller {
 					if(isset($this->request->get['theme'])){
 						$theme = $this->request->get['theme'];
 					}
+					$data['text_tester_status_1'] = $this->language->get('text_tester_status_1');
+			   		$data['text_tester_status_2'] = $this->language->get('text_tester_status_2');
+			   		$data['text_tester_status_3'] = $this->language->get('text_tester_status_3');
+			   		$data['text_tester_status_4'] = $this->language->get('text_tester_status_4');
+			   		$data['text_tester_status_5'] = $this->language->get('text_tester_status_5');
+			   		$data['text_tester_status_6'] = $this->language->get('text_tester_status_6');
+   		
 					$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
 				}
 				
