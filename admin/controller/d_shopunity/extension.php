@@ -368,7 +368,7 @@ class ControllerDShopunityExtension extends Controller {
 				$json['codename'] = $extension['codename'];
 				$data['extension'] = $this->model_d_shopunity_extension->getTestableExtension($tester_id, $extension_id, $extension_download_link_id);
 				if($data['extension']){
-					$this->load->language('d_shopunity/tester');
+					$this->load->language('d_shopunity/extension');
 					$theme = 'extension_thumb';
 					if(isset($this->request->get['theme'])){
 						$theme = $this->request->get['theme'];
