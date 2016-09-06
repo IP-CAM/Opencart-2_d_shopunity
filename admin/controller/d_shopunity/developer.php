@@ -12,6 +12,8 @@ class ControllerDShopunityDeveloper extends Controller {
 	public function __construct($registry) {
 		parent::__construct($registry);
 		$this->load->model('d_shopunity/mbooth');
+		$this->load->model('d_shopunity/account');
+		$this->load->model('d_shopunity/extension');
 
 		$this->extension = $this->model_d_shopunity_mbooth->getExtension($this->codename);
 	}
