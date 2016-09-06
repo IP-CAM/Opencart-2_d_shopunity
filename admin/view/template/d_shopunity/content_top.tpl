@@ -32,12 +32,6 @@
 						<span class="fa fa-puzzle-piece"></span> 
 						<?php echo $tab_extension; ?>
 					</a></li>
-					<?php if($tester) {?>
-					<li <?php if ($route == 'd_shopunity/tester') { ?>class="active" <?php } ?>><a href="<?php echo $href_tester; ?>" >
-						<span class="fa fa-puzzle-piece"></span> 
-						<?php echo $tab_tester; ?>
-					</a></li>
-					<?php } ?>
 					<li <?php if ($route == 'd_shopunity/market') { ?>class="active" <?php } ?>><a href="<?php echo $href_market; ?>" >
 						<span class="fa fa-flask"></span> 
 						<?php echo $tab_market; ?>
@@ -46,6 +40,18 @@
 						<span class="fa fa-money"></span> 
 						<?php echo $tab_billing; ?>
 					</a></li>
+					<?php if($tester) {?>
+					<li <?php if ($route == 'd_shopunity/tester') { ?>class="active" <?php } ?>><a href="<?php echo $href_tester; ?>" >
+						<span class="fa fa-puzzle-piece"></span> 
+						<?php echo $tab_tester; ?>
+					</a></li>
+					<?php } ?>
+					<?php if($developer) {?>
+					<li <?php if ($route == 'd_shopunity/developer') { ?>class="active" <?php } ?>><a href="<?php echo $href_developer; ?>" >
+						<span class="fa fa-puzzle-piece"></span> 
+						<?php echo $tab_developer; ?>
+					</a></li>
+					<?php } ?>
 					<!-- <li><a href="<?php echo $href_backup; ?>" >
 						<span class="fa fa-undo"></span> 
 						<?php echo $tab_backup; ?>

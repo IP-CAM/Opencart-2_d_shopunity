@@ -18,6 +18,7 @@ $_['tab_transaction']			= 'Transactions';
 $_['tab_backup']				= 'History';
 $_['tab_setting']				= 'Settings';
 $_['tab_tester']				= 'Tester';
+$_['tab_developer']				= 'Developer';
 
 //buttons
 $_['button_logout']            = 'Logout out of <b>Shopunity</b>';
