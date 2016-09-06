@@ -25,7 +25,13 @@ class ModelDShopunityDeveloper extends Model {
 
         $json = $this->api->get('developers/'.$developer_id.'/extensions', $data);
 
-        return $this->_extension($json);
+        if($json){
+            foreach($json as $key => $value){
+                $json[$key] = $this->_extension($value);
+            }
+        }
+
+        return $json;
     }
 
 
