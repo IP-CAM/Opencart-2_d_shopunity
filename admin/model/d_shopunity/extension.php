@@ -141,6 +141,7 @@ class ModelDShopunityExtension extends Model {
 
         return $this->_extension($json);
     }
+    
 
     public function purchaseExtension($extension_id, $extension_recurring_price_id){
         $data = array(

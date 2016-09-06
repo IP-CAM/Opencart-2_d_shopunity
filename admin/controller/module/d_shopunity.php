@@ -96,6 +96,7 @@ class ControllerModuleDShopunity extends Controller {
 		$data['tab_backup'] =  $this->language->get('tab_backup');
 		$data['tab_setting'] =  $this->language->get('tab_setting');
 		$data['tab_tester'] =  $this->language->get('tab_tester');
+		$data['tab_developer'] =  $this->language->get('tab_developer');
 
 		$data['href_extension'] =  $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_market'] =  $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
@@ -103,14 +104,19 @@ class ControllerModuleDShopunity extends Controller {
 		$data['href_backup'] = $this->url->link('d_shopunity/backup', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_setting'] = $this->url->link('d_shopunity/setting', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_tester'] = $this->url->link('d_shopunity/tester', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_developer'] = $this->url->link('d_shopunity/developer', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$data['button_logout'] =  $this->language->get('button_logout');
 		$data['logout'] = $this->url->link('d_shopunity/account/logout', 'token=' . $this->session->data['token'], 'SSL');
+		$account = $this->config->get('d_shopunity_account');
 
 		$data['tester'] = false;
-		$account = $this->config->get('d_shopunity_account');
 		if(!empty($account['tester'])){
 			$data['tester'] = true;
+		}
+		$data['developer'] = false;
+		if(!empty($account['developer'])){
+			$data['developer'] = true;
 		}
 		$data['header'] = $this->load->controller('common/header');
    		$data['column_left'] = $this->load->controller('common/column_left');
