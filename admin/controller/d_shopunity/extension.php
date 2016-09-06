@@ -27,26 +27,16 @@ class ControllerDShopunityExtension extends Controller {
 		$this->document->addScript('view/javascript/d_shopunity/library/list/list.min.js');
 		$this->document->addScript('view/javascript/d_shopunity/library/list/list.fuzzysearch.min.js');
 
-   		$this->load->language('d_shopunity/extension');
    		$this->load->model('d_shopunity/extension');
-
-   		$data['text_tester_status_1'] = $this->language->get('text_tester_status_1');
-   		$data['text_tester_status_2'] = $this->language->get('text_tester_status_2');
-   		$data['text_tester_status_3'] = $this->language->get('text_tester_status_3');
-   		$data['text_tester_status_4'] = $this->language->get('text_tester_status_4');
-   		$data['text_tester_status_5'] = $this->language->get('text_tester_status_5');
-   		$data['text_tester_status_6'] = $this->language->get('text_tester_status_6');
-   		$data['text_new_version_available'] = $this->language->get('text_new_version_available');
 
 		$data['store_extensions'] = $this->model_d_shopunity_extension->getStoreExtensions();
 		$data['local_extensions'] = $this->model_d_shopunity_extension->getLocalExtensions();
 		$data['unregestered_extensions'] = $this->model_d_shopunity_extension->getUnregisteredExtensions();
 
 		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
-
    		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
-
+   		$data = $this->_productThumb($data);
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
 
@@ -104,16 +94,7 @@ class ControllerDShopunityExtension extends Controller {
 			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
-
-   		$this->load->language('d_shopunity/extension');
    		$this->load->model('d_shopunity/extension');
-
-   		$data['text_tester_status_1'] = $this->language->get('text_tester_status_1');
-   		$data['text_tester_status_2'] = $this->language->get('text_tester_status_2');
-   		$data['text_tester_status_3'] = $this->language->get('text_tester_status_3');
-   		$data['text_tester_status_4'] = $this->language->get('text_tester_status_4');
-   		$data['text_tester_status_5'] = $this->language->get('text_tester_status_5');
-   		$data['text_tester_status_6'] = $this->language->get('text_tester_status_6');
 
 		$required = $this->model_d_shopunity_mbooth->getDependencies($codename);
 		$filter_data['codename'] = array();
@@ -136,10 +117,9 @@ class ControllerDShopunityExtension extends Controller {
 		}
 
 		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
-
    		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
-
+   		$data = $this->_productThumb($data);
    		$this->response->setOutput($this->load->view($this->route.'_dependency.tpl', $data));
 	}
 
@@ -264,10 +244,12 @@ class ControllerDShopunityExtension extends Controller {
 				
 				$json['codename'] = $extension['codename'];
 				$data['extension'] = $this->model_d_shopunity_extension->getExtension($extension_id);
+
 				$theme = 'extension_thumb';
 				if(isset($this->request->get['theme'])){
 					$theme = $this->request->get['theme'];
 				}
+				$data = $this->_productThumb($data);
 				$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
 
 				$json['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
@@ -373,13 +355,8 @@ class ControllerDShopunityExtension extends Controller {
 					if(isset($this->request->get['theme'])){
 						$theme = $this->request->get['theme'];
 					}
-					$data['text_tester_status_1'] = $this->language->get('text_tester_status_1');
-			   		$data['text_tester_status_2'] = $this->language->get('text_tester_status_2');
-			   		$data['text_tester_status_3'] = $this->language->get('text_tester_status_3');
-			   		$data['text_tester_status_4'] = $this->language->get('text_tester_status_4');
-			   		$data['text_tester_status_5'] = $this->language->get('text_tester_status_5');
-			   		$data['text_tester_status_6'] = $this->language->get('text_tester_status_6');
 
+					$data = $this->_productThumb($data);
 					$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
 				}
 				
@@ -438,6 +415,7 @@ class ControllerDShopunityExtension extends Controller {
 				if(isset($this->request->get['theme'])){
 					$theme = $this->request->get['theme'];
 				}
+				$data = $this->_productThumb($data);
 				$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
 			}
 
@@ -534,6 +512,21 @@ class ControllerDShopunityExtension extends Controller {
 		}
 
 		$this->response->setOutput(json_encode($json));
+	}
+
+
+	public function _productThumb($data){
+
+		$this->load->language('d_shopunity/extension');
+		$data['text_tester_status_1'] = $this->language->get('text_tester_status_1');
+   		$data['text_tester_status_2'] = $this->language->get('text_tester_status_2');
+   		$data['text_tester_status_3'] = $this->language->get('text_tester_status_3');
+   		$data['text_tester_status_4'] = $this->language->get('text_tester_status_4');
+   		$data['text_tester_status_5'] = $this->language->get('text_tester_status_5');
+   		$data['text_tester_status_6'] = $this->language->get('text_tester_status_6');
+   		$data['text_new_version_available'] = $this->language->get('text_new_version_available');
+
+		return $data;
 	}
 
 
