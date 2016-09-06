@@ -270,8 +270,8 @@ class ModelDShopunityExtension extends Model {
             }
 
             $result['purchase'] = $this->_ajax($this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $data['extension_id'] , 'SSL'));
-            $result['install'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] . (isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : '', 'SSL'));
-            $result['update'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id']  . (isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : '', 'SSL'));
+            $result['install'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] . ((isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : ''), 'SSL'));
+            $result['update'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id']  . ((isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : ''), 'SSL'));
             $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'] . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id'] ));
             $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token=' . $this->session->data['token']  . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['submit'] = $this->_ajax($this->url->link('d_shopunity/extension/submit', 'token=' . $this->session->data['token']  . '&extension_id='.$data['extension_id'] , 'SSL'));
