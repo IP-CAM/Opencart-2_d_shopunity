@@ -193,6 +193,17 @@ class ModelDShopunityExtension extends Model {
         return $result;
     }
 
+    public function getExtensionDownloadByDownloadLinkIdForTesting($extension_id, $extension_download_link_id){
+        $data = array(
+            'extension_download_link_id' => $extension_download_link_id,
+            'store_version' => VERSION,
+            'store_id' => $this->store_id,
+            'testing' => true);
+        $result = $this->api->get('extensions/'.$extension_id.'/download', $data);
+        return $result;
+    }
+    
+
     public function getExtensionDownloadByCodename($codename, $version = false){
         $data = array(
             'store_version' => VERSION,

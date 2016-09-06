@@ -192,7 +192,11 @@ class ControllerDShopunityExtension extends Controller {
 				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
 			}
 
-			$download = $this->model_d_shopunity_extension->getExtensionDownload($extension_id);
+			if(isset($this->request->get['extension_download_link_id'])){
+				$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkId($extension_id, $this->request->get['extension_download_link_id']);
+			}else{
+				$download = $this->model_d_shopunity_extension->getExtensionDownload($extension_id);
+			}
 
 			if(!empty($download['error']) || empty($download['download'])){
 				$json['error'] = 'Error! We cound not get the download link: '.$download['error'];
@@ -299,7 +303,7 @@ class ControllerDShopunityExtension extends Controller {
 
 			$extension = $this->model_d_shopunity_extension->getExtension($extension_id);
 
-			$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkId($extension_id, $extension_download_link_id);
+			$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkIdForTesting($extension_id, $extension_download_link_id);
 
 			if(!empty($download['error']) || empty($download['download'])){
 				$json['error'] = 'Error! We cound not get the download link: '.$download['error'];
