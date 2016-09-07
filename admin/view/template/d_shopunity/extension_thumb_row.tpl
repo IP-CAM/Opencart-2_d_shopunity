@@ -86,13 +86,10 @@
 	        	<?php if($extension['submittable']){ ?>
 	                <a class="btn btn-warning show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
 		        <?php } ?>
-
+				<hr/>
 		        <?php if($extension['testable']){ ?>
 	                <a class="btn btn-primary show-loading approve-extension" data-href="<?php echo $extension['approve']; ?>" data-toggle="tooltip" data-original-title="Approve"><span class="fa fa-thumbs-up"></span></a>
 	                <a class="btn btn-danger show-loading disapprove-extension" data-href="<?php echo $extension['disapprove']; ?>" data-toggle="tooltip" data-original-title="Disaprove"><span class="fa fa-thumbs-down"></span></a>
-		        <?php } ?>
-	
-				<?php if($extension['testable']){ ?>
 	                <a class="btn btn-warning show-loading test-extension" data-href="<?php echo $extension['test']; ?>&theme=extension_thumb_row" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
 		        <?php } ?>
 		       	</div>
