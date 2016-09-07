@@ -36,10 +36,7 @@
 						<span class="fa fa-flask"></span> 
 						<?php echo $tab_market; ?>
 					</a></li>
-					<li <?php if ($route == 'd_shopunity/order' || $route == 'd_shopunity/invoice' || $route == 'd_shopunity/transaction'  ) { ?>class="active" <?php } ?>><a href="<?php echo $href_billing; ?>" >
-						<span class="fa fa-money"></span> 
-						<?php echo $tab_billing; ?>
-					</a></li>
+					
 					<?php if($developer) {?>
 					<li <?php if ($route == 'd_shopunity/developer') { ?>class="active" <?php } ?>><a href="<?php echo $href_developer; ?>" >
 						<span class="fa fa-code"></span> 
@@ -52,7 +49,10 @@
 						<?php echo $tab_tester; ?>
 					</a></li>
 					<?php } ?>
-					
+					<li <?php if ($route == 'd_shopunity/order' || $route == 'd_shopunity/invoice' || $route == 'd_shopunity/transaction'  ) { ?>class="active pull-right" <?php } ?>><a href="<?php echo $href_billing; ?>" >
+						<span class="fa fa-money"></span> 
+						<?php echo $tab_billing; ?>
+					</a></li>
 					<!-- <li><a href="<?php echo $href_backup; ?>" >
 						<span class="fa fa-undo"></span> 
 						<?php echo $tab_backup; ?>
