@@ -41,6 +41,12 @@
 						<a class="btn btn-danger btn-sm show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
 		            <?php } ?>
 	                
+	                <?php if($extension['activate']){ ?>
+					<a class="btn btn-success activate-extension hide" data-href="<?php echo $extension['activate']; ?>"  data-toggle="tooltip" data-original-title="Activate"><span class="fa fa-power-off "></span></a>
+					<?php } ?>
+					<?php if($extension['deactivate']){ ?>
+						<a class="btn btn-danger deactivate-extension hide" data-href="<?php echo $extension['deactivate']; ?>"  data-toggle="tooltip" data-original-title="Deactivate"><span class="fa fa-power-off "></span></a>
+					<?php } ?>
 		        	
 		        	<!-- 
 		        	<?php if($extension['downloadable'] ){ ?>
