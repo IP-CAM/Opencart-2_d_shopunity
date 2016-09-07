@@ -66,7 +66,7 @@ d_shopunity = {
 				if(json['extension']){
 					$('#extension_'+json['codename']).replaceWith(json['extension']);
 
-					that.activateExtension($('#extension_'+json('codename')+' .activate-extension'));
+					that.activateExtension($('#extension_'+json['codename']+' .activate-extension'));
 				}
 
 			}
