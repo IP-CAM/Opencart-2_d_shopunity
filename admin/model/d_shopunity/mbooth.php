@@ -206,10 +206,13 @@ class ModelDShopunityMbooth extends Model {
         if(isset($route) && isset($parts)){
 
             try{
-                parse_str(implode("&", $parts), $vars);
-                $this->request->get['extension'] = $vars['extension'];
-       
-                $this->load->controller($route);
+                if(VERSION < '2.3.0.0'){
+                    $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
+                }else{
+                    parse_str(implode("&", $parts), $vars);
+                    $this->request->get['extension'] = $vars['extension'];
+                    $this->load->controller($route);
+                }
                 $result['success'][] = 'Extension activated';
                 
             }catch(Exception $e){
@@ -233,12 +236,12 @@ class ModelDShopunityMbooth extends Model {
         if(isset($route) && isset($parts)){
 
             try{
-                parse_str(implode("&", $parts), $vars);
-                $content = $this->load->controller($route, $vars);
-                if($content){
-                    $result['success'][] = 'Extension deactivated';
+                if(VERSION < '2.3.0.0'){
+                    $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
                 }else{
-                    $result['error'][] = 'Extension not deactivated';
+                    parse_str(implode("&", $parts), $vars);
+                    $this->request->get['extension'] = $vars['extension'];
+                    $this->load->controller($route);
                 }
                 
             }catch(Exception $e){
