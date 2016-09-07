@@ -193,8 +193,8 @@ class ModelDShopunityMbooth extends Model {
         return $this->moveFiles(DIR_SYSTEM . 'mbooth/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
     }
 
+    
     public function activateExtension($codename, $result = array()) {
-        $result = array();
         $extension = $this->getExtension($codename);
         if(isset($extension['install'])){
             if(isset($extension['install']['url'])){
@@ -206,12 +206,11 @@ class ModelDShopunityMbooth extends Model {
         if(isset($route) && isset($parts)){
 
             try{
-                $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
-                if($content){
-                    $result['success'][] = 'Extension activated';
-                }else{
-                    $result['error'][] = 'Extension not activated';
-                }
+                parse_str(implode("&", $parts), $vars);
+                $this->request->get['extension'] = $vars['extension'];
+       
+                $this->load->controller($route);
+                $result['success'][] = 'Extension activated';
                 
             }catch(Exception $e){
                 $result['error'][] = 'Extension not activated message: '. $e->message;
@@ -221,6 +220,7 @@ class ModelDShopunityMbooth extends Model {
     }
 
     public function deactivateExtension($codename, $result = array()) {
+
         $extension = $this->getExtension($codename);
         if(isset($extension['uninstall'])){
             if(isset($extension['uninstall']['url'])){
@@ -233,7 +233,8 @@ class ModelDShopunityMbooth extends Model {
         if(isset($route) && isset($parts)){
 
             try{
-                $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
+                parse_str(implode("&", $parts), $vars);
+                $content = $this->load->controller($route, $vars);
                 if($content){
                     $result['success'][] = 'Extension deactivated';
                 }else{
@@ -246,6 +247,7 @@ class ModelDShopunityMbooth extends Model {
         }
         return $result;
     }
+
 
 	public function deleteExtension($codename){
 
