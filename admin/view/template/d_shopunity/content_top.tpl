@@ -49,7 +49,7 @@
 						<?php echo $tab_tester; ?>
 					</a></li>
 					<?php } ?>
-					<li <?php if ($route == 'd_shopunity/order' || $route == 'd_shopunity/invoice' || $route == 'd_shopunity/transaction'  ) { ?>class="active pull-right" <?php } ?>><a href="<?php echo $href_billing; ?>" >
+					<li <?php if ($route == 'd_shopunity/order' || $route == 'd_shopunity/invoice' || $route == 'd_shopunity/transaction'  ) { ?>class="active" <?php } ?>><a href="<?php echo $href_billing; ?>" >
 						<span class="fa fa-money"></span> 
 						<?php echo $tab_billing; ?>
 					</a></li>
