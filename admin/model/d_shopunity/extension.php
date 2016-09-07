@@ -283,22 +283,23 @@ class ModelDShopunityExtension extends Model {
 
                 if(isset($mbooth['index'])){
                     $result['admin'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
-                    if(isset($mbooth['install'])){
-                        if(isset($mbooth['install']['url'])){
-                            $parts = explode('&', $mbooth['install']['url']);
-                            $route = array_shift($parts);
+                }
 
-                            $result['activate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
-                        }
+                if(isset($mbooth['install'])){
+                    if(isset($mbooth['install']['url'])){
+                        $parts = explode('&', $mbooth['install']['url']);
+                        $route = array_shift($parts);
+
+                        $result['activate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
                     }
+                }
 
-                    if(isset($mbooth['uninstall'])){
-                        if(isset($mbooth['uninstall']['url'])){
-                            $parts = explode('&', $mbooth['uninstall']['url']);
-                            $route = array_shift($parts);
+                if(isset($mbooth['uninstall'])){
+                    if(isset($mbooth['uninstall']['url'])){
+                        $parts = explode('&', $mbooth['uninstall']['url']);
+                        $route = array_shift($parts);
 
-                            $result['deactivate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
-                        }
+                        $result['deactivate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
                     }
                 }
             }
