@@ -24,4 +24,15 @@ class ModelDShopunityVqmod extends Model {
         }
         return false;
     }
+
+    public function refreshCache(){
+        $dir_vqmod =  str_replace("system", "vqmod", DIR_SYSTEM);
+        $file  = $dir_vqmod.'mods.cache';
+
+        if (file_exists($file)) { 
+            return unlink($file);
+        }
+    
+        return false;
+    }
 }

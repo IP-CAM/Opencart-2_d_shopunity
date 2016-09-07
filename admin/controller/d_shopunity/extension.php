@@ -239,8 +239,8 @@ class ControllerDShopunityExtension extends Controller {
 			if(!empty($result['success'])) {
 
 				$result = $this->model_d_shopunity_mbooth->installDependencies($extension['codename'], $result);
-				
-				//$result = $this->model_d_shopunity_mbooth->activateExtension($extension['codename'], $result);
+				$this->load->model('d_shopunity/vqmod');
+				$this->model_d_shopunity_vqmod->refreshCache();
 
 				$json['installed'] = true;
 				$json['text'] = "Extension ".$extension['codename']." has been successfuly installed";
