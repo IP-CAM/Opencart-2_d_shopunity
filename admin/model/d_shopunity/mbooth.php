@@ -194,62 +194,62 @@ class ModelDShopunityMbooth extends Model {
     }
 
     
-    public function activateExtension($codename, $result = array()) {
-        $extension = $this->getExtension($codename);
-        if(isset($extension['install'])){
-            if(isset($extension['install']['url'])){
-                $parts = explode('&', $extension['install']['url']);
-                $route = array_shift($parts);
-            }
-        }
+    // public function activateExtension($codename, $result = array()) {
+    //     $extension = $this->getExtension($codename);
+    //     if(isset($extension['install'])){
+    //         if(isset($extension['install']['url'])){
+    //             $parts = explode('&', $extension['install']['url']);
+    //             $route = array_shift($parts);
+    //         }
+    //     }
 
-        if(isset($route) && isset($parts)){
+    //     if(isset($route) && isset($parts)){
 
-            try{
-                if(VERSION < '2.3.0.0'){
-                    $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
-                }else{
-                    parse_str(implode("&", $parts), $vars);
-                    $this->request->get['extension'] = $vars['extension'];
-                    $this->load->controller($route);
-                }
-                $result['success'][] = 'Extension activated';
+    //         try{
+    //             if(VERSION < '2.3.0.0'){
+    //                 $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
+    //             }else{
+    //                 parse_str(implode("&", $parts), $vars);
+    //                 $this->request->get['extension'] = $vars['extension'];
+    //                 $this->load->controller($route);
+    //             }
+    //             $result['success'][] = 'Extension activated';
                 
-            }catch(Exception $e){
-                $result['error'][] = 'Extension not activated message: '. $e->message;
-            }
-        }
-        return $result;
-    }
+    //         }catch(Exception $e){
+    //             $result['error'][] = 'Extension not activated message: '. $e->message;
+    //         }
+    //     }
+    //     return $result;
+    // }
 
-    public function deactivateExtension($codename, $result = array()) {
+    // public function deactivateExtension($codename, $result = array()) {
 
-        $extension = $this->getExtension($codename);
-        if(isset($extension['uninstall'])){
-            if(isset($extension['uninstall']['url'])){
-                $parts = explode('&', $extension['uninstall']['url']);
-                $route = array_shift($parts);
-            }
+    //     $extension = $this->getExtension($codename);
+    //     if(isset($extension['uninstall'])){
+    //         if(isset($extension['uninstall']['url'])){
+    //             $parts = explode('&', $extension['uninstall']['url']);
+    //             $route = array_shift($parts);
+    //         }
 
-        }
+    //     }
 
-        if(isset($route) && isset($parts)){
+    //     if(isset($route) && isset($parts)){
 
-            try{
-                if(VERSION < '2.3.0.0'){
-                    $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
-                }else{
-                    parse_str(implode("&", $parts), $vars);
-                    $this->request->get['extension'] = $vars['extension'];
-                    $this->load->controller($route);
-                }
+    //         try{
+    //             if(VERSION < '2.3.0.0'){
+    //                 $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
+    //             }else{
+    //                 parse_str(implode("&", $parts), $vars);
+    //                 $this->request->get['extension'] = $vars['extension'];
+    //                 $this->load->controller($route);
+    //             }
                 
-            }catch(Exception $e){
-                $result['error'][] = 'Extension not deactivated message: '. $e->message;
-            }
-        }
-        return $result;
-    }
+    //         }catch(Exception $e){
+    //             $result['error'][] = 'Extension not deactivated message: '. $e->message;
+    //         }
+    //     }
+    //     return $result;
+    // }
 
 
 	public function deleteExtension($codename){

@@ -72,6 +72,28 @@ d_shopunity = {
 		
 	},
 
+	activateExtension: function($node){
+		$.ajax({
+			url: $node.data('href'),
+			dataType: 'json',
+			method: 'get',
+			success: function(json) {
+				console.log(json)
+			}
+		});
+	},
+
+	deactivateExtension: function($node){
+		$.ajax({
+			url: $node.data('href'),
+			dataType: 'json',
+			method: 'get',
+			success: function(json) {
+				console.log(json)
+			}
+		});
+	},
+
 	updateExtension: function($node){
 		var that = this;
 		swal({	
@@ -344,6 +366,14 @@ d_shopunity = {
 
 		$(document).on('click', '.delete-extension', function(){
 			that.deleteExtension($(this));
+		});
+
+		$(document).on('click', '.activate-extension', function(){
+			that.activateExtension($(this));
+		});
+
+		$(document).on('click', '.deactivate-extension', function(){
+			that.deactivateExtension($(this));
 		});
 
 		$(document).on('click', '.suspend-extension', function(){

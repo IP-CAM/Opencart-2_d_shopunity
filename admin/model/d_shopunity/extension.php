@@ -258,6 +258,8 @@ class ModelDShopunityExtension extends Model {
             $result['registered'] = true;
             $result['installed'] = $this->isInstalled($data['codename']);
             $result['admin'] = false;
+            $result['activate'] = false;
+            $result['deactivate'] = false;
             $result['update_available'] = false;
             $result['current_version'] = $result['version'];
 
@@ -281,6 +283,23 @@ class ModelDShopunityExtension extends Model {
 
                 if(isset($mbooth['index'])){
                     $result['admin'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
+                    if(isset($mbooth['install'])){
+                        if(isset($mbooth['install']['url'])){
+                            $parts = explode('&', $mbooth['install']['url']);
+                            $route = array_shift($parts);
+
+                            $result['activate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
+                        }
+                    }
+
+                    if(isset($mbooth['uninstall'])){
+                        if(isset($mbooth['uninstall']['url'])){
+                            $parts = explode('&', $mbooth['uninstall']['url']);
+                            $route = array_shift($parts);
+
+                            $result['deactivate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
+                        }
+                    }
                 }
             }
 
@@ -347,9 +366,28 @@ class ModelDShopunityExtension extends Model {
                 );
             $result['installed'] = true;
             $result['registered'] = false;
-            $result['view'] = false;
+            $result['admin'] = false;
+            $result['activate'] = false;
+            $result['deactivate'] = false;
             if(isset($data['index'])){
-                $result['view'] =  $this->_ajax($this->url->link($data['index'], 'token=' . $this->session->data['token'] , 'SSL'));
+                $result['admin'] =  $this->_ajax($this->url->link($data['index'], 'token=' . $this->session->data['token'] , 'SSL'));
+            }
+            if(isset($data['install'])){
+                if(isset($data['install']['url'])){
+                    $parts = explode('&', $data['install']['url']);
+                    $route = array_shift($parts);
+
+                    $result['activate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
+                }
+            }
+
+            if(isset($data['uninstall'])){
+                if(isset($data['uninstall']['url'])){
+                    $parts = explode('&', $data['uninstall']['url']);
+                    $route = array_shift($parts);
+
+                    $result['deactivate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
+                }
             }
             $result['store_extension'] = false;
             $result['tester_status_id'] = false;
