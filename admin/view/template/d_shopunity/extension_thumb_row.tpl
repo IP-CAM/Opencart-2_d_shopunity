@@ -1,4 +1,4 @@
-<div class="extension-thumb-row"  id="extension_<?php echo $extension['codename']; ?>">
+<div class="extension-thumb extension-thumb-row"  id="extension_<?php echo $extension['codename']; ?>">
 	<div class="row">
 		<div class="col-md-1">
 			<a href="<?php echo $extension['url']; ?>">

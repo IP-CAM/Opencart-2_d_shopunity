@@ -65,11 +65,13 @@ d_shopunity = {
 
 				if(json['extension']){
 					$('#extension_'+json['codename']).replaceWith(json['extension']);
+
+					that.activateExtension($('#extension_'+json('codename')+' .activate-extension'));
 				}
+
 			}
 		}); 
 		return false;
-		
 	},
 
 	activateExtension: function($node){
@@ -165,7 +167,9 @@ d_shopunity = {
 			closeOnCancel: true
 		}, 
 		function(isConfirm){  
-			if (isConfirm) {     
+			if (isConfirm) {
+				that.deactivateExtension($node.closest('.deactivate-extension'));
+
 				$.ajax({
 					url: $node.data('href'),
 					dataType: 'json',
