@@ -240,7 +240,7 @@ class ControllerDShopunityExtension extends Controller {
 
 				$result = $this->model_d_shopunity_mbooth->installDependencies($extension['codename'], $result);
 				
-				$result = $this->model_d_shopunity_mbooth->activateExtension($extension['codename'], $result);
+				//$result = $this->model_d_shopunity_mbooth->activateExtension($extension['codename'], $result);
 
 				$json['installed'] = true;
 				$json['text'] = "Extension ".$extension['codename']." has been successfuly installed";
@@ -345,7 +345,7 @@ class ControllerDShopunityExtension extends Controller {
 
 				$result = $this->model_d_shopunity_mbooth->installDependencies($extension['codename'], $result);
 				
-				$result = $this->model_d_shopunity_mbooth->activateExtension($extension['codename'], $result);
+				//$result = $this->model_d_shopunity_mbooth->activateExtension($extension['codename'], $result);
 
 				$json['installed'] = true;
 				$json['text'] = "Extension ".$extension['codename']." has been successfuly installed";
@@ -388,12 +388,12 @@ class ControllerDShopunityExtension extends Controller {
 			$json['redirect'] =  str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
 
-		if(empty($json['error'])){
+		//if(empty($json['error'])){
 			$codename = $this->request->get['codename'];
 			$this->load->model('d_shopunity/mbooth');
 
-			$result = $this->model_d_shopunity_mbooth->deactivateExtension($codename);
-		}
+			//$result = $this->model_d_shopunity_mbooth->deactivateExtension($codename);
+		//}
 		
 		if(empty($result['error'])){
 			$result = $this->model_d_shopunity_mbooth->deleteExtension($codename);
