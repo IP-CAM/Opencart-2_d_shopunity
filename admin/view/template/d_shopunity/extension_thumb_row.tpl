@@ -88,6 +88,7 @@
 		        <?php } ?>
 				</div>
 		        <?php if($extension['testable']){ ?>
+		        <hr/>
 		        <div class="form-inline">
 	                <a class="btn btn-primary show-loading approve-extension" data-href="<?php echo $extension['approve']; ?>" data-toggle="tooltip" data-original-title="Approve"><span class="fa fa-thumbs-up"></span></a>
 	                <a class="btn btn-danger show-loading disapprove-extension" data-href="<?php echo $extension['disapprove']; ?>" data-toggle="tooltip" data-original-title="Disaprove"><span class="fa fa-thumbs-down"></span></a>
