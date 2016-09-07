@@ -95,7 +95,6 @@
 	                <a class="btn btn-warning show-loading test-extension" data-href="<?php echo $extension['test']; ?>&theme=extension_thumb_row" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
 		        </div>
 		        <?php } ?>
-		       	
 	        </div>
 		</div>
 	</div>
