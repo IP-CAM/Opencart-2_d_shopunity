@@ -35,6 +35,10 @@
 			<div class="pull-right ">
 				<div class="form-inline">
 	            
+	            <?php if($extension['installable'] && !$extension['installed']){ ?>
+	            	<a class="btn btn-info show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
+	            <?php } ?>
+	            
 	        	<?php if($extension['updatable'] && $extension['installed']){ ?>
 	        	<a class="btn btn-success show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
 	        	<?php } ?>
@@ -70,10 +74,6 @@
 				<?php if($extension['downloadable'] ){ ?>
 	        		<a class="btn btn-default download-extension" data-href="<?php echo $extension['download']; ?>"  data-toggle="tooltip" data-original-title="Download"><span class="fa fa-download"></span></a>
 		        <?php } ?>
-
-				<?php if($extension['installable'] && !$extension['installed']){ ?>
-	            	<a class="btn btn-info show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
-	            <?php } ?>
 
 	            <?php if($extension['installed']){ ?>
 					<a class="btn btn-danger show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
