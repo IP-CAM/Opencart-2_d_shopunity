@@ -40,9 +40,9 @@ class Shopunity {
 			$this->store_id = $this->getStoreId();
 		}
 
-		if(strpos($_SERVER['HTTP_HOST'], 'localhost') !== false){
-			$this->api = $this->api_local;
-		}
+		// if(strpos($_SERVER['HTTP_HOST'], 'localhost') !== false){
+		// 	$this->api = $this->api_local;
+		// }
 		
 	}
 
