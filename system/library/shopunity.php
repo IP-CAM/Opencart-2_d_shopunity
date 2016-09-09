@@ -51,7 +51,8 @@ class Shopunity {
 	}
 
 	public function getStoreId(){
-		return $this->getCurrentStore()['store_id'];
+		$store = $this->getCurrentStore();
+		return $store['store_id'];
 	}
 
 	public function getCurrentStore(){
