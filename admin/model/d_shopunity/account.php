@@ -36,8 +36,14 @@ class ModelDShopunityAccount extends Model {
 						$json['error']['error'] === 'invalid_token'
 					)
 				){
-					$json = $this->refreshToken($this->config->get('d_shopunity_oauth')['refresh_token']);
+					$d_shopunity_oauth = $this->config->get('d_shopunity_oauth');
 					
+					if(isset($d_shopunity_oauth['access_token'])){
+						$json = $this->refreshToken($d_shopunity_oauth['refresh_token']);
+					}else{
+						$json = false;
+					}
+
 					//get new access token
 					if($json)
 					{
