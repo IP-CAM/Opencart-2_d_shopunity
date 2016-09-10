@@ -82,7 +82,7 @@
     "changelog": [
         {     
             "varsion":"3.0.25",
-            "change": "1. conflict fix"
+            "change": "1. conflict fix \r\n 2. Added filemanager"
         },
         {     
             "varsion":"3.0.24",
