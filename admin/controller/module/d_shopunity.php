@@ -98,6 +98,8 @@ class ControllerModuleDShopunity extends Controller {
 		$data['tab_tester'] =  $this->language->get('tab_tester');
 		$data['tab_developer'] =  $this->language->get('tab_developer');
 
+		$data['button_cancel'] =  $this->language->get('button_cancel');
+
 		$data['href_extension'] =  $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_market'] =  $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_billing'] =  $this->url->link('d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
@@ -108,6 +110,8 @@ class ControllerModuleDShopunity extends Controller {
 		
 		$data['button_logout'] =  $this->language->get('button_logout');
 		$data['logout'] = $this->url->link('d_shopunity/account/logout', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+		
 		$account = $this->config->get('d_shopunity_account');
 
 		$data['tester'] = false;

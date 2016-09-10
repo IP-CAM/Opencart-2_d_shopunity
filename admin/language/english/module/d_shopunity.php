@@ -21,4 +21,5 @@ $_['tab_tester']				= 'Tester';
 $_['tab_developer']				= 'Developer';
 
 //buttons
-$_['button_logout']            = 'Logout out of <b>Shopunity</b>';
+$_['button_logout']             = 'Logout out of <b>Shopunity</b>';
+$_['button_cancel'] 			= 'Cancel';
