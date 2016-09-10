@@ -60,8 +60,9 @@
 			   
 				</div>
 				<?php } ?>
-
-				<a class="btn btn-info show-extension-json" data-href="<?php echo $extension['json']; ?>" data-toggle="tooltip" data-original-title="mbooth.json"><span class="fa fa-code"></span></a>
+				<?php if($extension['installed']){ ?>	
+					<a class="btn btn-info show-extension-json" data-href="<?php echo $extension['json']; ?>" data-toggle="tooltip" data-original-title="mbooth.json"><span class="fa fa-code"></span></a>
+				<?php } ?>
 				<?php if($extension['admin']){ ?>
 					<a class="btn btn-info show-loading" href="<?php echo $extension['admin']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-pencil"></span></a>
 				<?php } ?>
@@ -71,8 +72,10 @@
 				<?php if($extension['deactivate']){ ?>
 					<a class="btn btn-danger deactivate-extension hide" data-href="<?php echo $extension['deactivate']; ?>"  data-toggle="tooltip" data-original-title="Deactivate"><span class="fa fa-power-off "></span></a>
 				<?php } ?>
-				<?php if($extension['downloadable'] ){ ?>
+				<?php if($extension['downloadable'] && $extension['installed']){ ?>
 	        		<a class="btn btn-default download-extension" data-href="<?php echo $extension['download']; ?>"  data-toggle="tooltip" data-original-title="Download"><span class="fa fa-download"></span></a>
+	        		<a class="btn btn-default" href="<?php echo $extension['filemanager']; ?>"  data-toggle="tooltip" data-original-title="Filemanager"><span class="fa fa-file-code-o"></span></a>
+		        	
 		        <?php } ?>
 
 	            <?php if($extension['installed']){ ?>
@@ -83,7 +86,7 @@
 	            <a class="btn btn-danger show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span></a>
 	        	<?php } ?>
 
-	        	<?php if($extension['submittable']){ ?>
+	        	<?php if($extension['submittable'] && $extension['installed']){ ?>
 	                <a class="btn btn-warning show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
 		        <?php } ?>
 				</div>

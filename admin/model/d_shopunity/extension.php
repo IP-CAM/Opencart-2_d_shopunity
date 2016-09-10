@@ -272,6 +272,7 @@ class ModelDShopunityExtension extends Model {
                     if(!empty($result['tester_version']) && !empty($mbooth['version'])){
                         $result['update_available'] = $semver->gt($result['tester_version'], $mbooth['version']);
                         $result['current_version'] = $mbooth['version'];
+                        $result['version'] = $result['tester_version'];
                     }elseif(!empty($result['version']) && !empty($mbooth['version'])){
                         $result['update_available'] = $semver->gt($result['version'], $mbooth['version']);
                         $result['current_version'] = $mbooth['version'];
@@ -307,12 +308,13 @@ class ModelDShopunityExtension extends Model {
             $result['purchase'] = $this->_ajax($this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['install'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] . ((isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : ''), 'SSL'));
             $result['update'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id']  . ((isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : ''), 'SSL'));
-            $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'] . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id'] ));
+            $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'] . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id']  , 'SSL'));
             $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token=' . $this->session->data['token']  . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['submit'] = $this->_ajax($this->url->link('d_shopunity/extension/submit', 'token=' . $this->session->data['token']  . '&extension_id='.$data['extension_id'] , 'SSL'));
             $result['json'] = $this->_ajax($this->url->link('d_shopunity/extension/json', 'token=' . $this->session->data['token']  . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['billing'] = $this->_ajax($this->url->link('d_shopunity/order', 'token=' . $this->session->data['token']  . '&codename='.$result['codename'] , 'SSL'));
-
+            $result['filemanager'] = $this->_ajax($this->url->link('d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$data['codename'] , 'SSL'));
+           
             if(!empty($data['store_extension'])){
                 $result['suspend'] = $this->_ajax($this->url->link('d_shopunity/extension/suspend', 'token=' . $this->session->data['token']  . '&store_extension_id='.$data['store_extension']['store_extension_id'] , 'SSL'));
             }else{
@@ -407,10 +409,11 @@ class ModelDShopunityExtension extends Model {
             $result['purchase'] = '';
             $result['install'] = '';
             $result['update'] = '';
-            $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'].'&codename='.$result['codename'] ));
-            $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token='.$this->session->data['token'].'&codename='.$result['codename'] ));
+            $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'].'&codename='.$result['codename'] , 'SSL' ));
+            $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token='.$this->session->data['token'].'&codename='.$result['codename'] , 'SSL' ));
             $result['json'] = $this->_ajax($this->url->link('d_shopunity/extension/json', 'token=' . $this->session->data['token']  . '&codename='.$result['codename'] , 'SSL'));
             $result['billing'] = $this->_ajax($this->url->link('d_shopunity/order', 'token=' . $this->session->data['token']  . '&codename='.$result['codename'] , 'SSL'));
+            $result['filemanager'] = $this->_ajax($this->url->link('d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$data['codename'] , 'SSL'));
             $result['suspend'] = '';
             $result['test'] = '';
             $result['approve'] = '';

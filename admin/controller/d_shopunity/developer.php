@@ -36,18 +36,11 @@ class ControllerDShopunityDeveloper extends Controller {
    		$this->load->language('d_shopunity/tester');
    		$this->load->model('d_shopunity/developer');
 
-   		$data['text_tester_status_1'] = $this->language->get('text_tester_status_1');
-   		$data['text_tester_status_2'] = $this->language->get('text_tester_status_2');
-   		$data['text_tester_status_3'] = $this->language->get('text_tester_status_3');
-   		$data['text_tester_status_4'] = $this->language->get('text_tester_status_4');
-   		$data['text_tester_status_5'] = $this->language->get('text_tester_status_5');
-   		$data['text_tester_status_6'] = $this->language->get('text_tester_status_6');
-   		
 		$data['extensions'] = $this->model_d_shopunity_developer->getExtensions($developer_id);
 
    		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
-
+   		$data = $this->load->controller('d_shopunity/extension/_productThumb',$data);
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
 
