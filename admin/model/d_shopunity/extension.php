@@ -269,13 +269,10 @@ class ModelDShopunityExtension extends Model {
                 try{
                     $semver = new Semver;
 
-                    if(!empty($result['tester_version']) && !empty($mbooth['version'])){
-                        $result['update_available'] = $semver->gt($result['tester_version'], $mbooth['version']);
+                    if(!empty($result['update_version']) && !empty($mbooth['version'])){
+                        $result['update_available'] = $semver->gt($result['update_version'], $mbooth['version']);
                         $result['current_version'] = $mbooth['version'];
-                        $result['version'] = $result['tester_version'];
-                    }elseif(!empty($result['version']) && !empty($mbooth['version'])){
-                        $result['update_available'] = $semver->gt($result['version'], $mbooth['version']);
-                        $result['current_version'] = $mbooth['version'];
+                        $result['version'] = $result['update_version'];
                     }
                   
                 }catch(Exception $e){
