@@ -104,7 +104,18 @@
 	<div class="row m-t">
 		<div class="col-md-6">
 			<?php if($extension['downloadable'] && $extension['tester_status_id']){?>
-				<div class="alert alert-warning"><?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?></div>
+				<?php if($extension['tester_status_id'] == 0 || $extension['tester_status_id'] == 3 || $extension['tester_status_id'] == 6) { ?>
+					<div class="alert alert-danger">
+				<?php } ?>
+				<?php if($extension['tester_status_id'] == 1 || $extension['tester_status_id'] == 2 || $extension['tester_status_id'] == 4) { ?>
+					<div class="alert alert-info">
+				<?php } ?>
+				<?php if($extension['tester_status_id'] == 5) { ?>
+					<div class="alert alert-success">
+				<?php } ?>
+
+					<?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?>
+				</div>
 			<?php } ?>
 			<?php if($extension['update_available']){?>
 				<div class="alert alert-info"><?php echo $text_new_version_available; ?> <?php echo $extension['version']; ?></div>
