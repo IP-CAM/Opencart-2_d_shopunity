@@ -116,7 +116,13 @@
 		line-height: 1.7;
 
 	}
+	.developer{
+	
+		img{
+			width: 30px;
 
+		}
+	}
 	.name{
 		height: 32px;
 		overflow: hidden;
@@ -153,5 +159,11 @@
 		&.show{
 			display: block;
 		}
+	}
+}
+.extention-item{
+	.description{
+		max-width: 900px;
+		margin: auto;
 	}
 }

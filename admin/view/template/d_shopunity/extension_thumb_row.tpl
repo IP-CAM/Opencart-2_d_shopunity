@@ -2,21 +2,24 @@
 	<div class="row">
 		<div class="col-md-1">
 			<a href="<?php echo $extension['url']; ?>">
-			   <img class="img-responsive" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
+			   <img class="img-responsive img-rounded" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
 			</a>
+			
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-4">
 			<span class="name"><?php echo $extension['name']; ?></span>
 			<span class="label label-info"><?php echo $extension['current_version']; ?></span> 
-			<?php if($extension['downloadable'] && $extension['tester_status_id']){?>
-				<div class="alert alert-warning m-t"><?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?></div>
-			<?php } ?>
-			<?php if($extension['update_available']){?>
-				<div class="alert alert-info m-t"><?php echo $text_new_version_available; ?> <?php echo $extension['version']; ?></div>
-			<?php } ?>
 			
 		</div>
 		<div class="col-md-1">
+			<?php if(!empty($extension['developer'])){ ?>
+				<a class="developer" href="<?php echo $extension['developer']; ?>">
+				   <img class="img-responsive img-circle" data-toggle="tooltip" data-original-title="<?php echo $extension['developer']['name']; ?>" src="<?php echo $extension['developer']['image']; ?>" /> 
+
+				</a>
+			<?php } ?>
+		</div>
+		<div class="col-md-2">
 			<!-- <div class="rating">
 	    		<span class="fa fa-star"></span>
 	    		<span class="fa fa-star"></span>
@@ -26,11 +29,8 @@
 	    	</div> -->
 	    	
 		</div>
-		<div class="col-md-3">
-			<?php if($extension['downloadable'] && $extension['tester_comment']){ ?>
-			<div class="alert alert-info"><?php echo $extension['tester_comment']; ?></div>
-			<?php } ?>
-		</div>
+		
+		
 		<div class="col-md-4">
 			<div class="pull-right ">
 				<div class="form-inline">
@@ -99,6 +99,21 @@
 		        </div>
 		        <?php } ?>
 	        </div>
+		</div>
+	</div>
+	<div class="row m-t">
+		<div class="col-md-6">
+			<?php if($extension['downloadable'] && $extension['tester_status_id']){?>
+				<div class="alert alert-warning"><?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?></div>
+			<?php } ?>
+			<?php if($extension['update_available']){?>
+				<div class="alert alert-info"><?php echo $text_new_version_available; ?> <?php echo $extension['version']; ?></div>
+			<?php } ?>
+		</div>
+		<div class="col-md-6">
+			<?php if($extension['downloadable'] && $extension['tester_comment']){ ?>
+				<div class="alert alert-info"><?php echo $extension['tester_comment']; ?></div>
+			<?php } ?>
 		</div>
 	</div>
 	<hr/>

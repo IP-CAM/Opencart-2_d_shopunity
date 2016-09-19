@@ -30,6 +30,9 @@ class ControllerDShopunityDeveloper extends Controller {
 			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
+		$this->document->addScript('view/javascript/d_shopunity/library/list/list.min.js');
+		$this->document->addScript('view/javascript/d_shopunity/library/list/list.fuzzysearch.min.js');
+
 		$developer_id = $account['developer']['developer_id'];
 
    		$this->load->language('d_shopunity/extension');

@@ -20,7 +20,8 @@ d_shopunity = {
 			confirmButtonColor: "#5bc0de",	
 			confirmButtonText: "Yes, Purchase it!",	
 			closeOnConfirm: false,
-			closeOnCancel: true
+			closeOnCancel: true,
+			showLoaderOnConfirm: true
 		}, 
 		function(isConfirm){  
 			if (isConfirm) {    
@@ -52,7 +53,8 @@ d_shopunity = {
 						confirmButtonColor: "#AEDEF4",	
 						confirmButtonText: "View",	
 						closeOnConfirm: false,
-						closeOnCancel: true
+						closeOnCancel: true,
+						showLoaderOnConfirm: true
 					},
 					function(isConfirm){  
 						if (isConfirm) {
@@ -106,7 +108,8 @@ d_shopunity = {
 			confirmButtonColor: "#8fbb6c",	
 			confirmButtonText: "Yes, Update it!",	
 			closeOnConfirm: false,
-			closeOnCancel: true
+			closeOnCancel: true,
+			showLoaderOnConfirm: true
 		}, 
 		function(isConfirm){  
 			if (isConfirm) {     
@@ -124,7 +127,8 @@ d_shopunity = {
 								confirmButtonColor: "#AEDEF4",	
 								confirmButtonText: "View",	
 								closeOnConfirm: false,
-								closeOnCancel: true
+								closeOnCancel: true,
+								showLoaderOnConfirm: true
 							},
 							function(isConfirm){  
 								if (isConfirm) {
@@ -164,7 +168,8 @@ d_shopunity = {
 			confirmButtonColor: "#f56b6b",	
 			confirmButtonText: "Yes, Delete it!",	
 			closeOnConfirm: false,
-			closeOnCancel: true
+			closeOnCancel: true,
+			showLoaderOnConfirm: true
 		}, 
 		function(isConfirm){  
 			if (isConfirm) {
@@ -219,7 +224,8 @@ d_shopunity = {
 			confirmButtonColor: "#f56b6b",	
 			confirmButtonText: "Yes, Cancel this purchase!",	
 			closeOnConfirm: false,
-			closeOnCancel: true
+			closeOnCancel: true,
+			showLoaderOnConfirm: true
 		}, 
 		function(isConfirm){  
 			if (isConfirm) {     
@@ -243,7 +249,8 @@ d_shopunity = {
 			confirmButtonColor: "#f56b6b",	
 			confirmButtonText: "Yes, submit this extension!",	
 			closeOnConfirm: false,
-			closeOnCancel: true
+			closeOnCancel: true,
+			showLoaderOnConfirm: true
 		}, 
 		function(isConfirm){  
 			if (isConfirm) {     
@@ -267,7 +274,8 @@ d_shopunity = {
 			confirmButtonColor: "#f56b6b",	
 			confirmButtonText: "Yes, approve this extension!",	
 			closeOnConfirm: false,
-			closeOnCancel: true
+			closeOnCancel: true,
+			showLoaderOnConfirm: true
 		}, 
 		function(isConfirm){  
 			if (isConfirm) {     
@@ -293,7 +301,8 @@ d_shopunity = {
 			confirmButtonColor: "#f56b6b",	
 			confirmButtonText: "Yes, disapprove this extension!",	
 			closeOnConfirm: false,
-			closeOnCancel: true
+			closeOnCancel: true,
+			showLoaderOnConfirm: true
 		}, 
 		function(inputValue){   
 			if (inputValue === false) return false;      

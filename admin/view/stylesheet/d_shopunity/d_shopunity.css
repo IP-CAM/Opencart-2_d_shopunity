@@ -115,6 +115,8 @@
   color: #fff;
   font-size: 14px;
   line-height: 1.7; }
+.extension-thumb .developer img {
+  width: 30px; }
 .extension-thumb .name {
   height: 32px;
   overflow: hidden; }
@@ -143,5 +145,9 @@
     display: inline-block; }
   .extension-thumb .loading.show {
     display: block; }
+
+.extention-item .description {
+  max-width: 900px;
+  margin: auto; }
 
 /*# sourceMappingURL=d_shopunity.css.map */

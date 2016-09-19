@@ -137,15 +137,22 @@ class ModelDShopunityAccount extends Model {
 	}
 
 	public function getToken($callback_route){
-		$resource = array( 
-	    	'grant_type' => 'authorization_code',
-	    	'client_id' => $this->api->getClientId(),
-			'code' => $this->request->get['code'],
-	        'state' => $this->request->get['state'],
-	        'redirect_uri' => urlencode($this->url->link($callback_route, 'token=' . $this->session->data['token'], 'SSL'))
-		);
+		$json = array();
+		if(isset($this->request->get['code'])){
+			$resource = array( 
+		    	'grant_type' => 'authorization_code',
+		    	'client_id' => $this->api->getClientId(),
+				'code' => $this->request->get['code'],
+		        'state' => $this->request->get['state'],
+		        'redirect_uri' => urlencode($this->url->link($callback_route, 'token=' . $this->session->data['token'], 'SSL'))
+			);
 
-		$json = $this->api->post('oauth/token', $resource);
+			$json = $this->api->post('oauth/token', $resource);
+		}
+
+		if(isset($this->request->get['error'])){
+			$json['error'] = $this->request->get['error'];
+		}
 
 		return $json;
 	}
