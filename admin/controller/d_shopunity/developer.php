@@ -47,6 +47,35 @@ class ControllerDShopunityDeveloper extends Controller {
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
 
+	/**
+	 * Update the extension over the whole system. 
+	 */
+	public function update(){
+		if(!isset($this->request->get['extension_id'])){
+			$this->session->data['error'] = 'Error! extension_id missing';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+
+		if(!isset($this->request->get['developer_id'])){
+			$this->session->data['error'] = 'Error! developer_id missing';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+		try{
+			$this->load->model('d_shopunity/developer');
+			$result = $this->model_d_shopunity_developer->updateExtension($this->request->get['extension_id'], $this->request->get['developer_id']);
+
+			if(!empty($result['error'])){
+				$this->session->data['error'] = $result['error'];
+			}elseif(!empty($result['success'])){
+				$this->session->data['success'] = $result['success'];
+			}
+		}catch(Exception $e){
+			$this->session->data['error'] = $e->getMessage();
+		}
+
+		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+	}
+
 	public function profile($developer){
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
 		$data['developer'] = $developer;

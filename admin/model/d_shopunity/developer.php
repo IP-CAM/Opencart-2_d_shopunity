@@ -35,13 +35,6 @@ class ModelDShopunityDeveloper extends Model {
     }
 
     public function updateExtnesion($extension_id, $developer_id){
-        $extension = $this->getExtension($extension_id);
-
-        $this->load->model('d_shopunity/mbooth');
-
-        $data = $this->model_d_shopunity_mbooth->getExtension($extension['codename']);
-
-        $data['store_version'] = VERSION;
 
         $json = $this->api->post('developers/'.$developer_id.'/extensions/'.$extension_id.'/update');
 

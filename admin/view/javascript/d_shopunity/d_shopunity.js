@@ -342,6 +342,30 @@ d_shopunity = {
 		
 	},
 
+	developerUpdateExtension: function($node){
+		var that = this;
+		swal({	
+			title: "Update extension in all shopunity.net",	
+			text: "You are about to start an update of all installations of this extension throughout shopunity! Are you sure?",	
+			type: "warning",	
+			showCancelButton: true, 
+			confirmButtonColor: "#f56b6b",	
+			confirmButtonText: "Yes, update all installations!",	
+			closeOnConfirm: false,
+			closeOnCancel: true,
+			showLoaderOnConfirm: true
+		}, 
+		function(isConfirm){  
+			if (isConfirm) {     
+				location.href = $node.data('href');  
+			} else {     
+				that.hideLoading($('.loading'));
+		 	}	
+		});
+
+		return false;
+	}
+
 	showLoading: function($loading){
 		$loading.addClass('show');
 	},
@@ -411,6 +435,10 @@ d_shopunity = {
 		$(document).on('click', '.disapprove-extension', function(){
 			that.disapproveExtension($(this));
 		});
+
+		$(document).on('click', '.developer-update-extension', function(){
+			that.developerUpdateExtension($(this));
+		});	
 
 		$(document).on('click', '.show-loading', function(){
 			that.showLoading($(this).parents('.extension-thumb').find('.loading'));

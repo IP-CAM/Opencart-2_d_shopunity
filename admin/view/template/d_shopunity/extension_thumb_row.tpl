@@ -42,6 +42,11 @@
 		        		<a class="btn btn-default btn-xs " href="<?php echo $extension['filemanager']; ?>"  data-toggle="tooltip" data-original-title="Filemanager"><span class="fa fa-file-code-o"></span></a>
 			        	
 			        <?php } ?>
+					
+					<?php if($extension['submittable'] && $extension['extension_id'] == 1){ ?>
+		                <a class="btn btn-warning btn-xs show-loading developer-update-extension" data-href="<?php echo $extension['developer_update']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-globe"></span></a>
+			        <?php } ?>
+			        
 			    	</div>
 		    	<?php } ?>
 			</p>
