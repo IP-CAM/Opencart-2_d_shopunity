@@ -20,65 +20,61 @@
 		        <p class="info">
 		        	<span class="version label label-info">v<?php echo $extension['version']; ?></span>
 					<?php if($extension['installed'] && $extension['store_extension'] && !$extension['store_extension']['status']) { ?>
-		        	<span class="version label label-danger" data-toggle="tooltip" data-original-title="This extension is installed, yet you do not have an order or the invoice is not paid.">Unpaid</span>
+		        		<span class="version label label-danger" data-toggle="tooltip" data-original-title="This extension is installed, yet you do not have an order or the invoice is not paid.">Unpaid</span>
 		        	<?php } ?>
 		        </p>
 
 				<div class="pull-right">
-					<?php if($extension['admin']){ ?>
-						<a class="btn btn-info btn-sm show-loading" href="<?php echo $extension['admin']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-pencil"></span></a>
-					<?php } ?>
-					
-	                <?php if($extension['installable'] && !$extension['installed']){ ?>
-		            	<a class="btn btn-info btn-sm show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
+					<?php if($extension['installable'] && !$extension['installed']){ ?>
+		            	<!-- install -->
+		            	<a class="btn btn-success btn-sm show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
 		            <?php } ?>
-
-		            <?php if($extension['updatable'] && $extension['installed']){ ?>
-		        	<a class="btn btn-success btn-sm show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
+		            
+		        	<?php if($extension['updatable'] && $extension['installed']){ ?>
+		        		<!-- update -->
+		        		<a class="btn btn-success btn-sm show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
 		        	<?php } ?>
+		        	
+			       
+					<?php if($extension['purchasable'] ){ ?>
+			        	<!-- purchase -->
+			        	<div class="purchase-extension btn-group input-sm">
+							<?php if(!empty($extension['price'])){ ?>
+				             <select class="form-control">
+								<?php foreach($extension['prices'] as $price){ ?>
+								<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price_format']; ?> / <?php echo $price['recurring_duration']; ?> days</option>
+								<?php } ?>
+							</select>
+				          
+				            <?php } ?>
+				           
+				            <a class="btn btn-primary btn-sm pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
+						</div>
+					<?php } ?>
 
 		            <?php if($extension['installed']){ ?>
-						<a class="btn btn-danger btn-sm show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
+						<!-- delete -->
+						<a class="btn btn-danger btn-sm show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
 		            <?php } ?>
-	                
-	                <?php if($extension['activate']){ ?>
-					<a class="btn btn-success activate-extension hide" data-href="<?php echo $extension['activate']; ?>"  data-toggle="tooltip" data-original-title="Activate"><span class="fa fa-power-off "></span></a>
-					<?php } ?>
-					<?php if($extension['deactivate']){ ?>
-						<a class="btn btn-danger deactivate-extension hide" data-href="<?php echo $extension['deactivate']; ?>"  data-toggle="tooltip" data-original-title="Deactivate"><span class="fa fa-power-off "></span></a>
-					<?php } ?>
-		        	
-		        	<!-- 
-		        	<?php if($extension['downloadable'] ){ ?>
-		        	<a class="btn btn-default btn-sm download-extension" data-href="<?php echo $extension['download']; ?>"  data-toggle="tooltip" data-original-title="Download"><span class="fa fa-download"></span></a>
-			        <?php } ?>
-			        -->
-					<?php if($extension['purchasable']){ ?>
-			        <div class="purchase-extension">
-						<div class="form-inline">
-							<?php if(!empty($extension['price'])){ ?>
-				           
-				                <select class="form-control input-sm">
-									<?php foreach($extension['prices'] as $price){ ?>
-									<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price_format']; ?> / <?php echo $price['recurring_duration']; ?> days</option>
-									<?php } ?>
-								</select>
-				     
-				            <?php } ?>
-					    	<a class="btn btn-primary btn-sm pull-right" data-extension-id="<?php echo $extension['extension_id'];?>"><span class="fa fa-shopping-cart"></span> Buy</a>
-				        </div>
-					</div>
-					<?php } ?>
 
 					<?php if($extension['suspendable'] && !$extension['installed']){ ?>
-	                <a class="btn btn-danger btn-sm show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span></a>
-		        	<?php } ?>
-				<!-- 
-		        	<?php if($extension['submittable']){ ?>
-	                <a class="btn btn-warning btn-sm  show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
-		        	<?php } ?> -->	
+		            	<!-- suspend -->
+		            	<a class="btn btn-danger btn-sm show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span></a>
+		        	<?php } ?>	        	
+					
+			        <?php if($extension['activate']){ ?>
+			        	<!-- activate -->
+						<a class="btn btn-success btn-sm activate-extension hide" data-href="<?php echo $extension['activate']; ?>"  data-toggle="tooltip" data-original-title="Activate"><span class="fa fa-power-off "></span></a>
+					<?php } ?>
+
+					<?php if($extension['deactivate']){ ?>
+						<!-- deactivate -->
+						<a class="btn btn-danger btn-sm deactivate-extension hide" data-href="<?php echo $extension['deactivate']; ?>"  data-toggle="tooltip" data-original-title="Deactivate"><span class="fa fa-power-off "></span></a>
+					<?php } ?>
+					
 		        	<?php if($extension['commercial'] && !$extension['purchasable'] && !$extension['installable']){ ?>
-					<a class="btn btn-danger btn-sm" href="<?php echo $extension['billing']; ?>" data-toggle="tooltip" data-original-title="Billing">Pay invoice</a>
+		        		<!-- pay invoice -->
+						<a class="btn btn-danger btn-sm btn-sm" href="<?php echo $extension['billing']; ?>" data-toggle="tooltip" data-original-title="Billing">Pay invoice</a>
 		        	<?php } ?>
 		        </div>
 

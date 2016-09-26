@@ -6,7 +6,8 @@
   margin-bottom: 25px;
   margin-top: 0;
   padding: 0;
-  position: relative; }
+  position: relative;
+  background-color: #ffffff; }
   .ibox .ibox-content {
     background-color: #ffffff;
     color: inherit;
@@ -145,6 +146,12 @@
     display: inline-block; }
   .extension-thumb .loading.show {
     display: block; }
+
+.extension-thumb-row {
+  border-bottom: solid 1px #eee;
+  padding: 15px 15px 0px 15px; }
+  .extension-thumb-row:hover {
+    background: rgba(0, 0, 0, 0.02); }
 
 .extention-item .description {
   max-width: 900px;

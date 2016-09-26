@@ -83,6 +83,9 @@
 .p-xl {
   padding: 40px;
 }
+.p-n{
+  padding: 0 !important;
+}
 .m-xxs {
   margin: 2px 4px;
 }

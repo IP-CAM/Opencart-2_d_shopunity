@@ -357,6 +357,13 @@ d_shopunity = {
 	render: function(){
 		var that = this;
 
+		//content_top.tpl
+		//Stack menu when collapsed
+		$('#bs-example-navbar-collapse-1').on('show.bs.collapse', function() {
+		    $('.nav-pills').addClass('nav-stacked');
+		    $('.logout').removeClass('pull-right');
+		});
+
 		$(document).on('click', '.purchase-extension .btn', function(){
 			that.purchaseExtension($(this).data('extension-id'), $(this).parents('.purchase-extension').find('select').val());
 		});

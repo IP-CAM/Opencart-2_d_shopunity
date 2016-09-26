@@ -2,16 +2,69 @@
 	<div class="row">
 		<div class="col-md-1">
 			<a href="<?php echo $extension['url']; ?>">
-			   <img class="img-responsive img-rounded" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
+			   <img class="img-responsive img-rounded m-b" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
 			</a>
 			
 		</div>
-		<div class="col-md-4">
-			<span class="name"><?php echo $extension['name']; ?></span>
-			<span class="label label-info"><?php echo $extension['current_version']; ?></span> 
+		<div class="col-md-2">
+			<strong class="name"><?php echo $extension['name']; ?></strong>
+			<span class="label label-default"><?php echo $extension['current_version']; ?></span> 
+			<?php if($extension['downloadable'] && $extension['tester_status_id']){?>
+				<?php if($extension['tester_status_id'] == 0 || $extension['tester_status_id'] == 3 || $extension['tester_status_id'] == 6) { ?>
+					<span class="label label-danger">
+				<?php } ?>
+				<?php if($extension['tester_status_id'] == 1 || $extension['tester_status_id'] == 2 || $extension['tester_status_id'] == 4) { ?>
+					<span class="label label-info">
+				<?php } ?>
+				<?php if($extension['tester_status_id'] == 5) { ?>
+					<span class="label label-success">
+				<?php } ?>
+
+					<?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?>
+				</span>
+			<?php } ?>
+			<p class="m-t m-b">
+				<?php if($extension['installed'] || $extension['admin'] || ($extension['submittable'] && $extension['installed']) || ($extension['downloadable'] && $extension['installed'])){ ?>	
+					<div class="well well-sm">
+					<?php if($extension['installed']){ ?>	
+						<a class="btn btn-info btn-xs show-extension-json" data-href="<?php echo $extension['json']; ?>" data-toggle="tooltip" data-original-title="mbooth.json"><span class="fa fa-code"></span></a>
+					<?php } ?>
+					<?php if($extension['admin']){ ?>
+						<a class="btn btn-info btn-xs  show-loading" href="<?php echo $extension['admin']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-pencil"></span></a>
+					<?php } ?>
+
+					<?php if($extension['submittable'] && $extension['installed']){ ?>
+		                <a class="btn btn-warning btn-xs  show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
+			        <?php } ?>
+
+					<?php if($extension['downloadable'] && $extension['installed']){ ?>
+		        		<a class="btn btn-default btn-xs download-extension" data-href="<?php echo $extension['download']; ?>"  data-toggle="tooltip" data-original-title="Download"><span class="fa fa-download"></span></a>
+		        		<a class="btn btn-default btn-xs " href="<?php echo $extension['filemanager']; ?>"  data-toggle="tooltip" data-original-title="Filemanager"><span class="fa fa-file-code-o"></span></a>
+			        	
+			        <?php } ?>
+			    	</div>
+		    	<?php } ?>
+			</p>
+			
+			
+
 			
 		</div>
-		<div class="col-md-1">
+		
+		<div class="col-md-6">
+			<p class="text-muted m-b"><?php echo $extension['description_short']; ?></p> 
+
+	
+			<?php if($extension['downloadable'] && $extension['tester_comment']){ ?>
+				<div class="alert alert-info"><?php echo $extension['tester_comment']; ?></div>
+			<?php } ?>
+	
+			<?php if($extension['update_available']){?>
+				<div class="alert alert-info"><?php echo $text_new_version_available; ?> <?php echo $extension['version']; ?></div>
+			<?php } ?>
+
+	</div>
+		<div class="col-md-1 col-xs-3">
 			<?php if(!empty($extension['developer'])){ ?>
 				<a class="developer" href="<?php echo $extension['developer']; ?>">
 				   <img class="img-responsive img-circle" data-toggle="tooltip" data-original-title="<?php echo $extension['developer']['name']; ?>" src="<?php echo $extension['developer']['image']; ?>" /> 
@@ -19,76 +72,63 @@
 				</a>
 			<?php } ?>
 		</div>
-		<div class="col-md-2">
-			<!-- <div class="rating">
-	    		<span class="fa fa-star"></span>
-	    		<span class="fa fa-star"></span>
-	    		<span class="fa fa-star"></span>
-	    		<span class="fa fa-star"></span>
-	    		<span class="fa fa-star"></span>
-	    	</div> -->
-	    	
-		</div>
 		
-		
-		<div class="col-md-4">
-			<div class="pull-right ">
+		<div class="col-md-2 col-xs-9">
+			<div class="pull-right m-b">
 				<div class="form-inline">
 	            
 	            <?php if($extension['installable'] && !$extension['installed']){ ?>
-	            	<a class="btn btn-success show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
-	            <?php } ?>
-	            
-	        	<?php if($extension['updatable'] && $extension['installed']){ ?>
-	        	<a class="btn btn-success show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
-	        	<?php } ?>
-	        	
-		       
-				<?php if($extension['purchasable'] ){ ?>
-		        <div class="purchase-extension btn-group">
-				
-						<?php if(!empty($extension['price'])){ ?>
-			             <select class="form-control">
-							<?php foreach($extension['prices'] as $price){ ?>
-							<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price_format']; ?> / <?php echo $price['recurring_duration']; ?> days</option>
-							<?php } ?>
-						</select>
-			          
-			            <?php } ?>
-			           
-			            <a class="btn btn-primary pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
-			   
-				</div>
-				<?php } ?>
-				<?php if($extension['installed']){ ?>	
-					<a class="btn btn-info show-extension-json" data-href="<?php echo $extension['json']; ?>" data-toggle="tooltip" data-original-title="mbooth.json"><span class="fa fa-code"></span></a>
-				<?php } ?>
-				<?php if($extension['admin']){ ?>
-					<a class="btn btn-info show-loading" href="<?php echo $extension['admin']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-pencil"></span></a>
-				<?php } ?>
-				<?php if($extension['activate']){ ?>
-					<a class="btn btn-success activate-extension hide" data-href="<?php echo $extension['activate']; ?>"  data-toggle="tooltip" data-original-title="Activate"><span class="fa fa-power-off "></span></a>
-				<?php } ?>
-				<?php if($extension['deactivate']){ ?>
-					<a class="btn btn-danger deactivate-extension hide" data-href="<?php echo $extension['deactivate']; ?>"  data-toggle="tooltip" data-original-title="Deactivate"><span class="fa fa-power-off "></span></a>
-				<?php } ?>
-				<?php if($extension['downloadable'] && $extension['installed']){ ?>
-	        		<a class="btn btn-default download-extension" data-href="<?php echo $extension['download']; ?>"  data-toggle="tooltip" data-original-title="Download"><span class="fa fa-download"></span></a>
-	        		<a class="btn btn-default" href="<?php echo $extension['filemanager']; ?>"  data-toggle="tooltip" data-original-title="Filemanager"><span class="fa fa-file-code-o"></span></a>
+		            	<!-- install -->
+		            	<a class="btn btn-success show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
+		            <?php } ?>
+		            
+		        	<?php if($extension['updatable'] && $extension['installed']){ ?>
+		        		<!-- update -->
+		        		<a class="btn btn-success show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
+		        	<?php } ?>
 		        	
-		        <?php } ?>
+			       
+					<?php if($extension['purchasable'] ){ ?>
+			        	<!-- purchase -->
+			        	<div class="purchase-extension btn-group">
+							<?php if(!empty($extension['price'])){ ?>
+				             <select class="form-control">
+								<?php foreach($extension['prices'] as $price){ ?>
+								<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price_format']; ?> / <?php echo $price['recurring_duration']; ?> days</option>
+								<?php } ?>
+							</select>
+				          
+				            <?php } ?>
+				           
+				            <a class="btn btn-primary pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
+						</div>
+					<?php } ?>
 
-	            <?php if($extension['installed']){ ?>
-					<a class="btn btn-danger show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
-	            <?php } ?>
+		            <?php if($extension['installed']){ ?>
+						<!-- delete -->
+						<a class="btn btn-danger show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
+		            <?php } ?>
 
-				<?php if($extension['suspendable'] && !$extension['installed']){ ?>
-	            <a class="btn btn-danger show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span></a>
-	        	<?php } ?>
+					<?php if($extension['suspendable'] && !$extension['installed']){ ?>
+		            	<!-- suspend -->
+		            	<a class="btn btn-danger show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span></a>
+		        	<?php } ?>	        	
+					
+			        <?php if($extension['activate']){ ?>
+			        	<!-- activate -->
+						<a class="btn btn-success activate-extension hide" data-href="<?php echo $extension['activate']; ?>"  data-toggle="tooltip" data-original-title="Activate"><span class="fa fa-power-off "></span></a>
+					<?php } ?>
 
-	        	<?php if($extension['submittable'] && $extension['installed']){ ?>
-	                <a class="btn btn-warning show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
-		        <?php } ?>
+					<?php if($extension['deactivate']){ ?>
+						<!-- deactivate -->
+						<a class="btn btn-danger deactivate-extension hide" data-href="<?php echo $extension['deactivate']; ?>"  data-toggle="tooltip" data-original-title="Deactivate"><span class="fa fa-power-off "></span></a>
+					<?php } ?>
+					
+					
+		        	<?php if($extension['commercial'] && !$extension['purchasable'] && !$extension['installable']){ ?>
+		        		<!-- pay invoice -->
+						<a class="btn btn-danger" href="<?php echo $extension['billing']; ?>" data-toggle="tooltip" data-original-title="Billing">Pay invoice</a>
+		        	<?php } ?>
 				</div>
 		        <?php if($extension['testable']){ ?>
 		        <br/>
@@ -101,31 +141,4 @@
 	        </div>
 		</div>
 	</div>
-	<div class="row m-t">
-		<div class="col-md-6">
-			<?php if($extension['downloadable'] && $extension['tester_status_id']){?>
-				<?php if($extension['tester_status_id'] == 0 || $extension['tester_status_id'] == 3 || $extension['tester_status_id'] == 6) { ?>
-					<div class="alert alert-danger">
-				<?php } ?>
-				<?php if($extension['tester_status_id'] == 1 || $extension['tester_status_id'] == 2 || $extension['tester_status_id'] == 4) { ?>
-					<div class="alert alert-info">
-				<?php } ?>
-				<?php if($extension['tester_status_id'] == 5) { ?>
-					<div class="alert alert-success">
-				<?php } ?>
-
-					<?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?>
-				</div>
-			<?php } ?>
-			<?php if($extension['update_available']){?>
-				<div class="alert alert-info"><?php echo $text_new_version_available; ?> <?php echo $extension['version']; ?></div>
-			<?php } ?>
-		</div>
-		<div class="col-md-6">
-			<?php if($extension['downloadable'] && $extension['tester_comment']){ ?>
-				<div class="alert alert-info"><?php echo $extension['tester_comment']; ?></div>
-			<?php } ?>
-		</div>
-	</div>
-	<hr/>
 </div>

@@ -18,78 +18,64 @@
 				
 			</div>
 		</div>
-
+		
+		
 		<div  id="list_search_1" class="ibox">
+			<?php if($store_extensions){ ?>
 			<div class="ibox-title">
 				<h4>Purchased modules.</h4>
 				<p>These modules have been purchased. You can use them only for this webshop.</p>
 			</div>
 			<div class="ibox-content">
 				<ul class="list list-unstyled">
-				<?php if($store_extensions){ ?>
+				
 					<?php foreach($store_extensions as $extension) { ?>
 					<li>
 						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?>
 					</li>
 					<?php } ?>
-				<?php }else{ ?>
-					<div class="alert alert-warning">You haven't purchased any modules yet</div>
-				<?php } ?>
+				
 				</ul>
 			</div>
+			<?php } ?>
 		</div>
-			
+		
 		<div  id="list_search_2" class="ibox"> 
+			<?php if($local_extensions){ ?>
 			<div class="ibox-title">
 				<h4>Expired or Free licenses.</h4>
 			<p>These modules do not have a license, or their lisence has been expired. </p>
 			</div>
-			<div class="ibox-content">
+			<div class="ibox-content p-n">
 				<ul class="list list-unstyled">
-				<?php if($local_extensions){ ?>\
 					<?php foreach($local_extensions as $extension) { ?>
 					<li>
 						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?>
 					</li>
 					<?php } ?>
-				<?php }else{ ?>
-					<li>
-						<div class="alert alert-warning">There are no expired or free modules installed</div>
-					</li>
-				<?php } ?>
 				</ul>
 			</div>
+			<?php } ?>
 		</div>
-	
+		
 		<div id="list_search_3" class="ibox">
+			<?php if($unregestered_extensions){ ?>
 			<div class="ibox-title">
 				<h4>Unknown Modules.</h4>
 				<p>These modules are not regestered with the shopunity network.</p>
 			</div>
 			<div class="ibox-content">
 				<ul class="list list-unstyled">
-				<?php if($unregestered_extensions){ ?>
 					<?php foreach($unregestered_extensions as $extension) { ?>
 					<li>
 						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?>
 					</li>
 					<?php } ?>
-				<?php }else{ ?>
-				<li>
-					<div class="alert alert-warning">You don't have any unregestered modules installed</div>
-				</li>
-				<?php } ?>
-			</ul>
+				</ul>
 			</div>
-	 <!-- <pre>
-
-			
-		<?php print_r($store_extensions );?>
-	</pre>  
-	<pre>
-		<?php print_r($local_extensions );?>
-	</pre>    -->
+			<?php } ?>
 		</div>
+		
 	</div>
 </div>
 <script>
@@ -99,15 +85,26 @@
 	  plugins: [ ListFuzzySearch() ]
 	};
 
-	var userList1 = new List('list_search_1', options);
-	var userList2 = new List('list_search_2', options);
-	var userList3 = new List('list_search_3', options);
-
-	$('.fuzzy-search').on("keyup",function(){
-        userList1.search($(this).val());
-        userList2.search($(this).val());
-        userList3.search($(this).val());
-    }); 
+	if($('#list_search_1 ul').length){
+		var userList1 = new List('list_search_1', options);
+		$('.fuzzy-search').on("keyup",function(){
+	        userList1.search($(this).val());
+	    }); 
+	}
+	if($('#list_search_2 ul').length){
+		var userList1 = new List('list_search_2', options);
+		$('.fuzzy-search').on("keyup",function(){
+	        userList1.search($(this).val());
+	    }); 
+	}
+	if($('#list_search_3 ul').length){
+		var userList1 = new List('list_search_3', options);
+		$('.fuzzy-search').on("keyup",function(){
+	        userList1.search($(this).val());
+	    }); 
+	}
+	
+	
 
 </script>
 <?php echo $content_bottom; ?>

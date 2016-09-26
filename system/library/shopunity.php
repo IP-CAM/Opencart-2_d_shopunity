@@ -62,7 +62,8 @@ class Shopunity {
 		}else{
 
 			if($this->access_token){
-				$result = file_get_contents($this->api."stores?access_token=".$this->access_token.'&url='.urlencode(HTTP_CATALOG));
+				
+				$result = file_get_contents($this->api."stores?access_token=".$this->access_token.'&url='.urlencode((defined('HTTP_CATALOG')) ? HTTP_CATALOG : HTTP_SERVER));
 
 				$json = json_decode($result,true);
 

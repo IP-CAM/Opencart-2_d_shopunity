@@ -1,7 +1,7 @@
 <?php
-
 class ModelDShopunityMbooth extends Model {
     private $dir_root = '';
+    private $subversions = array('lite', 'light', 'free');
 
     public function __construct($registry){
         parent::__construct($registry);
@@ -9,32 +9,44 @@ class ModelDShopunityMbooth extends Model {
       
     }
 
-	public function getExtensions(){
-		$result = array();
+    public function getExtensions(){
+        $result = array();
 
-		$files = glob(DIR_SYSTEM . 'mbooth/extension/*.json');
+        $files = glob(DIR_SYSTEM . 'mbooth/extension/*.json');
 
-		foreach($files as $file){
-			$result[] = $this->_extension(json_decode(file_get_contents($file), true));
-		}
+        foreach($files as $file){
+            $result[] = $this->_extension(json_decode(file_get_contents($file), true));
+        }
 
         return $result;
 
-	}
+    }
 
-	public function getExtension($codename){
-		$result = array();
+    public function getExtension($codename){
 
-		$file = DIR_SYSTEM . 'mbooth/extension/'.$codename.'.json';
+        $file = $this->getExtensionJson($codename);
+        return $this->_extension($file);
+    }
 
-		if(file_exists($file)){
-			return $this->_extension(json_decode(file_get_contents($file), true));
-		}else{
-			return false;
-		}
-	}
+    public function getExtensionJson($codename){
+        $result = array();
 
-	public function downloadExtensionArchive($download_link){
+        $file = DIR_SYSTEM . 'mbooth/extension/'.$codename.'.json';
+
+        if(file_exists($file)){
+            return json_decode(file_get_contents($file), true);
+        }else{
+            foreach ($this->subversions as $subversion){
+                $file = DIR_SYSTEM . 'mbooth/extension/'.$codename.'_'.$subversion.'.json';
+                if (file_exists($file)) {
+                    return json_decode(file_get_contents($file), true);
+                }
+            }
+        }
+        return false;
+    }
+
+    public function downloadExtensionFromServer($download_link){
 
         $filename = DIR_SYSTEM . 'mbooth/download/extension.zip';
         $userAgent = 'Googlebot/2.1 (http://www.googlebot.com/bot.html)';
@@ -53,14 +65,14 @@ class ModelDShopunityMbooth extends Model {
         curl_setopt($ch, CURLOPT_FILE, $fp);
         $page = curl_exec($ch);
         if (!$page) {
-            exit;
+            throw new Exception('Error! downloadExtensionFromServer we could not download '.htmlspecialchars_decode($download_link));
         }
         curl_close($ch);
 
         return $filename;
     }
 
-     public function extractExtensionArchive($filename = false, $location = false) {
+     public function extractExtension($filename = false, $location = false) {
         if (!$filename) {
             $filename = DIR_SYSTEM . 'mbooth/download/extension.zip';
         }
@@ -94,12 +106,17 @@ class ModelDShopunityMbooth extends Model {
             $zip->close();
         }
 
+
+        if(isset($result['error'])){
+            throw new Exception('Error! extractExtension failed: filename: '. $filename. ', message: '.json_encode($result['error']));
+        }
+
         unlink($filename);
 
         return $result;
     }
 
-	public function downloadExtension($codename){
+    public function downloadExtension($codename){
 
         $mbooth = $this->getExtension($codename);
         if($mbooth){
@@ -126,29 +143,29 @@ class ModelDShopunityMbooth extends Model {
             //add install.xml file for opencart automatic installer.
             if(isset($mbooth['install'])){
 
-            	if(isset($mbooth['install']['php'])){
-            		if(file_exists($this->dir_root . $mbooth['install']['php'])){
-            			$zip->addFile($this->dir_root . $mbooth['install']['php'], 'install.php');
-            		}
-            	}
+                if(isset($mbooth['install']['php'])){
+                    if(file_exists($this->dir_root . $mbooth['install']['php'])){
+                        $zip->addFile($this->dir_root . $mbooth['install']['php'], 'install.php');
+                    }
+                }
 
-            	if(isset($mbooth['install']['sql'])){
-            		if(file_exists($this->dir_root . $mbooth['install']['sql'])){
-            			$zip->addFile($this->dir_root . $mbooth['install']['sql'], 'install.sql');
-            		}
-            	}
+                if(isset($mbooth['install']['sql'])){
+                    if(file_exists($this->dir_root . $mbooth['install']['sql'])){
+                        $zip->addFile($this->dir_root . $mbooth['install']['sql'], 'install.sql');
+                    }
+                }
 
-            	if(isset($mbooth['install']['xml'])){
-            		if(file_exists($this->dir_root . $mbooth['install']['xml'])){
-            			$zip->addFile($this->dir_root . $mbooth['install']['xml'], 'install.xml');
-            		}
-            	}
+                if(isset($mbooth['install']['xml'])){
+                    if(file_exists($this->dir_root . $mbooth['install']['xml'])){
+                        $zip->addFile($this->dir_root . $mbooth['install']['xml'], 'install.xml');
+                    }
+                }
             }
 
             if(isset($mbooth['readme'])){
-            	if(file_exists($this->dir_root . $mbooth['readme'])){
-        			$zip->addFile($this->dir_root . $mbooth['readme'], 'readme.md');
-        		}
+                if(file_exists($this->dir_root . $mbooth['readme'])){
+                    $zip->addFile($this->dir_root . $mbooth['readme'], 'readme.md');
+                }
             }
          
             $zip->close();
@@ -169,17 +186,89 @@ class ModelDShopunityMbooth extends Model {
             return false;
         }
 
-	}
+    }
 
-	public function deleteExtension($codename){
+    public function installExtension($result) {
+        
+        return $this->moveFiles(DIR_SYSTEM . 'mbooth/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+    }
 
-		$mbooth = $this->getExtension($codename);
+    
+    // public function activateExtension($codename, $result = array()) {
+    //     $extension = $this->getExtension($codename);
+    //     if(isset($extension['install'])){
+    //         if(isset($extension['install']['url'])){
+    //             $parts = explode('&', $extension['install']['url']);
+    //             $route = array_shift($parts);
+    //         }
+    //     }
+
+    //     if(isset($route) && isset($parts)){
+
+    //         try{
+    //             if(VERSION < '2.3.0.0'){
+    //                 $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
+    //             }else{
+    //                 parse_str(implode("&", $parts), $vars);
+    //                 $this->request->get['extension'] = $vars['extension'];
+    //                 $this->load->controller($route);
+    //             }
+    //             $result['success'][] = 'Extension activated';
+                
+    //         }catch(Exception $e){
+    //             $result['error'][] = 'Extension not activated message: '. $e->message;
+    //         }
+    //     }
+    //     return $result;
+    // }
+
+    // public function deactivateExtension($codename, $result = array()) {
+
+    //     $extension = $this->getExtension($codename);
+    //     if(isset($extension['uninstall'])){
+    //         if(isset($extension['uninstall']['url'])){
+    //             $parts = explode('&', $extension['uninstall']['url']);
+    //             $route = array_shift($parts);
+    //         }
+
+    //     }
+
+    //     if(isset($route) && isset($parts)){
+
+    //         try{
+    //             if(VERSION < '2.3.0.0'){
+    //                 $content = file_get_contents(str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL')));
+    //             }else{
+    //                 parse_str(implode("&", $parts), $vars);
+    //                 $this->request->get['extension'] = $vars['extension'];
+    //                 $this->load->controller($route);
+    //             }
+                
+    //         }catch(Exception $e){
+    //             $result['error'][] = 'Extension not deactivated message: '. $e->message;
+    //         }
+    //     }
+    //     return $result;
+    // }
+
+
+    public function deleteExtension($codename){
+
+        $mbooth = $this->getExtension($codename);
+        $this->load->model('d_shopunity/vqmod');
         if($mbooth){
             $result = array('success' => array(), 'error' => array());
             foreach ($mbooth['files'] as $file) {
-                if (is_file(DIR_ROOT . $file)) {
+                if (is_file($this->dir_root . $file)) {
 
-                    if (@unlink(DIR_ROOT . $file)) {
+                    //if vqmod
+                    if(strpos($file, 'vqmod') !== false && strpos($file, '.xml_') !== false){
+                        $this->model_d_shopunity_vqmod->setVqmod(basename($file, '.xml_').'.xml', 0);
+                    }elseif(strpos($file, 'vqmod') !== false && strpos($file, '.xml') !== false){
+                        $this->model_d_shopunity_vqmod->setVqmod(basename($file), 1);
+                    }
+
+                    if (@unlink($this->dir_root . $file)) {
                         $result['success'][] = $file;
                     } else {
                         $result['error'][] = $file;
@@ -206,18 +295,21 @@ class ModelDShopunityMbooth extends Model {
                     $result['error'][] = $file;
                 }
             }
+            @unlink($this->dir_root.'vqmod/mods.cache');
+            @unlink($this->dir_root.'vqmod/checked.cache');
+            $content = file_get_contents(DIR_CATALOG);
         }else{
             $result = false;
         }
         return $result;
-	}
+    }
 
-	public function backupExtension($codename){
+    public function backupExtension($codename){
 
 
-	}
+    }
 
-	public function getFiles($dir, &$arr_files) {
+    public function getFiles($dir, &$arr_files) {
 
         if (is_dir($dir)) {
             $handle = opendir($dir);
@@ -294,11 +386,133 @@ class ModelDShopunityMbooth extends Model {
         return true;
     }
 
-	public function _extension($data){
+    public function installDependencies($codename, $result = array()){
 
-		$result = array();
-		if(!empty($data)){
-			$result = $data;
+        foreach($this->getDependencies($codename) as $require){
+            if(!empty($require['codename'])){
+
+                $extension = $this->getExtension($require['codename']);
+                
+                $satisfies = false;
+                try{
+                    $semver = new Semver;
+                    if(!empty($extension['version'])){
+                        $satisfies = $semver->expression($require['version'])->satisfiedBy($semver->version($extension['version']));
+                    }
+                  
+                }catch(Exception $e){
+                    $result['error'][] = 'Error: version:'.$require['version'].', message: '.$e->getMessage();
+                }
+
+                if(empty($extension) || !$satisfies){
+                    $this->load->model('d_shopunity/extension');
+                    $download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($require['codename'], $require['version']);
+
+                    if(isset($download['download'])){
+                        $extension_zip = $this->downloadExtensionFromServer($download['download']);
+                        $extracted = $this->extractExtension($extension_zip); 
+                        $result = $this->installExtension($result);
+                        $result['success'][] = $require['codename'] . ' installed.';
+                        $result['success'][] = '----------------------------------------------------------';
+                    }elseif(isset($download['error'])){
+                        $result['error'][] = 'Error: we could not install '. $require['codename']. ' message: ' . $download['error'];
+                    }else{
+                        $result['error'][] = 'Error! We could not install ' .$require['codename'] . ', message: '. json_encode($download);
+                    }   
+                 
+                }else{
+                    $result['success'][] = $require['codename'] . ' not installed. Already up to date.';
+                    $result['success'][] = '----------------------------------------------------------';
+                }
+           
+            }else{
+                $result['error'][] = 'Error: requied parse for '. json_encode( $require);
+            }
+        }
+        return $result;
+    }
+
+    public function validateDependencies($codename){
+
+        $extension = json_decode(file_get_contents(DIR_SYSTEM.'mbooth/extension/'.$codename.'.json'), true);
+        if(isset($extension['required'])){
+            foreach($extension['required'] as $extension_codename => $version){
+                if(!file_exists(DIR_SYSTEM.'mbooth/extension/'.$extension_codename.'.json')){
+                    $this->response->redirect($this->url->link('d_shopunity/extension/dependency', 'codename='.$codename.'&token='.$this->session->data['token'], 'SSL'));
+                }
+            }
+        }
+        return true;
+
+    }
+
+    public function getDependencies($codename){
+        $result = array();
+
+        $extension = $this->getExtension($codename);
+        if($extension){
+            if(!empty($extension['required'])){
+                foreach($extension['required'] as $require => $version){
+                    $result[] = array(
+                        'codename' => (string)$require,
+                        'version' => (string)$version
+                    );
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public function getVersion($codename){
+
+        $extension = $this->getExtension($codename);
+
+        if(!empty($extension['version'])){
+            return $extension['version'];
+        }else{
+            return false;
+        }
+    }
+
+
+    public function _extension($data){
+
+        $result = array();
+        if(!empty($data)){
+            $result = $data;
+            if(isset($data['index'])){
+                if(VERSION < '2.3.0.0' && strpos($result['index'], 'extension/module/') !== false) {
+                    $result['index'] = str_replace('extension/module/', "module/", $result['index']);
+                }
+
+                if(VERSION >= '2.3.0.0' && strpos($result['index'], 'extension/module/') === false) {
+                    $result['index'] = str_replace('module/', 'extension/module/', $result['index']);
+                }
+            }
+
+            if(isset($result['install']) && isset($result['install']['url'])){
+                if(VERSION < '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') !== false) {
+                    $result['install']['url'] = str_replace('extension/extension/', "extension/", $result['install']['url']);
+                }
+
+                if(VERSION >= '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') === false) {
+                    $result['install']['url'] = str_replace('extension/', 'extension/extension/', $result['install']['url']);
+                }
+            }
+
+            if(isset($result['uninstall']) && isset($result['uninstall']['url'])){
+                if(VERSION < '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') !== false) {
+                    $result['uninstall']['url'] = str_replace('extension/extension/', "extension/", $result['uninstall']['url']);
+                }
+
+                if(VERSION >= '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') === false) {
+                    $result['uninstall']['url'] = str_replace('extension/', 'extension/extension/', $result['uninstall']['url']);
+                }
+            }
+
+            
+
             if (!empty($data['dirs'])) {
 
                 $dir_files = array();
@@ -312,10 +526,10 @@ class ModelDShopunityMbooth extends Model {
                     $result['files'][] = (string) $file;
                 }
             }
-		}
-		return $result;
 
-	}
+        }
+        return $result;
 
+    }
 
 }

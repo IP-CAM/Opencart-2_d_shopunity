@@ -161,6 +161,14 @@
 		}
 	}
 }
+.extension-thumb-row{
+	border-bottom: solid 1px #eee;
+	padding: 15px 15px 0px 15px;
+	&:hover{
+		background: rgba(0,0,0,0.02);
+	}
+
+}
 .extention-item{
 	.description{
 		max-width: 900px;

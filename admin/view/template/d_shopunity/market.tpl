@@ -6,17 +6,13 @@
 <?php echo $content_top; ?>
 <div class="row">
 	<div class="col-md-3">
-		<?php echo $categories; ?>
-
-	
-				
 		<ul class="list-group">
  
 			<li class="list-group-item"><a href="<?php echo $all; ?>"><h4>All</h4><small>All extensions</small></a></li>
 			<li class="list-group-item"><a href="<?php echo $commercial; ?>"><h4>Commercial</h4><small>List of commercial extensions</small></a></li>
 			<li class="list-group-item"><a href="<?php echo $free; ?>"><h4>Free</h4><small>List of free extensions</small></a></li>
 		</ul>
-
+		<?php echo $categories; ?>
 		
 	</div>
 	<div class="col-md-9">

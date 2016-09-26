@@ -231,7 +231,6 @@ class ModelDShopunityExtension extends Model {
         return $json;
     }
 
-
     public function isInstalled($codename){
         if(file_exists(DIR_SYSTEM . 'mbooth/extension/'.$codename.'.json')){
             return true;
@@ -243,7 +242,7 @@ class ModelDShopunityExtension extends Model {
 
         $result = array();
 
-        if(!empty($data)){
+        if(!empty($data) && !isset($data['error'])){
             $result = $data;
             $result['url'] = $this->url->link('d_shopunity/extension/item', 'token='.$this->session->data['token'].'&extension_id='.$data['extension_id'],'SSL');
             if($data['prices']){
@@ -329,6 +328,8 @@ class ModelDShopunityExtension extends Model {
                 $result['disapprove'] = '';
             }  
 
+        }else{
+            throw new Exception('Error! extension not returned from shopunity: '. json_encode($data), 404);
         }
 
         return $result;

@@ -77,7 +77,7 @@ class ControllerDShopunityExtension extends Controller {
 
    		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
-
+   		$data = $this->_productThumb($data);
    		$this->response->setOutput($this->load->view($this->route.'_item.tpl', $data));
 	}
 
@@ -484,6 +484,27 @@ class ControllerDShopunityExtension extends Controller {
 		try{
 			$this->load->model('d_shopunity/extension');
 			$result = $this->model_d_shopunity_extension->submitExtension($this->request->get['extension_id']);
+
+			if(!empty($result['error'])){
+				$this->session->data['error'] = $result['error'];
+			}elseif(!empty($result['success'])){
+				$this->session->data['success'] = $result['success'];
+			}
+		}catch(Exception $e){
+			$this->session->data['error'] = $e->getMessage();
+		}
+
+		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+	}
+
+	public function push_update(){
+		if(!isset($this->request->get['extension_id'])){
+			$this->session->data['error'] = 'Error! extension_id missing';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+		try{
+			$this->load->model('d_shopunity/extension');
+			$result = $this->model_d_shopunity_extension->pushUpdateExtnesion($this->request->get['extension_id']);
 
 			if(!empty($result['error'])){
 				$this->session->data['error'] = $result['error'];

@@ -1,9 +1,3 @@
-<div class="ibox developer-profile">
-	<div class="ibox-title">
-		<h4>Categories</h4>
-		<p>Browes categories to find interesting extensions</p>
-	</div>
-</div>
 <ul class="list-group">
 	<?php if($categories){?> 
 		<?php foreach($categories as $category){ ?>
