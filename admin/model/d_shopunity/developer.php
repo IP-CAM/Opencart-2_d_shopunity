@@ -34,7 +34,7 @@ class ModelDShopunityDeveloper extends Model {
         return $json;
     }
 
-    public function updateExtnesion($extension_id, $developer_id){
+    public function updateExtension($extension_id, $developer_id){
 
         $json = $this->api->post('developers/'.$developer_id.'/extensions/'.$extension_id.'/update');
 
