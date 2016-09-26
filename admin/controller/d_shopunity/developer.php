@@ -64,7 +64,6 @@ class ControllerDShopunityDeveloper extends Controller {
 		try{
 			$this->load->model('d_shopunity/developer');
 			$result = $this->model_d_shopunity_developer->updateExtension($this->request->get['extension_id'], $this->request->get['developer_id']);
-
 			$json['result'] = $result;
 			if(empty($result)){
 				$json['error'] = 'Error! no updates made.';
