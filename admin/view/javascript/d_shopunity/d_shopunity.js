@@ -364,7 +364,7 @@ d_shopunity = {
 		});
 
 		return false;
-	}
+	},
 
 	showLoading: function($loading){
 		$loading.addClass('show');
