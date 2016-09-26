@@ -60,20 +60,21 @@ class ControllerDShopunityDeveloper extends Controller {
 			$this->session->data['error'] = 'Error! developer_id missing';
 			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
+		$json = array();
 		try{
 			$this->load->model('d_shopunity/developer');
 			$result = $this->model_d_shopunity_developer->updateExtension($this->request->get['extension_id'], $this->request->get['developer_id']);
 
-			if(!empty($result['error'])){
-				$this->session->data['error'] = $result['error'];
-			}elseif(!empty($result['success'])){
-				$this->session->data['success'] = $result['success'];
+			if(empty($result)){
+				$json['error'] = 'Error! no updates made.';
+			}else{
+				$json['success'] = 'We have sent ' .count($result).' requests to update the extension';
 			}
 		}catch(Exception $e){
-			$this->session->data['error'] = $e->getMessage();
+			$json['error'] = $e->getMessage();
 		}
 
-		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function profile($developer){

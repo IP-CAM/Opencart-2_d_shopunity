@@ -357,7 +357,35 @@ d_shopunity = {
 		}, 
 		function(isConfirm){  
 			if (isConfirm) {     
-				location.href = $node.data('href');  
+				$.ajax({
+					url: $node.data('href'),
+					dataType: 'json',
+					method: 'get',
+					success: function(json) {
+						that.hideLoading($('.loading'));
+
+						if(json['success']){
+							var text = json['success'];
+							var type = "success";
+						}
+
+						if(json['error']){
+							var text = json['error'];
+							var type = "warning";
+						}
+						swal({	
+							title: "Updated",	
+							text: text,	
+							type: type,	
+							showCancelButton: false, 
+							confirmButtonColor: "#AEDEF4",	
+							confirmButtonText: "Ok",	
+							closeOnConfirm: false,
+							closeOnCancel: true,
+							showLoaderOnConfirm: true
+						});
+					}
+				});  
 			} else {     
 				that.hideLoading($('.loading'));
 		 	}	
