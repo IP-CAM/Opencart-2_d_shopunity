@@ -71,6 +71,7 @@ class ControllerDShopunityDeveloper extends Controller {
 			}else{
 				$json['success'] = 'We have sent ' .count($result).' requests to update the extension';
 			}
+			
 		}catch(Exception $e){
 			$json['error'] = $e->getMessage();
 		}
