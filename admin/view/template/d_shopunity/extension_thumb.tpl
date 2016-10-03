@@ -27,12 +27,12 @@
 				<div class="pull-right">
 					<?php if($extension['installable'] && !$extension['installed']){ ?>
 		            	<!-- install -->
-		            	<a class="btn btn-success btn-sm show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
+		            	<a class="btn btn-success btn-sm show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
 		            <?php } ?>
 		            
 		        	<?php if($extension['updatable'] && $extension['installed']){ ?>
 		        		<!-- update -->
-		        		<a class="btn btn-success btn-sm show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
+		        		<a class="btn btn-success btn-sm show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
 		        	<?php } ?>
 		        	
 			       
@@ -54,12 +54,12 @@
 
 		            <?php if($extension['installed']){ ?>
 						<!-- delete -->
-						<a class="btn btn-danger btn-sm show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
+						<a class="btn btn-danger btn-sm show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span></a>	
 		            <?php } ?>
 
 					<?php if($extension['suspendable'] && !$extension['installed']){ ?>
 		            	<!-- suspend -->
-		            	<a class="btn btn-danger btn-sm show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span></a>
+		            	<a class="btn btn-danger btn-sm show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>&theme=extension_thumb" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span></a>
 		        	<?php } ?>	        	
 					
 			        <?php if($extension['activate']){ ?>
