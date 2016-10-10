@@ -313,15 +313,7 @@ class ModelDShopunityExtension extends Model {
             $result['billing'] = $this->_ajax($this->url->link('d_shopunity/order', 'token=' . $this->session->data['token']  . '&codename='.$result['codename'] , 'SSL'));
             $result['filemanager'] = $this->_ajax($this->url->link('d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$data['codename'] , 'SSL'));
             $result['developer_update'] = $this->_ajax($this->url->link('d_shopunity/developer/update', 'token='.$this->session->data['token'] . '&extension_id='.$data['extension_id'].'&developer_id='.$data['developer_id'] , 'SSL'));
-            
-            // The Regular Expression filter
-            $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
-
-            // Check if there is a url in the text
-            if(preg_match($reg_exUrl, $data['tester_comment'], $url)) {
-                $result['tester_comment'] = preg_replace($reg_exUrl, "<a href="{$url[0]}">{$url[0]}</a> ", $data['tester_comment']);
-            }
-
+         
             if(!empty($data['store_extension'])){
                 $result['suspend'] = $this->_ajax($this->url->link('d_shopunity/extension/suspend', 'token=' . $this->session->data['token']  . '&store_extension_id='.$data['store_extension']['store_extension_id'] , 'SSL'));
             }else{
