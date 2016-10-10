@@ -54,7 +54,7 @@
 
 		            <?php if($extension['installed']){ ?>
 						<!-- delete -->
-						<a class="btn btn-danger btn-block show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span> Buy</a>	
+						<a class="btn btn-danger btn-block show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span> Delete</a>	
 		            <?php } ?>
 
 					<?php if($extension['suspendable'] && !$extension['installed']){ ?>
