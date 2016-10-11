@@ -38,16 +38,15 @@
 			       
 					<?php if($extension['purchasable'] ){ ?>
 			        	<!-- purchase -->
-			        	<div class="purchase-extension btn-group input-sm">
+			        	<div class="purchase-extension btn-group form-inline">
 							<?php if(!empty($extension['price'])){ ?>
-				             <select class="form-control">
+				             <select class="form-control input-sm">
 								<?php foreach($extension['prices'] as $price){ ?>
 								<option value="<?php echo $price['extension_recurring_price_id']; ?>"><?php echo $price['recurring_price_format']; ?> / <?php echo $price['recurring_duration']; ?> days</option>
 								<?php } ?>
 							</select>
 				          
 				            <?php } ?>
-				           
 				            <a class="btn btn-primary btn-sm pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
 						</div>
 					<?php } ?>
