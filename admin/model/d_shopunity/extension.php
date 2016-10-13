@@ -351,6 +351,7 @@ class ModelDShopunityExtension extends Model {
             
             $result = $data;
             $result['name'] = trim($data['name']);
+            $result['description_short'] = trim($data['description']);
             $result['url'] = '';
             $result['prices'] = '';
             $result['image'] = $image_main;
@@ -404,6 +405,7 @@ class ModelDShopunityExtension extends Model {
             $result['suspendable'] = false;
             $result['submittable'] = false;
             $result['testable'] = false;
+            $result['commercial'] = false;
             
             $result['purchase'] = '';
             $result['install'] = '';
