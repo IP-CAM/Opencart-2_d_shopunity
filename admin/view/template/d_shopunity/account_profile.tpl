@@ -11,13 +11,5 @@
 			</div>
 			<div class="h4 name"><?php echo $account['firstname']; ?> <?php echo $account['lastname']; ?></div>
 		</div>
-		<!-- <div class="view-profile">
-			<a href="<?php echo $account['profile_url']; ?>" target="_blank" class="btn btn-info ">View profile</a>
-		</div> -->
 	</div>
 </div>
-
-<!-- 	<pre>
-		<?php print_r($account); ?>
-
-	</pre> -->

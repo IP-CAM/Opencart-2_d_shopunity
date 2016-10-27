@@ -16,6 +16,7 @@ class Deploy_Bitbucket{
   private $download_name = 'download.zip'; // name of downloaded zip file
   private $debug = false;  // false = hide output
   private $process = 'deploy'; // deploy or update
+  private $access_token = ''; // deploy or update
  
   // files to ignore in directory
   private $ignore_files = array('README.md', '.gitignore', '.', '..');
@@ -24,6 +25,7 @@ class Deploy_Bitbucket{
   private $files = array('modified' => array(), 'added' => array(), 'removed' => array());
  
   function __construct($user = '', $pass = '', $repo = '', $deploy = '', $branch = '', $owner = ''){
+    $result = array();
 
     if($user){
         $this->user = $user;
@@ -55,11 +57,25 @@ class Deploy_Bitbucket{
     }
 
     if($json){
+      $this->log($json);
 
       $data = json_decode($json); // decode json into php object
       $this->repo = $data->repository->name;
       $this->owner = $data->repository->owner->username;
       $this->user = $data->actor->username;
+      
+      
+
+      if(isset($data->access_token)){
+        $this->log($data->access_token);
+        $this->access_token = $data->access_token;
+      }
+
+      $result['repo'] = $this->repo;
+      $result['owner'] = $this->owner;
+      $result['user'] = $this->user;
+      $result['access_token'] = $this->access_token;
+      
       // process all commits
       
         // if no commits have been posted, deploy latest node
@@ -68,32 +84,49 @@ class Deploy_Bitbucket{
         // download repo
         if(!$this->get_repo($this->branch)){
           $this->log('Download of Repo Failed');
-          return;
+          $result['error'] = 'Download of Repo Failed';
+          //return;
         }
- 
-        // unzip repo download
-        if(!$this->unzip_repo()){
-          $this->log('Unzip Failed');
-          return;
+
+        if(empty($result['error'])){
+          $result['step_1'] = 'get_repo complete';
+   
+          // unzip repo download
+          if(!$this->unzip_repo()){
+            $this->log('Unzip Failed');
+            $result['error'] = 'Unzip Failed';
+            //return;
+          }
         }
- 
-        $node = $this->get_node_from_dir();
-        $message = 'Bitbucket zip retrieved, complete deploy';
-        if(!$node){
-          $this->log('Node could not be set, no unziped repo');
-          return; 
+        
+        if(empty($result['error'])){
+          $result['step_2'] = 'unzip_repo complete';
+   
+          $node = $this->get_node_from_dir();
+          $message = 'Bitbucket zip retrieved, complete deploy';
+          if(!$node){
+            $this->log('Node could not be set, no unziped repo');
+            $result['error'] = 'Node could not be set, no unziped repo';
+            //return; 
+          }
         }
- 
-        // append changes to destination
-        $this->parse_changes($node, $message);
- 
-        // delete zip file
-        unlink($this->download_name);
-      
+
+        if(empty($result['error'])){
+          $result['step_3'] = 'get_node_from_dir complete';
+   
+          // append changes to destination
+          $this->parse_changes($node, $message);
+   
+          // delete zip file
+          unlink($this->download_name);
+        }
     }else{
       // no $_POST['payload']
       $this->log('No Payload' . file_get_contents('php://input'));
+      $result['error'] = 'No Payload';
     }
+
+    echo json_encode($result);
   }
  
   /**
@@ -125,11 +158,17 @@ class Deploy_Bitbucket{
     $fp = fopen($this->download_name, 'w');
  
     // set download url of repository for the relating node
-    $ch = curl_init("https://bitbucket.org/$this->owner/$this->repo/get/$node.zip");
-    $this->log('downloading: '."https://bitbucket.org/$this->owner/$this->repo/get/$node.zip");
  
-    // http authentication to access the download
-    curl_setopt($ch, CURLOPT_USERPWD, "$this->user:$this->pass");
+    if($this->access_token){
+      $ch = curl_init("https://bitbucket.org/$this->owner/$this->repo/get/$node.zip?access_token=".$this->access_token);
+    }else{
+      $ch = curl_init("https://bitbucket.org/$this->owner/$this->repo/get/$node.zip");
+      // http authentication to access the download
+      curl_setopt($ch, CURLOPT_USERPWD, "$this->user:$this->pass");
+    }
+    
+    $this->log('downloading: '."https://bitbucket.org/$this->owner/$this->repo/get/$node.zip?access_token=".$this->access_token);
+
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false); //was true
  

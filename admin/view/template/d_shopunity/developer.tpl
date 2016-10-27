@@ -42,11 +42,6 @@
 				<div class="bs-callout bs-callout-info">No store modules to display</div>
 			<?php } ?>
 		</div>
-		
-	 
-	<!--<pre>
-		<?php print_r($local_extensions );?>
-	</pre>   -->
 		</div>
 	</div>
 </div>

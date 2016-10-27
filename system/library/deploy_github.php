@@ -14,6 +14,7 @@ class Deploy_GitHub{
   private $download_name = 'download.zip'; // name of downloaded zip file
   private $debug = false;  // false = hide output
   private $process = 'deploy'; // deploy or update
+  private $access_token = ''; // deploy or update
  
   // files to ignore in directory
   private $ignore_files = array('README.md', '.gitignore', '.', '..');
@@ -22,7 +23,7 @@ class Deploy_GitHub{
   private $files = array('modified' => array(), 'added' => array(), 'removed' => array());
  
   function __construct($user = '', $repo = '', $deploy = '', $branch = ''){
-
+    $result = array();
     if($user){
         $this->user = $user;
     }
@@ -43,13 +44,24 @@ class Deploy_GitHub{
         $this->branch = $branch;
     }
 
-    $json = isset($_POST['payload']) ? $_POST['payload'] : false;
+    $json = file_get_contents('php://input');
+    if(empty($json)){
+      $json = isset($_POST['payload']) ? $_POST['payload'] : false;
+    }
     if($json){
       $data = json_decode(html_entity_decode($json)); // decode json into php object
       
       $parts = explode("/", $data->repository->full_name);
       $this->user = $parts[0];
       $this->repo = $parts[1];
+      if(isset($_POST['access_token'])){
+        $this->access_token = $_POST['access_token'];
+      }
+
+      $result['repo'] = $this->repo;
+      $result['user'] = $this->user;
+      $result['access_token'] = $this->access_token;
+
       // process all commits
       
         // if no commits have been posted, deploy latest node
@@ -58,32 +70,47 @@ class Deploy_GitHub{
         // download repo
         if(!$this->get_repo($this->branch)){
           $this->log('Download of Repo Failed');
-          return;
+          $result['error'] = 'Download of Repo Failed';
         }
- 
-        // unzip repo download
-        if(!$this->unzip_repo()){
-          $this->log('Unzip Failed');
-          return;
+        
+        if(empty($result['error'])){
+          $result['step_1'] = 'get_repo complete';
+          // unzip repo download
+          if(!$this->unzip_repo()){
+            $this->log('Unzip Failed');
+            $result['error'] = 'Unzip Failed';
+          }
         }
- 
-        $node = $this->get_node_from_dir();
-        $message = 'Bitbucket post failed, complete deploy';
-        if(!$node){
-          $this->log('Node could not be set, no unziped repo');
-          return; 
+        
+        if(empty($result['error'])){
+          $result['step_2'] = 'unzip_repo complete';
+        
+          $node = $this->get_node_from_dir();
+          $message = 'Github post failed, complete deploy';
+          if(!$node){
+            $this->log('Node could not be set, no unziped repo');
+            $result['error'] = 'Node could not be set, no unziped repo';
+          }
         }
- 
-        // append changes to destination
-        $this->parse_changes($node, $message);
- 
-        // delete zip file
-        unlink($this->download_name);
-      
+        
+        if(empty($result['error'])){
+          $result['step_3'] = 'get_node_from_dir complete';
+
+          // append changes to destination
+          $this->parse_changes($node, $message);
+   
+          // delete zip file
+          unlink($this->download_name);
+        }
     }else{
       // no $_POST['payload']
       $this->log('No Payload');
+      $result['error'] = 'No Payload';
+      $result['request'] = $_POST;
+
     }
+
+    echo json_encode($result);
   }
  
   /**
@@ -115,8 +142,15 @@ class Deploy_GitHub{
     $fp = fopen($this->download_name, 'w');
  
     // set download url of repository for the relating node
-    $ch = curl_init("https://codeload.github.com/$this->user/$this->repo/zip/".$node);
- 
+    // "https://github.com/$this->user/$this->repo/archive/$node.zip"
+    if($this->access_token){
+      $ch = curl_init("https://codeload.github.com/$this->user/$this->repo/zip/".$node."?token=".$this->access_token);
+    }else{
+      $ch = curl_init("https://codeload.github.com/$this->user/$this->repo/zip/".$node);
+      //http authentication to access the download
+      //curl_setopt($ch, CURLOPT_USERPWD, "$this->user:$this->pass");
+    }
+
     // http authentication to access the download
     //curl_setopt($ch, CURLOPT_USERPWD, "$this->user");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
