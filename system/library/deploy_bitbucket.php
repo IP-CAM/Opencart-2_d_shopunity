@@ -72,6 +72,7 @@ class Deploy_Bitbucket{
       }
 
       $result['repo'] = $this->repo;
+      $result['branch'] = $this->branch;
       $result['owner'] = $this->owner;
       $result['user'] = $this->user;
       $result['access_token'] = $this->access_token;

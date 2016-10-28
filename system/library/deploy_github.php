@@ -59,6 +59,7 @@ class Deploy_GitHub{
       }
 
       $result['repo'] = $this->repo;
+      $result['branch'] = $this->branch;
       $result['user'] = $this->user;
       $result['access_token'] = $this->access_token;
 
