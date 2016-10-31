@@ -255,7 +255,7 @@ class ModelDShopunityExtension extends Model {
                     }
                 }
             }
-
+            $result['mbooth'] = $data['mbooth'];
             $result['registered'] = true;
             $result['installed'] = $this->isInstalled($data['codename']);
             $result['admin'] = false;
@@ -305,11 +305,13 @@ class ModelDShopunityExtension extends Model {
 
             $result['purchase'] = $this->_ajax($this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['install'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] . ((isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : ''), 'SSL'));
+            $result['popup_test'] = $this->_ajax($this->url->link('d_shopunity/extension/popupTest', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] . ((isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : ''), 'SSL'));
+            $result['test'] = $this->_ajax($this->url->link('d_shopunity/extension/test', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id'] . ((isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : ''), 'SSL'));
             $result['update'] = $this->_ajax($this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $data['extension_id']  . ((isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : ''), 'SSL'));
             $result['download'] = $this->_ajax($this->url->link('d_shopunity/extension/download', 'token='.$this->session->data['token'] . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id']  , 'SSL'));
             $result['uninstall'] = $this->_ajax($this->url->link('d_shopunity/extension/uninstall', 'token=' . $this->session->data['token']  . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id'] , 'SSL'));
             $result['submit'] = $this->_ajax($this->url->link('d_shopunity/extension/submit', 'token=' . $this->session->data['token']  . '&extension_id='.$data['extension_id'] , 'SSL'));
-            $result['json'] = $this->_ajax($this->url->link('d_shopunity/extension/json', 'token=' . $this->session->data['token']  . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id'] , 'SSL'));
+            $result['json'] = $this->_ajax($this->url->link('d_shopunity/extension/json', 'token=' . $this->session->data['token']  . '&codename='.$data['codename']. '&extension_id=' . $data['extension_id'] . ((isset($data['extension_download_link_id'])) ? '&extension_download_link_id=' . $data['extension_download_link_id'] : ''), 'SSL'));
             $result['billing'] = $this->_ajax($this->url->link('d_shopunity/order', 'token=' . $this->session->data['token']  . '&codename='.$result['codename'] , 'SSL'));
             $result['filemanager'] = $this->_ajax($this->url->link('d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$data['codename'] , 'SSL'));
             $result['developer_update'] = $this->_ajax($this->url->link('d_shopunity/developer/update', 'token='.$this->session->data['token'] . '&extension_id='.$data['extension_id'].'&developer_id='.$data['developer_id'] , 'SSL'));
@@ -348,7 +350,6 @@ class ModelDShopunityExtension extends Model {
             $this->load->model('tool/image');
             $image_thumb = (!empty($data['images']['thumb'])) ? $data['images']['thumb'] : $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 320, 200);
             $image_main = (!empty($data['images']['main'])) ? $data['images']['main'] : $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 640, 400);
-            
             $result = $data;
             $result['name'] = trim($data['name']);
             $result['description_short'] = trim($data['description']);

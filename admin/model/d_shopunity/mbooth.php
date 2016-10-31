@@ -48,6 +48,12 @@ class ModelDShopunityMbooth extends Model {
 
 	public function downloadExtensionFromServer($download_link){
 
+        //check if it is possible to download
+        $error_download = json_decode(file_get_contents($download_link),true);
+        if(isset($error_download['error'])){
+            throw new Exception('Error! downloadExtensionFromServer failed: '.$error_download['error'].' link: '.htmlspecialchars_decode($download_link));
+        }
+
         $filename = DIR_SYSTEM . 'mbooth/download/extension.zip';
         $userAgent = 'Googlebot/2.1 (http://www.googlebot.com/bot.html)';
 

@@ -37,8 +37,72 @@ d_shopunity = {
 		
 	},
 
+	popupStart: function($title){
+		$("#modal").modal('show');
+		$("#modal .preloader").show();
+		$("#modal .modal-title").html($title);
+		$("#modal .modal-body").html('');
+	},
+
+	popupShow: function($content){
+		$("#modal .preloader").hide();
+		$('#modal .modal-body').html($content);
+	},
+
+	popupTest: function($node){
+
+		this.popupStart('Install extension for testing');
+		var that = this;
+		$.ajax({
+			url: $node.data('href'),
+			dataType: 'json',
+			method: 'get',
+			success: function(json) {
+				
+				if(json['content']){
+					that.popupShow(json['content']);
+				}
+			}
+		}); 
+
+		return false;
+
+	},
+
 	installExtension: function($node){
 		var that = this;
+		var extension_id = $node.data('extension_id');
+		var $log = $('#extension_'+extension_id+' .log');
+		$('#extension_'+extension_id+' .required')
+			.find('.text-start').addClass('hide').parent()
+			.find('.text-process').removeClass('hide');
+
+		if (!!window.EventSource) {
+		  var source = new EventSource( $node.data('href'));
+		} else {
+		  // Result to xhr polling :(
+		} 
+
+		source.addEventListener('message', function(e) {
+			var data = JSON.parse(e.data);
+		   $log.append(data.message+"\n");
+		}, false);
+
+		source.addEventListener('open', function(e) {
+		  // Connection was opened.
+		}, false);
+
+		source.addEventListener('error', function(e) {
+			console.log('error!!!');
+			source.close();
+			$('#extension_'+extension_id+' .required')
+				.find('.text-process').addClass('hide').parent()
+				.find('.text-complete').removeClass('hide');
+		  if (e.readyState == EventSource.CLOSED) {
+		    // Connection was closed.
+		  }
+		}, false);
+		/*
 		$.ajax({
 			url: $node.data('href'),
 			dataType: 'json',
@@ -71,8 +135,13 @@ d_shopunity = {
 					that.activateExtension($('#extension_'+json['codename']+' .activate-extension'));
 				}
 
+				if(json['error']){
+					swal("Oops! Extension wasn't installed properly", json['error'], "error")
+				}
+
 			}
 		}); 
+*/
 		return false;
 	},
 
@@ -330,12 +399,14 @@ d_shopunity = {
 
 	showExtensionJson: function($node){
 
-		$("#myModal").modal('show');
+		this.popupStart('Extension Json');
+		var that = this;
 		$.ajax({
 			url: $node.data('href'),
 			dataType: 'json',
 			success: function(json) {
-				$("#myModal").find(".modal-body").html(syntaxHighlight(json));
+				$("#modal .preloader").hide();
+				$("#modal").find(".modal-body").html('<pre>'+syntaxHighlight(json)+'</pre>');
 	
 			}
 		});
@@ -418,6 +489,10 @@ d_shopunity = {
 
 		$(document).on('click', '.purchase-extension .btn', function(){
 			that.purchaseExtension($(this).data('extension-id'), $(this).parents('.purchase-extension').find('select').val());
+		});
+
+		$(document).on('click', '.popup-test', function(){
+			that.popupTest($(this));
 		});
 
 		$(document).on('click', '.install-extension', function(){

@@ -19,7 +19,6 @@
 			</div>
 		</div>
 		
-		
 		<div  id="list_search_1" class="ibox">
 			<?php if($store_extensions){ ?>
 			<div class="ibox-title">
