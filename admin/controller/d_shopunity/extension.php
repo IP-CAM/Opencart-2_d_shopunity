@@ -19,6 +19,8 @@ class ControllerDShopunityExtension extends Controller {
 	}
 
 	public function index(){
+		
+		// FB::log('model_d_shopunity_extension->getExtensions:');
 
 		if(!$this->model_d_shopunity_account->isLogged()){
 			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
@@ -383,6 +385,7 @@ class ControllerDShopunityExtension extends Controller {
 	}
 
 	public function popupTest(){
+
 		$this->load->language('d_shopunity/extension');
 		if(!isset($this->request->get['extension_id'])){
 			$this->session->data['error'] = 'Error! extension_id missing';
@@ -412,9 +415,9 @@ class ControllerDShopunityExtension extends Controller {
 			$this->load->model('d_shopunity/extension');
 			$data['extension'] = $this->model_d_shopunity_extension->getTestableExtension($tester_id, $extension_id, $extension_download_link_id);		
 
-			if(!empty($data['extension']['mbooth']['required'])){
+			if(!empty($data['extension']['required'])){
 				$filter_data = array();
-				foreach($data['extension']['mbooth']['required'] as $codename => $version){
+				foreach($data['extension']['required'] as $codename => $version){
 					$filter_data['codename'][] = $codename;
 					
 				}
@@ -442,93 +445,56 @@ class ControllerDShopunityExtension extends Controller {
 		$json = array();
 		$json['installed'] = false;
 
-		if(!$this->model_d_shopunity_account->isLogged()){
-			$this->_send('1', 'You are not logged in ' . date("h:i:s", time()));
-		}
-
-		if(!isset($this->request->get['extension_download_link_id'])){
-			$this->_send('2', 'Error! extension_download_link_id missing ' . date("h:i:s", time()));
-			//$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
-		}
-
-		if(!isset($this->request->get['extension_id'])){
-			$this->_send('3', 'Error! extension_id missing ' . date("h:i:s", time()));
-			//$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
-		}
-
-		$account = $this->config->get('d_shopunity_account');
-
-		if(empty($account['tester'])){
-			$this->_send('3', 'Error! you must be a tester ' . date("h:i:s", time()));
-			//$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
-		}
-
-		$tester_id = $account['tester']['tester_id'];
-
-		$extension_download_link_id = $this->request->get['extension_download_link_id'];
-		$extension_id = $this->request->get['extension_id'];
-		
-		$this->load->model('d_shopunity/extension');
-		$this->load->model('d_shopunity/mbooth');
-
 		try{
+			if(!$this->model_d_shopunity_account->isLogged()){
+				throw new Exception('You are not logged in');
+			}
+
+			if(!isset($this->request->get['extension_download_link_id'])){
+				throw new Exception('Error! extension_download_link_id missing');
+			}
+
+			if(!isset($this->request->get['extension_id'])){
+				throw new Exception('Error! extension_id missing');
+			}
+
+			$account = $this->config->get('d_shopunity_account');
+
+			if(empty($account['tester'])){
+				throw new Exception('Error! you must be a tester');
+			}
+
+			$tester_id = $account['tester']['tester_id'];
+			$extension_download_link_id = $this->request->get['extension_download_link_id'];
+			$extension_id = $this->request->get['extension_id'];
+			
+			$this->load->model('d_shopunity/extension');
+			$this->load->model('d_shopunity/mbooth');
 
 			$extension = $this->model_d_shopunity_extension->getExtension($extension_id);
-			$this->_send(4, 'Get extension data ' . json_decode($extension));
+			$this->_send('Get extension data ' . json_decode($extension));
 
 			$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkIdForTesting($extension_id, $extension_download_link_id);
 
-			if(!empty($download['error']) || empty($download['download'])){
-				//$json['error'] = 'Error! We cound not get the download link: '.$download['error'];
-				$this->_send(5, 'Error! We cound not get the download link: '.$download['error']);
-			}else{
-				$this->_send(5, 'we got extension download url');
-			}
-
-			$error_download = json_decode(file_get_contents($download['download']),true);
-			
-			if(isset($error_download['error'])){
-				//$json['error'] = 'Error! getExtensionDownload failed: '.json_encode($error_download['error']);
-				$this->_send(6, 'Error! getExtensionDownload failed: '.json_encode($error_download['error']));
-			}else{
-				$this->_send(6, 'we are going to install the extension');
-			}
-			//start testing
-			//download the extension to system/mbooth/download
-			$extension_zip = $this->model_d_shopunity_mbooth->downloadExtensionFromServer($download['download']);
-			if(isset($extension_zip['error'])){
-				//$json['error'] = 'Error! downloadExtensionFromServer failed: '.json_encode($extension_zip['error']);
-				$this->_send(7, 'Error! downloadExtensionFromServer failed: '.json_encode($extension_zip['error']));
-				//$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
-			}else{
-				$this->_send(7, 'extension downloaded from servr');
-			}
-
-			//unzip the downloaded file to system/mbooth/download and remove the zip file
-			$extracted = $this->model_d_shopunity_mbooth->extractExtension($extension_zip);
-			if(isset($extracted['error'])){
-				//$json['error'] = 'Error! extractExtension failed: ' .json_encode($extracted['error']) . ' download from '.$download['download'];
-				$this->_send(8, 'Error! extractExtension failed: ' .json_encode($extracted['error']) . ' download from '.$download['download']);
-				//$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
-			}else{
-				$this->_send(8, 'extension extrected');
-			}
-
-			$result = array();
-
-			//BACKUP REFACTOR
-			// if(file_exists(DIR_SYSTEM . 'mbooth/xml/'.$this->request->post['mbooth'])){
-			// 	$result = $this->model_module_mbooth->backup_files_by_mbooth($this->request->post['mbooth'], 'update');
-			// }
-
-			$result = $this->model_d_shopunity_mbooth->installExtension($result);
+			$result = $this->_install($download);
 
 			
 			if(!empty($result['success'])) {
 
-				$this->_send(9, 'installing Dependencies ...'); 
-				$result = $this->model_d_shopunity_mbooth->installDependencies($extension['codename'], $result);
-				$this->_send(10, 'dependencies installed: '. json_encode($result)); 
+				$this->_send('installing Dependencies ...'); 
+				//$result = $this->model_d_shopunity_mbooth->installDependencies($extension['codename'], $result);
+
+				if(!empty($extension['required'])){
+					foreach($extension['required'] as $codename => $version){
+						$this->_send('installing: ' . $codename . ' ' . $version); 
+						$download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($codename, $version);
+					
+						$this->_install($download);
+					}
+		
+				}
+
+				$this->_send('dependencies installed: '); 
 				
 				
 
@@ -552,24 +518,27 @@ class ControllerDShopunityExtension extends Controller {
 				// 	$json['extension'] = $this->load->view('d_shopunity/'.$theme.'.tpl', $data);
 				// }
 
-				$this->_send(11, 'extension installed');
+				$this->_send('extension installed');
 				// $json['success'] = 'Extension #' . $this->request->get['extension_id'].' installed';
 				// $json['success'] .=  "<br />" . implode("<br />", $result['success']);
 			}
 
 			if(!empty($result['error'])) {
 				//$json['error'] = $this->language->get('error_install') . "<br />" . implode("<br />", $result['error']);
-				$this->_send(9, $this->language->get('error_install'));
+				$this->_send($this->language->get('error_install'));
 			}
 
 		}catch(Exception $e){
 			// $json['error'] = $e->getMessage();
-			$this->_send(100, $e->getMessage());
+			$this->_send($e->getMessage());
 		}
+
 
 		$this->stop_sse();
 		//$this->response->setOutput(json_encode($json));
 	}
+
+
 
 
 	public function uninstall(){
@@ -771,7 +740,7 @@ class ControllerDShopunityExtension extends Controller {
 
 	public function stop_sse() {
 		header('Content-Type: text/text');
-		echo "id: 1000" . PHP_EOL;
+		echo "id: " . time() . PHP_EOL;
 		echo "event: error" . PHP_EOL;
 		echo "data: STOP" . PHP_EOL;
 		echo PHP_EOL;
@@ -779,12 +748,65 @@ class ControllerDShopunityExtension extends Controller {
   		flush(); 
 	}
 
-	public function _send($id, $msg) {
-		echo "id: $id" . PHP_EOL;
+	public function _send($msg) {
+		echo "id: ".  time() . PHP_EOL;
 		echo "data: {\"message\":\"$msg\"}" . PHP_EOL;
 		echo PHP_EOL;
 		ob_flush();
   		flush(); 
+	}
+
+	public function _install($download){
+		$this->load->model('d_shopunity/extension');
+		$this->load->model('d_shopunity/mbooth');
+		$result = array();
+
+		if(!empty($download['errors'])){
+			throw new Exception('Error! We cound not get the download link: '.$download);
+		}
+
+		if(empty($download['download'])){
+			throw new Exception('Error! The download link is empty: '.$download);
+		}
+
+		$this->_send('we got extension download url');
+
+		$error_download = json_decode(file_get_contents($download['download']),true);
+		
+		if(isset($error_download['errors'])){
+			throw new Exception('Error! getExtensionDownload failed: '.json_encode($error_download));
+		}
+
+		$this->_send('we are going to install the extension');
+		
+		//start testing
+		//download the extension to system/mbooth/download
+		$extension_zip = $this->model_d_shopunity_mbooth->downloadExtensionFromServer($download['download']);
+		if(isset($extension_zip['errors'])){
+			throw new Exception('Error! downloadExtensionFromServer failed: '.json_encode($extension_zip));
+		}
+
+		$this->_send('extension downloaded from server');
+
+		//unzip the downloaded file to system/mbooth/download and remove the zip file
+		$extracted = $this->model_d_shopunity_mbooth->extractExtension($extension_zip);
+		if(isset($extracted['errors'])){
+			throw new Exception('Error! extractExtension failed: ' .json_encode($extracted) . ' download from '.$download['download']);
+		}
+
+		$this->_send('extension extrected');
+
+		
+		//BACKUP REFACTOR
+		// if(file_exists(DIR_SYSTEM . 'mbooth/xml/'.$this->request->post['mbooth'])){
+		// 	$result = $this->model_module_mbooth->backup_files_by_mbooth($this->request->post['mbooth'], 'update');
+		// }
+
+		$result = $this->model_d_shopunity_mbooth->installExtension($result);
+
+		$this->_send('extension installed');
+
+		return $result;
 	}
 
 }

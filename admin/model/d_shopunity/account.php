@@ -29,13 +29,9 @@ class ModelDShopunityAccount extends Model {
 			//validate is json returned.
 			if ($json) 
 			{
+				
 				//validate if expired_token
-				if(isset($json['error']['error']) && 
-					(
-						$json['error']['error'] === 'expired_token' ||  
-						$json['error']['error'] === 'invalid_token'
-					)
-				){
+				if(isset($json['errors'][0]['error']) && ($json['errors'][0]['error'] === 'auth_failed')){
 					$d_shopunity_oauth = $this->config->get('d_shopunity_oauth');
 					
 					if(isset($d_shopunity_oauth['access_token'])){
@@ -45,14 +41,11 @@ class ModelDShopunityAccount extends Model {
 					}
 
 					//get new access token
-					if($json)
-					{
+					if($json){
 
 						//validate is access_token returned.
-						if(!empty($json['access_token']))
-						{
+						if(!empty($json['access_token'])){
 							$this->login($json);
-
 							$this->config->set('d_shopunity_account', $json);
 							return $json;
 						}else{

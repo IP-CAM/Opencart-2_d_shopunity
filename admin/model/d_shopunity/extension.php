@@ -255,7 +255,6 @@ class ModelDShopunityExtension extends Model {
                     }
                 }
             }
-            $result['mbooth'] = $data['mbooth'];
             $result['registered'] = true;
             $result['installed'] = $this->isInstalled($data['codename']);
             $result['admin'] = false;
