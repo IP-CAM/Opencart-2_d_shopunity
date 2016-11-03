@@ -93,13 +93,15 @@ d_shopunity = {
 		}, false);
 
 		source.addEventListener('error', function(e) {
-			console.log('error!!!');
+			var data = JSON.parse(e.data);
+			$log.append(data.message+"\n");
+			
 			source.close();
 			$('#extension_'+extension_id+' .required')
 				.find('.text-process').addClass('hide').parent()
 				.find('.text-complete').removeClass('hide');
 		  if (e.readyState == EventSource.CLOSED) {
-		    // Connection was closed.
+		    console.log('Connection closed');
 		  }
 		}, false);
 		/*

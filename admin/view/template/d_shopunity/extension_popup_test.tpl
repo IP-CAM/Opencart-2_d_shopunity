@@ -1,14 +1,19 @@
 <div class="extension-popup" id="extension_<?php echo $extension['extension_id']; ?>">
 		
-		<div class="row">
+		<div class="row m-b">
 			
-			<div class="col-md-4">
-				<img class="img-responsive img-thumbnail img-rounded m-b" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
+			<div class="col-md-4 text-center">
+				<img class="img-responsive img-rounded m-b" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
+				<p>
+					<a class="btn btn-success text-start test-extension" data-href="<?php echo $extension['test']; ?>" data-extension_id="<?php echo $extension['extension_id']; ?>">Install</a>
+					<a class="btn text-process hide"><span class="fa fa-refresh fa-spin"></span> Installing...</a>
+					<a class="btn text-complete test-extension hide">Installed</a>
+				</p>
 			</div>
 			<div class="col-md-8">
 				<h3><?php  echo $extension['name'];  ?> <span class="label label-default"><?php  echo $extension['version'];  ?></span></h3>
 				<p><?php  echo $extension['description_short']; ?></p>
-				<p><a class="btn btn-primary test-extension" data-href="<?php echo $extension['test']; ?>" data-extension_id="<?php echo $extension['extension_id']; ?>">Install</a></p>
+				
 			</div>
 		</div>
 		<?php if(!empty($extension['required'])){?>
@@ -23,10 +28,10 @@
 					<div class="col-md-5"><?php echo $required['name']; ?> <?php if($required['status']) {?> <span class="label label-default"><?php echo $required['version']; ?><span> <?php }else{ ?><span class="label label-danger">Inactive</span> <?php } ?> </div>
 					<div class="col-md-4 ">
 						<?php if($required['installed']){ ?>
-							<span class="btn btn-default pull-right">installed</span>
+							<span class="btn pull-right">installed</span>
 						<?php } ?>
 						<?php if(!$required['installed'] && $required['installable']){ ?>
-							<span class="btn btn-success pull-right to-be-installed">
+							<span class="btn pull-right to-be-installed">
 								<span class="text-start">Will be installed</span>
 								<span class="text-process hide"><span class="fa fa-refresh fa-spin"></span></span>
 								<span class="text-complete hide">installed</span>
@@ -36,10 +41,10 @@
 							</span>
 						<?php } ?>
 						<?php if(!$required['installed'] && !$required['installable'] && $required['purchasable']){ ?>
-							<span class="btn btn-danger pull-right">Please purchase</span>
+							<span class="btn pull-right">Please purchase</span>
 						<?php } ?>
 						<?php if(!$required['installed'] && !$required['installable'] && !$required['purchasable']){ ?>
-							<span class="btn btn-danger pull-right">Can not be installed</span>
+							<span class="btn pull-right">Can not be installed</span>
 						<?php } ?>
 					</div>
 					<div class="col-md-12"></div>
