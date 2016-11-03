@@ -392,6 +392,27 @@ class ModelDShopunityMbooth extends Model {
         return true;
     }
 
+    public function needUpdate($codename, $version_expression){
+        $extension = $this->getExtension($codename);
+                    
+        $satisfies = false;
+        try{
+            $semver = new Semver;
+            if(!empty($extension['version'])){
+                $satisfies = $semver->expression($version_expression)->satisfiedBy($semver->version($extension['version']));
+            }
+          
+        }catch(Exception $e){
+            return true;
+        }
+
+        if(empty($extension) || !$satisfies){
+            return true;
+        }
+
+        return false;
+    }
+
     public function installDependencies($codename, $result = array()){
 
         foreach($this->getDependencies($codename) as $require){

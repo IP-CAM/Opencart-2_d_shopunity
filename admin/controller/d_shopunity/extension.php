@@ -486,10 +486,14 @@ class ControllerDShopunityExtension extends Controller {
 
 				if(!empty($extension['required'])){
 					foreach($extension['required'] as $codename => $version){
-						$this->_send('installing: ' . $codename . ' ' . $version); 
-						$download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($codename, $version);
-					
-						$this->_install($download);
+
+						if($this->model_d_shopunity_mbooth->needUpdate($codename, $version)){
+							$this->_send('installing: ' . $codename . ' ' . $version); 
+							$download = $this->model_d_shopunity_extension->getExtensionDownloadByCodename($codename, $version);
+							$this->_install($download);
+						}else{
+							$this->_send('Extension ' . $codename . ' is up to date (' . $version .')'); 
+						}
 					}
 		
 				}
