@@ -84,12 +84,12 @@
 	            
 	            <?php if($extension['installable'] && !$extension['installed']){ ?>
 		            	<!-- install -->
-		            	<a class="btn btn-success show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
+		            	<a class="btn btn-success show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
 		            <?php } ?>
 		            
 		        	<?php if($extension['updatable'] && $extension['installed']){ ?>
 		        		<!-- update -->
-		        		<a class="btn btn-success show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
+		        		<a class="btn btn-success show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
 		        	<?php } ?>
 		        	
 			       
@@ -140,7 +140,7 @@
 		        <div class="form-inline pull-right">
 	                <a class="btn btn-primary show-loading approve-extension" data-href="<?php echo $extension['approve']; ?>" data-toggle="tooltip" data-original-title="Approve"><span class="fa fa-thumbs-up"></span></a>
 	                <a class="btn btn-danger show-loading disapprove-extension" data-href="<?php echo $extension['disapprove']; ?>" data-toggle="tooltip" data-original-title="Disaprove"><span class="fa fa-thumbs-down"></span></a>
-	                <a class="btn btn-warning show-loading popup-test" data-href="<?php echo $extension['popup_test']; ?>&theme=extension_thumb_row" ><span class="fa fa-cloud-download"></span></a>
+	                <a class="btn btn-warning show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row&action=test" ><span class="fa fa-cloud-download"></span></a>
 		        </div>
 		        <?php } ?>
 	        </div>

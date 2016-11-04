@@ -49,9 +49,9 @@ d_shopunity = {
 		$('#modal .modal-body').html($content);
 	},
 
-	popupTest: function($node){
+	popup: function($node){
 
-		this.popupStart('Install extension for testing');
+		this.popupStart('Install extension');
 		var that = this;
 		$.ajax({
 			url: $node.data('href'),
@@ -73,7 +73,7 @@ d_shopunity = {
 		var that = this;
 		var extension_id = $node.data('extension_id');
 		var $log = $('#extension_'+extension_id+' .log');
-		$('#extension_'+extension_id+' .required')
+		$('#extension_'+extension_id)
 			.find('.text-start').addClass('hide').parent()
 			.find('.text-process').removeClass('hide');
 
@@ -84,8 +84,15 @@ d_shopunity = {
 		} 
 
 		source.addEventListener('message', function(e) {
+			console.log(e.data);
 			var data = JSON.parse(e.data);
 		   $log.append(data.message+"\n");
+		   if(data.activate){
+		   		that.activateExtension($('#extension_'+data.activate+' .activate-extension'));
+		   		$('#required_'+data.activate)
+		   			.find('.text-process').addClass('hide').parent()
+					.find('.text-complete').removeClass('hide');
+		   }
 		}, false);
 
 		source.addEventListener('open', function(e) {
@@ -93,16 +100,12 @@ d_shopunity = {
 		}, false);
 
 		source.addEventListener('error', function(e) {
-			var data = JSON.parse(e.data);
-			$log.append(data.message+"\n");
-			
+			$log.append('Connection closed');
 			source.close();
-			$('#extension_'+extension_id+' .required')
+			$('#extension_'+extension_id+ ' .description')
 				.find('.text-process').addClass('hide').parent()
 				.find('.text-complete').removeClass('hide');
-		  if (e.readyState == EventSource.CLOSED) {
-		    console.log('Connection closed');
-		  }
+		  
 		}, false);
 		/*
 		$.ajax({
@@ -493,25 +496,25 @@ d_shopunity = {
 			that.purchaseExtension($(this).data('extension-id'), $(this).parents('.purchase-extension').find('select').val());
 		});
 
-		$(document).on('click', '.popup-test', function(){
-			that.popupTest($(this));
+		$(document).on('click', '.popup-extension', function(){
+			that.popup($(this));
 		});
 
 		$(document).on('click', '.install-extension', function(){
 			that.installExtension($(this));
 		});
 
-		$(document).on('click', '.test-extension', function(){
-			that.installExtension($(this));
-		});
+		// $(document).on('click', '.test-extension', function(){
+		// 	that.installExtension($(this));
+		// });
 
 		$(document).on('click', '.download-extension', function(){
 			that.downloadExtension($(this));
 		});
 
-		$(document).on('click', '.update-extension', function(){
-			that.updateExtension($(this));
-		});
+		// $(document).on('click', '.update-extension', function(){
+		// 	that.updateExtension($(this));
+		// });
 
 		$(document).on('click', '.delete-extension', function(){
 			that.deleteExtension($(this));
