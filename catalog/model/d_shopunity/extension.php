@@ -241,10 +241,10 @@ class ModelDShopunityExtension extends Model {
     public function _extension($data){
 
         $result = array();
-
+        $this->session->data['token'] = (isset($this->session->data['token'])) ? $this->session->data['token'] : '';
         if(!empty($data) && !isset($data['error'])){
             $result = $data;
-            $result['url'] = $this->url->link('d_shopunity/extension/item', 'token='.$this->session->data['token'].'&extension_id='.$data['extension_id'],'SSL');
+            $result['url'] = $this->url->link('d_shopunity/extension/item', 'token='.$this->session->data['token'] .'&extension_id='.$data['extension_id'],'SSL');
             if($data['prices']){
                 $result['price'] = array();
                 foreach( $data['prices'] as $price){
