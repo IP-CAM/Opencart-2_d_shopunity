@@ -32,6 +32,9 @@ class ControllerDShopunityTester extends Controller {
 
 		$tester_id = $account['tester']['tester_id'];
 
+		$this->document->addScript('view/javascript/d_shopunity/library/list/list.min.js');
+		$this->document->addScript('view/javascript/d_shopunity/library/list/list.fuzzysearch.min.js');
+
    		$this->load->language('d_shopunity/extension');
    		$this->load->language('d_shopunity/tester');
    		$this->load->model('d_shopunity/extension');

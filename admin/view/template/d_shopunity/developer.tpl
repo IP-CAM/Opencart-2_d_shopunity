@@ -29,7 +29,8 @@
 			</div>
 		
 			<?php if($extensions){ ?>
-			<div id="list_search_1" class="ibox-content">
+			
+			<div id="list_search_1" class="ibox-content p-n">
 				<ul class="list list-unstyled">
 				<?php foreach($extensions as $extension) { ?>
 
@@ -41,7 +42,6 @@
 			<?php }else{ ?>
 				<div class="bs-callout bs-callout-info">No store modules to display</div>
 			<?php } ?>
-		</div>
 		</div>
 	</div>
 </div>

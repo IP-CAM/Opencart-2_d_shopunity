@@ -12,7 +12,7 @@
 				<h4>Search for extensions</h4>
 				<p>
 					<div class="input-group input-group-lg">
-						<input type="text" class="form-control" placeholder="Search for...">
+						<input type="text" class="form-control fuzzy-search" placeholder="Search for...">
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="button">Go!</button>
 						</span>
@@ -29,23 +29,35 @@
 			</div>
 		
 			<?php if($extensions){ ?>
-			<div class="ibox-content">
+			<div id="list_search_1" class="ibox-content p-n">
+				<ul class="list list-unstyled">
 				<?php foreach($extensions as $extension) { ?>
 
-					<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?>
+					<li><?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?></li>
 
 				<?php } ?>
+				</ul>
 			</div>
 			<?php }else{ ?>
 				<div class="bs-callout bs-callout-info">No store modules to display</div>
 			<?php } ?>
-		</div>
-		
-	 
-	<!--<pre>
-		<?php print_r($local_extensions );?>
-	</pre>   -->
+	
 		</div>
 	</div>
 </div>
+
+<script>
+	
+	var options = {
+	  valueNames: [ 'name' ], 
+	  plugins: [ ListFuzzySearch() ]
+	};
+
+	var userList1 = new List('list_search_1', options);
+
+	$('.fuzzy-search').on("keyup",function(){
+        userList1.search($(this).val());
+    }); 
+
+</script>
 <?php echo $content_bottom; ?>

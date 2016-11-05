@@ -30,7 +30,6 @@ class ModelDShopunityExtension extends Model {
                 $json[$key] = $this->_extension($value);
             }  
         }
-
         return $json;  
     }
 

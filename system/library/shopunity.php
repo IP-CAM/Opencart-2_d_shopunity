@@ -148,7 +148,14 @@ class Shopunity {
 			->body(json_encode($data))
 			->expectsJson()
 			->send();
-		return json_decode(json_encode($response->body), true);
+		$result = json_decode(json_encode($response->body), true);
+
+		//refer to FirePHP library on shopunity.net for debugging
+		if (class_exists('FB')) {
+			//FB::log($result);
+		}
+
+		return $result;
 	}
 
 	public function _requestCurl($method, $uri, $data = array()){

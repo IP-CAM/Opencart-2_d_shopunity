@@ -27,12 +27,12 @@
 					
 					<?php if($extension['installable'] && !$extension['installed']){ ?>
 		            	<!-- install -->
-		            	<a class="btn btn-success btn-block m-b show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span> Install</a>
+		            	<a class="btn btn-success btn-block m-b show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span> Install</a>
 		            <?php } ?>
 		            
 		        	<?php if($extension['updatable'] && $extension['installed']){ ?>
 		        		<!-- update -->
-		        		<a class="btn btn-success btn-block m-b show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span> Update</a>
+		        		<a class="btn btn-success btn-block m-b show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row&action=update"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span> Update</a>
 		        	<?php } ?>
 		        	
 			       
@@ -125,7 +125,7 @@
 		
 		                <a class="btn btn-primary show-loading approve-extension" data-href="<?php echo $extension['approve']; ?>" data-toggle="tooltip" data-original-title="Approve"><span class="fa fa-thumbs-up"></span></a>
 		                <a class="btn btn-danger show-loading disapprove-extension" data-href="<?php echo $extension['disapprove']; ?>" data-toggle="tooltip" data-original-title="Disaprove"><span class="fa fa-thumbs-down"></span></a>
-		                <a class="btn btn-warning show-loading test-extension" data-href="<?php echo $extension['test']; ?>&theme=extension_thumb_row" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
+		                <a class="btn btn-warning show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row&action=test" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
 			  
 			        <?php } ?>
 

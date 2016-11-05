@@ -1,4 +1,4 @@
-<div class="extension-thumb" id="extension_<?php echo $extension['codename']; ?>">
+<div class="extension-thumb" id="extension_thumb_<?php echo $extension['codename']; ?>">
 	<div class="ibox">
 		<!-- <?php if(!empty($extension['description_short'])) {?>
         <p class="absolute-description">
@@ -27,12 +27,12 @@
 				<div class="pull-right">
 					<?php if($extension['installable'] && !$extension['installed']){ ?>
 		            	<!-- install -->
-		            	<a class="btn btn-success btn-sm show-loading install-extension" data-href="<?php echo $extension['install']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
+		            	<a class="btn btn-success btn-sm popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span></a>
 		            <?php } ?>
 		            
 		        	<?php if($extension['updatable'] && $extension['installed']){ ?>
 		        		<!-- update -->
-		        		<a class="btn btn-success btn-sm show-loading update-extension" data-href="<?php echo $extension['update']; ?>&theme=extension_thumb"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
+		        		<a class="btn btn-success btn-sm popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb&action=update"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
 		        	<?php } ?>
 		        	
 			       

@@ -1,4 +1,4 @@
-<div class="extension-thumb extension-thumb-row"  id="extension_<?php echo $extension['codename']; ?>">
+<div class="extension-thumb extension-thumb-row"  id="extension_thumb_<?php echo $extension['codename']; ?>">
 	<div class="row">
 		<div class="col-md-1">
 			<a href="<?php echo $extension['url']; ?>">
@@ -25,7 +25,7 @@
 			<?php } ?>
 			<p class="m-t m-b">
 				<?php if($extension['installed'] || $extension['admin'] || ($extension['submittable'] && $extension['installed']) || $extension['downloadable']){ ?>	
-					<div class="well well-sm">
+					<div class="m-b">
 					<?php if($extension['installed'] || $extension['downloadable']){ ?>	
 						<a class="btn btn-info btn-xs show-extension-json" data-href="<?php echo $extension['json']; ?>" data-toggle="tooltip" data-original-title="mbooth.json"><span class="fa fa-code"></span></a>
 					<?php } ?>
@@ -61,7 +61,7 @@
 
 	
 			<?php if($extension['downloadable'] && $extension['tester_comment']){ ?>
-				<div class="alert alert-info"><?php echo $extension['tester_comment']; ?></div>
+				<div class="alert alert-danger"><?php echo $extension['tester_comment']; ?></div>
 			<?php } ?>
 	
 			<?php if($extension['update_available']){?>
@@ -89,7 +89,7 @@
 		            
 		        	<?php if($extension['updatable'] && $extension['installed']){ ?>
 		        		<!-- update -->
-		        		<a class="btn btn-success show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
+		        		<a class="btn btn-success show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row&action=update"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span></a>
 		        	<?php } ?>
 		        	
 			       

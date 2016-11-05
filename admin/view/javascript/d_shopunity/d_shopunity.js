@@ -61,6 +61,8 @@ d_shopunity = {
 				
 				if(json['content']){
 					that.popupShow(json['content']);
+					var mbooth = JSON.stringify(JSON.parse($("#modal").find(".mbooth").html()), null, 2);
+					$("#modal").find(".mbooth").html(syntaxHighlight(mbooth));
 				}
 			}
 		}); 
@@ -71,82 +73,56 @@ d_shopunity = {
 
 	installExtension: function($node){
 		var that = this;
-		var extension_id = $node.data('extension_id');
-		var $log = $('#extension_'+extension_id+' .log');
-		$('#extension_'+extension_id)
+		var codename = $node.data('codename');
+		var $log = $('#extension_popup_'+codename+' .log');
+		var $popup = $('#extension_popup_'+codename);
+
+		$popup
 			.find('.text-start').addClass('hide').parent()
 			.find('.text-process').removeClass('hide');
-
+		
 		if (!!window.EventSource) {
-		  var source = new EventSource( $node.data('href'));
-		} else {
-		  // Result to xhr polling :(
-		} 
+			var source = new EventSource( $node.data('href'));
+		}
 
+		//listen to message
 		source.addEventListener('message', function(e) {
-			console.log(e.data);
+
 			var data = JSON.parse(e.data);
 		   $log.append(data.message+"\n");
+		   
 		   if(data.activate){
-		   		that.activateExtension($('#extension_'+data.activate+' .activate-extension'));
-		   		$('#required_'+data.activate)
+		   		that.activateExtension($('#extension_thumb_'+data.activate).find('.activate-extension'));	
+		   }
+		   if(data.installed){
+		   		$('#required_'+data.installed)
 		   			.find('.text-process').addClass('hide').parent()
 					.find('.text-complete').removeClass('hide');
+
+				if(data.thumb){
+					$('#extension_thumb_'+data.installed).replaceWith(data.thumb);
+				}
 		   }
+		   
 		}, false);
 
+		//listen to open
 		source.addEventListener('open', function(e) {
-		  // Connection was opened.
+		  that.showLoading($('#extension_thumb_'+codename).find('.loading'));
 		}, false);
 
+		//listen to error
 		source.addEventListener('error', function(e) {
 			$log.append('Connection closed');
+			that.hideLoading($('.loading'));
 			source.close();
-			$('#extension_'+extension_id+ ' .description')
+
+			$popup
 				.find('.text-process').addClass('hide').parent()
 				.find('.text-complete').removeClass('hide');
 		  
 		}, false);
-		/*
-		$.ajax({
-			url: $node.data('href'),
-			dataType: 'json',
-			method: 'get',
-			success: function(json) {
-				if(json['installed']){
-					swal({	
-						title: "Installed",	
-						text: json['text'],	
-						type: "success",	
-						showCancelButton: true, 
-						confirmButtonColor: "#AEDEF4",	
-						confirmButtonText: "View",	
-						closeOnConfirm: false,
-						closeOnCancel: true,
-						showLoaderOnConfirm: true
-					},
-					function(isConfirm){  
-						if (isConfirm) {
-							location.href = json['view'];
-						} else {     
-							that.hideLoading($('.loading'));
-					 	}	
-					});
-				}
-
-				if(json['extension']){
-					$('#extension_'+json['codename']).replaceWith(json['extension']);
-
-					that.activateExtension($('#extension_'+json['codename']+' .activate-extension'));
-				}
-
-				if(json['error']){
-					swal("Oops! Extension wasn't installed properly", json['error'], "error")
-				}
-
-			}
-		}); 
-*/
+		
 		return false;
 	},
 
@@ -214,7 +190,7 @@ d_shopunity = {
 						}
 
 						if(json['extension']){
-							$('#extension_'+json['codename']).replaceWith(json['extension']);
+							$('#extension_thumb_'+json['codename']).replaceWith(json['extension']);
 						}
 					}
 				});   
@@ -275,7 +251,7 @@ d_shopunity = {
 						}
 
 						if(json['extension']){
-							$('#extension_'+json['codename']).replaceWith(json['extension']);
+							$('#extension_thumb_'+json['codename']).replaceWith(json['extension']);
 						}
 					}
 				});  

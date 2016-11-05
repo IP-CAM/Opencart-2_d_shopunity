@@ -11,11 +11,8 @@
 			<div class="ibox-title">
 				<h4>Search for extensions</h4>
 				<p>
-					
-						<input type="text" class="form-control fuzzy-search" placeholder="Search for...">
-					
+					<input type="text" class="form-control fuzzy-search" placeholder="Search for...">
 				</p>
-				
 			</div>
 		</div>
 		
@@ -25,15 +22,13 @@
 				<h4>Purchased modules.</h4>
 				<p>These modules have been purchased. You can use them only for this webshop.</p>
 			</div>
-			<div class="ibox-content">
+			<div class="ibox-content p-n">
 				<ul class="list list-unstyled">
-				
 					<?php foreach($store_extensions as $extension) { ?>
 					<li>
 						<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb_row.tpl'); ?>
 					</li>
 					<?php } ?>
-				
 				</ul>
 			</div>
 			<?php } ?>
@@ -43,7 +38,7 @@
 			<?php if($local_extensions){ ?>
 			<div class="ibox-title">
 				<h4>Expired or Free licenses.</h4>
-			<p>These modules do not have a license, or their lisence has been expired. </p>
+				<p>These modules do not have a license, or their lisence has been expired. </p>
 			</div>
 			<div class="ibox-content p-n">
 				<ul class="list list-unstyled">
@@ -63,7 +58,7 @@
 				<h4>Unknown Modules.</h4>
 				<p>These modules are not regestered with the shopunity network.</p>
 			</div>
-			<div class="ibox-content">
+			<div class="ibox-content p-n">
 				<ul class="list list-unstyled">
 					<?php foreach($unregestered_extensions as $extension) { ?>
 					<li>
