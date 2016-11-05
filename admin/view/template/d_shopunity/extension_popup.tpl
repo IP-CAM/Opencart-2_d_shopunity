@@ -6,7 +6,7 @@
 				<img class="img-responsive img-rounded m-b" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
 				<p>
 					<a class="btn btn-success text-start install-extension" data-href="<?php echo $action; ?>" data-extension_id="<?php echo $extension['extension_id']; ?>" data-codename="<?php echo $extension['codename']; ?>">Install</a>
-					<a class="btn  btn-default text-process hide" disabled="disabled"><span class="fa fa-refresh fa-spin"></span> Installing...</a>
+					<a class="btn  btn-link text-process hide" disabled="disabled"><span class="fa fa-refresh fa-spin"></span> Installing...</a>
 					<a class="btn  btn-link text-complete hide" disabled="disabled">Installed</a>
 					<?php if($extension['admin']){ ?>
 						<a class="btn  btn-info text-complete hide" href="<?php  echo $extension['admin'];  ?>"><span class="fa fa-pencil"></span> Admin</a>

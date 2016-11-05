@@ -61,7 +61,7 @@
 
 	
 			<?php if($extension['downloadable'] && $extension['tester_comment']){ ?>
-				<div class="alert alert-danger"><?php echo $extension['tester_comment']; ?></div>
+				<div class="alert alert-danger"><strong>Tester's reason for rejection</strong><br/><?php echo $extension['tester_comment']; ?></div>
 			<?php } ?>
 	
 			<?php if($extension['update_available']){?>
