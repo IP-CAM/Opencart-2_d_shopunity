@@ -27,12 +27,12 @@
 					
 					<?php if($extension['installable'] && !$extension['installed']){ ?>
 		            	<!-- install -->
-		            	<a class="btn btn-success btn-block m-b show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span> Install</a>
+		            	<a class="btn btn-success btn-block m-b popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Install"><span class="fa fa-magic"></span> Install</a>
 		            <?php } ?>
 		            
 		        	<?php if($extension['updatable'] && $extension['installed']){ ?>
 		        		<!-- update -->
-		        		<a class="btn btn-success btn-block m-b show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row&action=update"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span> Update</a>
+		        		<a class="btn btn-success btn-block m-b popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row&action=update"  data-toggle="tooltip" data-original-title="Update"><span class="fa fa-refresh"></span> Update</a>
 		        	<?php } ?>
 		        	
 			       
@@ -53,12 +53,12 @@
 
 		            <?php if($extension['installed']){ ?>
 						<!-- delete -->
-						<a class="btn btn-danger btn-block m-b show-loading delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span> Delete</a>	
+						<a class="btn btn-danger btn-block m-b delete-extension" data-href="<?php echo $extension['uninstall']; ?>&theme=extension_thumb_row"  data-toggle="tooltip" data-original-title="Delete"><span class="fa fa-trash-o"></span> Delete</a>	
 		            <?php } ?>
 
 					<?php if($extension['suspendable'] && !$extension['installed']){ ?>
 		            	<!-- suspend -->
-		            	<a class="btn btn-danger btn-block m-b show-loading suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span> Suspend</a>
+		            	<a class="btn btn-danger btn-block m-b suspend-extension" data-href="<?php echo $extension['suspend']; ?>" data-toggle="tooltip" data-original-title="Suspend"><span class="fa fa-ban"></span> Suspend</a>
 		        	<?php } ?>	        	
 					
 			        <?php if($extension['activate']){ ?>
@@ -106,12 +106,12 @@
 					<?php } ?>
 					<?php if($extension['admin']){ ?>
 						<!-- admin -->
-						<a class="btn btn-info show-loading" href="<?php echo $extension['admin']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-pencil"></span></a>
+						<a class="btn btn-info " href="<?php echo $extension['admin']; ?>"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-pencil"></span></a>
 					<?php } ?>
 
 					<?php if($extension['submittable'] && $extension['installed']){ ?>
 						<!-- submit -->
-		                <a class="btn btn-warning   show-loading submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
+		                <a class="btn btn-warning submit-extension" data-href="<?php echo $extension['submit']; ?>" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
 			        <?php } ?>
 
 					<?php if($extension['downloadable'] && $extension['installed']){ ?>
@@ -123,9 +123,9 @@
 
 			        <?php if($extension['testable']){ ?>
 		
-		                <a class="btn btn-primary show-loading approve-extension" data-href="<?php echo $extension['approve']; ?>" data-toggle="tooltip" data-original-title="Approve"><span class="fa fa-thumbs-up"></span></a>
-		                <a class="btn btn-danger show-loading disapprove-extension" data-href="<?php echo $extension['disapprove']; ?>" data-toggle="tooltip" data-original-title="Disaprove"><span class="fa fa-thumbs-down"></span></a>
-		                <a class="btn btn-warning show-loading popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row&action=test" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
+		                <a class="btn btn-primary approve-extension" data-href="<?php echo $extension['approve']; ?>" data-toggle="tooltip" data-original-title="Approve"><span class="fa fa-thumbs-up"></span></a>
+		                <a class="btn btn-danger disapprove-extension" data-href="<?php echo $extension['disapprove']; ?>" data-toggle="tooltip" data-original-title="Disaprove"><span class="fa fa-thumbs-down"></span></a>
+		                <a class="btn btn-warning popup-extension" data-href="<?php echo $extension['popup']; ?>&theme=extension_thumb_row&action=test" data-toggle="tooltip" data-original-title="Test"><span class="fa fa-cloud-download"></span></a>
 			  
 			        <?php } ?>
 

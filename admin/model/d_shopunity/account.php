@@ -113,7 +113,13 @@ class ModelDShopunityAccount extends Model {
 	// }
 
 	public function getAccount(){
-		$json = $this->api->get('account');
+
+		$json = $this->cache->get('d_shopunity.account.getAccount');
+
+		if(!$json){
+			$json = $this->api->get('account');
+			$this->cache->set('d_shopunity.account.getAccount', $json);
+		}
 		return $json;
 	}
 

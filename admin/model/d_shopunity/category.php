@@ -18,12 +18,17 @@ class ModelDShopunityCategory extends Model {
     }
 
     public function getCategories($filter_data = array()){
-        $json = $this->api->get('categories', $filter_data);
+        $json = $this->cache->get('d_shopunity.category.getCategories');
 
-        if($json){
-            foreach($json as $key => $value){
-                $json[$key] = $this->_category($value);
-            }  
+        if(!$json){
+            $json = $this->api->get('categories', $filter_data);
+
+            if($json){
+                foreach($json as $key => $value){
+                    $json[$key] = $this->_category($value);
+                }  
+            }
+            $this->cache->set('d_shopunity.category.getCategories', $json);
         }
 
         return $json;

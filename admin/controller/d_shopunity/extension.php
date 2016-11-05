@@ -35,8 +35,7 @@ class ControllerDShopunityExtension extends Controller {
 		$data['local_extensions'] = $this->model_d_shopunity_extension->getLocalExtensions();
 		$data['unregestered_extensions'] = $this->model_d_shopunity_extension->getUnregisteredExtensions();
 
-		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
+		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
    		$data = $this->_productThumb($data);
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));

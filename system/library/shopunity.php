@@ -151,9 +151,10 @@ class Shopunity {
 		$result = json_decode(json_encode($response->body), true);
 
 		//refer to FirePHP library on shopunity.net for debugging
-		if (class_exists('FB')) {
-			//FB::log($result);
-		}
+		// if (class_exists('FB')) {
+		// 	FB::log('REQUEST '.$uri);
+		// 	FB::log($result);
+		// }
 
 		return $result;
 	}
