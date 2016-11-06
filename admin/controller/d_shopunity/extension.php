@@ -223,6 +223,14 @@ class ControllerDShopunityExtension extends Controller {
 			}
 
 			$data['action'] = $data['extension'][$action].'&theme='.$theme;
+			$data['admin'] = false;
+			if(isset($data['extension']['admin'])){
+                $data['admin'] = $data['extension']['admin']; 
+            }
+
+            if(!empty($data['extension']['mbooth']['index'])){
+            	$data['admin'] = $this->url->link($data['extension']['mbooth']['index'], 'token=' . $this->session->data['token'] , 'SSL');
+            }
 			$data['mbooth'] = json_encode($data['extension']['mbooth']);
 
 			if(!empty($data['extension']['required'])){
@@ -693,7 +701,7 @@ class ControllerDShopunityExtension extends Controller {
 
 		$message = array(
 			"installed" => $codename,
-			"message" => "Activating $codename",
+			"message" => "Installed $codename",
 			"thumb" => $thumb
 		);
 

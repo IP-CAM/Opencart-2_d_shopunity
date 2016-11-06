@@ -2,19 +2,18 @@
 	<div class="row">
 		<div class="col-md-1">
 			<a href="<?php echo $extension['url']; ?>">
-			   <img class="img-responsive img-rounded m-b" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
+			   <img class="img-responsive img-rounded" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
 			</a>
-			
-		</div>
-		<div class="col-md-2">
-			<strong class="name"><?php echo $extension['name']; ?></strong>
-			<span class="label label-default"><?php echo $extension['current_version']; ?></span> 
 			<?php if($extension['downloadable'] && $extension['tester_status_id']){?>
+			<p class="m-b m-t text-center">
 				<?php if($extension['tester_status_id'] == 0 || $extension['tester_status_id'] == 3 || $extension['tester_status_id'] == 6) { ?>
 					<span class="label label-danger">
 				<?php } ?>
-				<?php if($extension['tester_status_id'] == 1 || $extension['tester_status_id'] == 2 || $extension['tester_status_id'] == 4) { ?>
+				<?php if($extension['tester_status_id'] == 1 || $extension['tester_status_id'] == 2) { ?>
 					<span class="label label-info">
+				<?php } ?>
+				<?php if($extension['tester_status_id'] == 4) { ?>
+					<span class="label label-warning">
 				<?php } ?>
 				<?php if($extension['tester_status_id'] == 5) { ?>
 					<span class="label label-success">
@@ -22,7 +21,13 @@
 
 					<?php echo ${'text_tester_status_'.$extension['tester_status_id']}; ?>
 				</span>
+			</p>
 			<?php } ?>
+		</div>
+		<div class="col-md-2">
+			<strong class="name"><?php echo $extension['name']; ?></strong>
+			<span class="label label-default"><?php echo $extension['current_version']; ?></span> 
+			
 			<p class="m-t m-b">
 				<?php if($extension['installed'] || $extension['admin'] || ($extension['submittable'] && $extension['installed']) || $extension['downloadable']){ ?>	
 					<div class="m-b">
