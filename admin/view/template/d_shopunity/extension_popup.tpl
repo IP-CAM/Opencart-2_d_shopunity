@@ -60,6 +60,15 @@
 							<?php if(!$required['installed'] && !$required['installable'] && !$required['purchasable']){ ?>
 								<span class="label label-danger ">Can not be installed</span>
 							<?php } ?>
+							<?php if($extension['activate']){ ?>
+					        	<!-- activate -->
+								<a class="btn btn-success activate-extension hide" data-href="<?php echo $required['activate']; ?>"  data-toggle="tooltip" data-original-title="Activate"><span class="fa fa-power-off "></span></a>
+							<?php } ?>
+
+							<?php if($extension['deactivate']){ ?>
+								<!-- deactivate -->
+								<a class="btn btn-danger deactivate-extension hide" data-href="<?php echo $required['deactivate']; ?>"  data-toggle="tooltip" data-original-title="Deactivate"><span class="fa fa-power-off "></span></a>
+							<?php } ?>
 						</div>
 						<div class="col-md-12"></div>
 					</div>

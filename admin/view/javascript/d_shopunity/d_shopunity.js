@@ -91,9 +91,6 @@ d_shopunity = {
 			var data = JSON.parse(e.data);
 		   $log.append(data.message+"\n");
 		   
-		   if(data.activate){
-		   		that.activateExtension($('#extension_thumb_'+data.activate).find('.activate-extension'));	
-		   }
 		   if(data.installed){
 		   		$('#required_'+data.installed)
 		   			.find('.text-process').addClass('hide').parent()
@@ -102,6 +99,11 @@ d_shopunity = {
 				if(data.thumb){
 					$('#extension_thumb_'+data.installed).replaceWith(data.thumb);
 				}
+		   }
+		   if(data.activate){
+		   	console.log($('#extension_thumb_'+data.activate).find('.activate-extension'));
+		   		that.activateExtension($('#extension_thumb_'+data.activate).find('.activate-extension'));
+		   		that.activateExtension($('#required_'+data.activate).find('.activate-extension'));	
 		   }
 		   
 		}, false);

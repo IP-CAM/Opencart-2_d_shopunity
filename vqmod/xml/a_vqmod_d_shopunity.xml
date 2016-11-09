@@ -9,7 +9,9 @@
 			<search position="after"><![CDATA[public function index() {]]></search>
 			<ignoreif><![CDATA[$data['d_shopunity'] = $this->url->link('d_shopunity/extension', 'token='.$this->request->get['token'], 'SSL');]]></ignoreif>
 			<add><![CDATA[
-			$data['d_shopunity'] = $this->url->link('d_shopunity/extension', 'token='.$this->request->get['token'], 'SSL');
+			if(!empty($this->request->get['token'])){
+				$data['d_shopunity'] = $this->url->link('d_shopunity/extension', 'token='.$this->request->get['token'], 'SSL');
+			}
 			]]></add>
 		</operation>
 	</file>
