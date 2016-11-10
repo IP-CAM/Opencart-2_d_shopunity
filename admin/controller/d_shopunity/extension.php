@@ -273,7 +273,7 @@ class ControllerDShopunityExtension extends Controller {
 			$this->load->model('d_shopunity/mbooth');
 
 			$extension = $this->model_d_shopunity_extension->getExtension($extension_id);
-			$this->_send('Get extension data ' . json_decode($extension));
+			$this->_send('Get extension data ');
 
 			if(isset($this->request->get['extension_download_link_id'])){
 				$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkId($extension_id, $this->request->get['extension_download_link_id']);
@@ -656,7 +656,8 @@ class ControllerDShopunityExtension extends Controller {
 	}
 
 	public function _productThumbView($extension){
-		$data['extension'] = $extension;
+		$this->load->model('d_shopunity/extension');
+		$data['extension'] = $this->model_d_shopunity_extension->getExtension($extension['extension_id']);
 		$this->load->language('d_shopunity/extension');
 		$theme = 'extension_thumb';
 		if(isset($this->request->get['theme'])){
@@ -673,12 +674,11 @@ class ControllerDShopunityExtension extends Controller {
 	}
 
 	public function stop_sse() {
-		header('Content-Type: text/text');
+		//header('Content-Type: text/text');
 		echo "id: " . time() . PHP_EOL;
 		echo "event: error" . PHP_EOL;
 		echo "data: STOP" . PHP_EOL;
 		echo PHP_EOL;
-		ob_flush();
   		flush(); 
 	}
 
@@ -686,7 +686,6 @@ class ControllerDShopunityExtension extends Controller {
 		echo "id: ".  time() . PHP_EOL;
 		echo "data: {\"message\":\"$msg\"}" . PHP_EOL;
 		echo PHP_EOL;
-		ob_flush();
   		flush(); 
 	}
 
@@ -694,7 +693,6 @@ class ControllerDShopunityExtension extends Controller {
 		echo "id: ".  time() . PHP_EOL;
 		echo "data: {\"activate\":\"$codename\", \"message\":\"Activating $codename\"}" . PHP_EOL;
 		echo PHP_EOL;
-		ob_flush();
   		flush(); 
 	}
 	public function _installed($codename, $thumb = ''){
@@ -708,7 +706,6 @@ class ControllerDShopunityExtension extends Controller {
 		echo "id: ".  time() . PHP_EOL;
 		echo "data: ". json_encode($message) . PHP_EOL;
 		echo PHP_EOL;
-		ob_flush();
   		flush(); 
 	}
 

@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-1">
 			<a href="<?php echo $extension['url']; ?>">
-			   <img class="img-responsive img-rounded" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
+			   <img class="img-responsive img-rounded m-b" src="<?php echo $extension['processed_images'][1]['url']; ?>" alt="" />
 			</a>
 			<?php if($extension['downloadable'] && $extension['tester_status_id']){?>
 			<p class="m-b m-t text-center">
@@ -61,7 +61,7 @@
 			
 		</div>
 		
-		<div class="col-md-5">
+		<div class="col-md-6">
 			<p class="text-muted m-b"><?php echo $extension['description_short']; ?></p> 
 
 	
@@ -72,18 +72,16 @@
 			<?php if($extension['update_available']){?>
 				<div class="alert alert-info"><?php echo $text_new_version_available; ?> <?php echo $extension['version']; ?></div>
 			<?php } ?>
-
 	</div>
 		<div class="col-md-1 col-xs-3">
 			<?php if(!empty($extension['developer'])){ ?>
-				<a class="developer" href="<?php echo $extension['developer']; ?>">
-				   <img class="img-responsive img-circle" data-toggle="tooltip" data-original-title="<?php echo $extension['developer']['name']; ?>" src="<?php echo $extension['developer']['image']; ?>" /> 
-
+				<a class="developer">
+				   <img class="img-responsive img-circle" data-toggle="tooltip" data-original-title="<?php echo $extension['developer']['name']; ?>" src="<?php echo $extension['developer']['image']; ?>" />
 				</a>
 			<?php } ?>
 		</div>
 		
-		<div class="col-md-3 col-xs-9">
+		<div class="col-md-2 col-xs-9">
 			<div class="pull-right m-b">
 				<div class="form-inline">
 	            

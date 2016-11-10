@@ -80,6 +80,7 @@
 		        	
 				</div>
 			</div>
+			<?php if($extension['installed'] || $extension['admin'] || $extension['testable']){ ?>
 			<div class="ibox">
 				<div class="ibox-title">
 					Developer & Tester Actions
@@ -132,6 +133,7 @@
 
 				</div>
 	    	</div>
+	    	<?php } ?>
 	        <?php echo $developer; ?>
 		</div>
 		<div class="col-md-9">

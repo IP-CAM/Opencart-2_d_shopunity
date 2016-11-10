@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "3.0.31",
+    "version": "3.0.32",
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease.",
     "index": "module/d_shopunity",
@@ -81,6 +81,10 @@
         "admin/view/javascript/shopunity"
     ],
     "changelog": [
+        {     
+            "varsion":"3.0.32",
+            "change": "1. Small fixes and debug"
+        },
         {     
             "varsion":"3.0.31",
             "change": "1. Small fixes and debug"
