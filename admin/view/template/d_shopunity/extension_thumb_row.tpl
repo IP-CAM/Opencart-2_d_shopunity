@@ -61,7 +61,7 @@
 			
 		</div>
 		
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<p class="text-muted m-b"><?php echo $extension['description_short']; ?></p> 
 
 	
@@ -81,7 +81,7 @@
 			<?php } ?>
 		</div>
 		
-		<div class="col-md-2 col-xs-9">
+		<div class="col-md-3 col-xs-9">
 			<div class="pull-right m-b">
 				<div class="form-inline">
 	            

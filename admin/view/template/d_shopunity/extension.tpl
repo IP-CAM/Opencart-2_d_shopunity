@@ -5,7 +5,7 @@
 ?>
 <?php echo $content_top; ?>
 <div class="row">
-	
+
 	<div class="col-md-12">
 		<div class="ibox">
 			<div class="ibox-title">
@@ -15,7 +15,7 @@
 				</p>
 			</div>
 		</div>
-		
+		<?php echo $developer_generate_module; ?>
 		<div  id="list_search_1" class="ibox">
 			<?php if($store_extensions){ ?>
 			<div class="ibox-title">
@@ -33,8 +33,8 @@
 			</div>
 			<?php } ?>
 		</div>
-		
-		<div  id="list_search_2" class="ibox"> 
+
+		<div  id="list_search_2" class="ibox">
 			<?php if($local_extensions){ ?>
 			<div class="ibox-title">
 				<h4>Expired or Free licenses.</h4>
@@ -51,7 +51,7 @@
 			</div>
 			<?php } ?>
 		</div>
-		
+
 		<div id="list_search_3" class="ibox">
 			<?php if($unregestered_extensions){ ?>
 			<div class="ibox-title">
@@ -69,13 +69,13 @@
 			</div>
 			<?php } ?>
 		</div>
-		
+
 	</div>
 </div>
 <script>
-	
+
 	var options = {
-	  valueNames: [ 'name' ], 
+	  valueNames: [ 'name' ],
 	  plugins: [ ListFuzzySearch() ]
 	};
 
@@ -83,22 +83,22 @@
 		var userList1 = new List('list_search_1', options);
 		$('.fuzzy-search').on("keyup",function(){
 	        userList1.search($(this).val());
-	    }); 
+	    });
 	}
 	if($('#list_search_2 ul').length){
 		var userList1 = new List('list_search_2', options);
 		$('.fuzzy-search').on("keyup",function(){
 	        userList1.search($(this).val());
-	    }); 
+	    });
 	}
 	if($('#list_search_3 ul').length){
 		var userList1 = new List('list_search_3', options);
 		$('.fuzzy-search').on("keyup",function(){
 	        userList1.search($(this).val());
-	    }); 
+	    });
 	}
-	
-	
+
+
 
 </script>
 <?php echo $content_bottom; ?>

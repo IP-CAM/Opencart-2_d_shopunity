@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "3.0.32",
+    "version": "3.0.33",
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease.",
     "index": "module/d_shopunity",
@@ -56,6 +56,7 @@
         "system/library/deploy_bitbucket.php",
         "system/library/deploy_github.php",
         "system/library/shopunity.php",
+				"system/library/modulegenerator.php",
         "system/library/semver.php",
 
         "vqmod/xml/a_vqmod_d_shopunity.xml",
@@ -81,71 +82,75 @@
         "admin/view/javascript/shopunity"
     ],
     "changelog": [
-        {     
+				{
+						"varsion":"3.0.33",
+						"change": "1. Added Module Generator feature"
+				},
+        {
             "varsion":"3.0.32",
             "change": "1. Small fixes and debug"
         },
-        {     
+        {
             "varsion":"3.0.31",
             "change": "1. Small fixes and debug"
         },
-        {     
+        {
             "varsion":"3.0.30",
             "change": "1. Small fixes and debug"
         },
-        {     
+        {
             "varsion":"3.0.29",
             "change": "1. Small fixes and debug"
-        }, 
-        {     
+        },
+        {
             "varsion":"3.0.28",
             "change": "1. Refactored API and install process"
         },
-        {     
+        {
             "varsion":"3.0.27",
             "change": "1. bug fixes \r\n 2. Deploy through shopunity"
         },
-        {     
+        {
             "varsion":"3.0.26",
             "change": "1. bug fixes"
         },
-        {     
+        {
             "varsion":"3.0.25",
             "change": "1. conflict fix \r\n 2. Added filemanager \r\n3. System update"
         },
-        {     
+        {
             "varsion":"3.0.24",
             "change": "1. works from localhost"
         },
-        {     
+        {
             "varsion":"3.0.23",
             "change": "1. more fixes"
         },
-        {     
+        {
             "varsion":"3.0.22",
             "change": "1. testing developer update function"
         },
-        {     
+        {
             "varsion":"3.0.21",
             "change": "1. developer"
         },
-        {     
+        {
             "varsion":"3.0.20",
             "change": "1. Unknown module fix"
         },
-        {     
+        {
             "varsion":"3.0.19",
             "change": "1. added paging"
         },
-        {     
+        {
             "varsion":"3.0.17",
             "change": "1. added status"
         },
-        {     
+        {
             "varsion":"3.0.16",
             "change": "1. added cancel"
         },
-        {   
+        {
             "varsion":"3.0.15",
             "change": "1. added refund"
         },

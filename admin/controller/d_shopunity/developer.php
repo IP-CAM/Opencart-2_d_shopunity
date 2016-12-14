@@ -48,7 +48,7 @@ class ControllerDShopunityDeveloper extends Controller {
 	}
 
 	/**
-	 * Update the extension over the whole system. 
+	 * Update the extension over the whole system.
 	 */
 	public function update(){
 		if(!isset($this->request->get['extension_id'])){
@@ -64,14 +64,14 @@ class ControllerDShopunityDeveloper extends Controller {
 		try{
 			$this->load->model('d_shopunity/developer');
 			$result = $this->model_d_shopunity_developer->updateExtension($this->request->get['extension_id'], $this->request->get['developer_id']);
-			
+
 			$json['result'] = $result;
 			if(empty($result)){
 				$json['error'] = 'Error! no updates made.';
 			}else{
 				$json['success'] = 'We have sent ' .count($result).' requests to update the extension';
 			}
-			
+
 		}catch(Exception $e){
 			$json['error'] = $e->getMessage();
 		}
@@ -84,5 +84,70 @@ class ControllerDShopunityDeveloper extends Controller {
 		$data['developer'] = $developer;
 
 		return $this->load->view($this->route.'_profile.tpl', $data);
+	}
+
+	public function generate_module(){
+		$account = $this->config->get('d_shopunity_account');
+
+		if(!empty($account['developer'])){
+			$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
+			$this->load->model('d_shopunity/mbooth');
+			$data['extensions'] = $this->model_d_shopunity_mbooth->getExtensions();
+			$data['action'] = $this->url->link('d_shopunity/developer/generate', 'token=' . $this->session->data['token'], 'SSL');
+
+			return $this->load->view($this->route.'_generate_module.tpl', $data);
+		}
+		return false;
+  }
+
+	public function generate(){
+		if(!isset($this->request->post['codename'])){
+			$this->session->data['error'] = 'Error! codename missing';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+
+		if(!isset($this->request->post['template_codename'])){
+			$this->session->data['error'] = 'Error! template_codename missing';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+		$codename = $this->request->post['codename'];
+		$template_codename = $this->request->post['template_codename'];
+
+		$this->load->model('d_shopunity/mbooth');
+		$template_extension = $this->model_d_shopunity_mbooth->getExtension($template_codename);
+		if(!$template_extension){
+			$this->session->data['error'] = 'Error! '. $template_codename .' does not exist';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+
+		$extension = $this->model_d_shopunity_mbooth->getExtension($codename);
+		if($extension){
+			$this->session->data['error'] = 'Error! '. $codename.' already exists';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+
+		if(!$template_extension['files']){
+			$this->session->data['error'] = 'Error! '. $template_codename.' has no files';
+			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		}
+
+		$files = $template_extension['files'];
+		$template_codename_camel = str_replace('_','', ucwords($template_codename, "_"));
+
+		$replace[$template_codename] = $codename;
+		$replace[$template_codename_camel] = str_replace('_','', ucwords($codename, "_"));
+
+		$modelgen = new ModuleGenerator($replace, $files);
+		$modelgen->generate();
+
+		if($modelgen->success){
+			$this->session->data['success'] = 'Success!' .$codename.' created.';
+		}
+
+		if($modelgen->error){
+			$this->session->data['error'] = 'Error!'.' Sorry, there was an error with these files: ' . json_encode($modelgen->error);
+		}
+
+		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 	}
 }
