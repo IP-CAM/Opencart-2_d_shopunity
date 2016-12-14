@@ -60,13 +60,14 @@ Class ModuleGenerator{
 
 	private function _writeCode($destination_file, $code){
 
-		$parts = explode('/', $this->dir. $destination_file);
+		$parts = explode('/', $destination_file);
 		$file = array_pop($parts);
-		$dir = '';
-		foreach($parts as $part)
-			 if(!is_dir($dir .= "/$part")) mkdir($dir);
-
-		return file_put_contents("$dir/$file", $code);
+		$dir = $this->dir;
+		foreach($parts as $part){
+			if(!is_dir($dir .= $part)) mkdir($dir);
+			$dir .= '/';
+		}
+		return file_put_contents($dir.$file, $code);
 	}
 
 }
