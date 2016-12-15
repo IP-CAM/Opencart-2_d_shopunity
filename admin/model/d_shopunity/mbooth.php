@@ -6,7 +6,7 @@ class ModelDShopunityMbooth extends Model {
     public function __construct($registry){
         parent::__construct($registry);
         $this->dir_root = substr_replace(DIR_SYSTEM, '/', -8);
-      
+
     }
 
 	public function getExtensions(){
@@ -173,7 +173,7 @@ class ModelDShopunityMbooth extends Model {
         			$zip->addFile($this->dir_root . $mbooth['readme'], 'readme.md');
         		}
             }
-         
+
             $zip->close();
 
             if (empty($result['error'])) {
@@ -195,11 +195,11 @@ class ModelDShopunityMbooth extends Model {
 	}
 
     public function installExtension($result) {
-        
+
         return $this->moveFiles(DIR_SYSTEM . 'mbooth/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
     }
 
-    
+
     // public function activateExtension($codename, $result = array()) {
     //     $extension = $this->getExtension($codename);
     //     if(isset($extension['install'])){
@@ -220,7 +220,7 @@ class ModelDShopunityMbooth extends Model {
     //                 $this->load->controller($route);
     //             }
     //             $result['success'][] = 'Extension activated';
-                
+
     //         }catch(Exception $e){
     //             $result['error'][] = 'Extension not activated message: '. $e->message;
     //         }
@@ -249,7 +249,7 @@ class ModelDShopunityMbooth extends Model {
     //                 $this->request->get['extension'] = $vars['extension'];
     //                 $this->load->controller($route);
     //             }
-                
+
     //         }catch(Exception $e){
     //             $result['error'][] = 'Extension not deactivated message: '. $e->message;
     //         }
@@ -394,14 +394,14 @@ class ModelDShopunityMbooth extends Model {
 
     public function needUpdate($codename, $version_expression){
         $extension = $this->getExtension($codename);
-                    
+
         $satisfies = false;
         try{
             $semver = new Semver;
             if(!empty($extension['version'])){
                 $satisfies = $semver->expression($version_expression)->satisfiedBy($semver->version($extension['version']));
             }
-          
+
         }catch(Exception $e){
             return true;
         }
@@ -419,14 +419,14 @@ class ModelDShopunityMbooth extends Model {
             if(!empty($require['codename'])){
 
                 $extension = $this->getExtension($require['codename']);
-                
+
                 $satisfies = false;
                 try{
                     $semver = new Semver;
                     if(!empty($extension['version'])){
                         $satisfies = $semver->expression($require['version'])->satisfiedBy($semver->version($extension['version']));
                     }
-                  
+
                 }catch(Exception $e){
                     $result['error'][] = 'Error: version:'.$require['version'].', message: '.$e->getMessage();
                 }
@@ -437,7 +437,7 @@ class ModelDShopunityMbooth extends Model {
 
                     if(isset($download['download'])){
                         $extension_zip = $this->downloadExtensionFromServer($download['download']);
-                        $extracted = $this->extractExtension($extension_zip); 
+                        $extracted = $this->extractExtension($extension_zip);
                         $result = $this->installExtension($result);
                         $result['success'][] = $require['codename'] . ' installed.';
                         $result['success'][] = '----------------------------------------------------------';
@@ -445,13 +445,13 @@ class ModelDShopunityMbooth extends Model {
                         $result['error'][] = 'Error: we could not install '. $require['codename']. ' message: ' . $download['error'];
                     }else{
                         $result['error'][] = 'Error! We could not install ' .$require['codename'] . ', message: '. json_encode($download);
-                    }   
-                 
+                    }
+
                 }else{
                     $result['success'][] = $require['codename'] . ' not installed. Already up to date.';
                     $result['success'][] = '----------------------------------------------------------';
                 }
-           
+
             }else{
                 $result['error'][] = 'Error: requied parse for '. json_encode( $require);
             }
@@ -460,8 +460,7 @@ class ModelDShopunityMbooth extends Model {
     }
 
     public function validateDependencies($codename){
-
-        $extension = json_decode(file_get_contents(DIR_SYSTEM.'mbooth/extension/'.$codename.'.json'), true);
+				$extension =  $this->getExtensions($codename);
         if(isset($extension['required'])){
             foreach($extension['required'] as $extension_codename => $version){
                 if(!file_exists(DIR_SYSTEM.'mbooth/extension/'.$extension_codename.'.json')){
@@ -538,7 +537,7 @@ class ModelDShopunityMbooth extends Model {
                 }
             }
 
-            
+
 
             if (!empty($data['dirs'])) {
 
