@@ -36,6 +36,10 @@ class ControllerModuleDShopunity extends Controller {
 
 	public function index(){
 
+		if($this->install230()){
+			return false;
+		}
+
 		if(!$this->model_d_shopunity_account->isLogged()){
 			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -155,7 +159,20 @@ class ControllerModuleDShopunity extends Controller {
 		return true;
 	}
 
+	public function install230(){
+
+		if(VERSION >= '2.3.0.0'
+		&& isset($this->request->get['route'])
+		&& strpos($this->request->get['route'], '/install') !== false ){
+			
+			$this->install();
+			return true;
+		}
+		return false;
+	}
+
 	public function install() {
+
 		$this->load->model('d_shopunity/ocmod');
 		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 1);
 		$this->model_d_shopunity_ocmod->refreshCache();
@@ -189,15 +206,13 @@ class ControllerModuleDShopunity extends Controller {
 
         $this->load->model('d_shopunity/mbooth');
 		$this->model_d_shopunity_mbooth->installDependencies($this->codename);
-
-		//$this->getUpdate(1);	  
 	}
 
 	public function uninstall() {
 		$this->load->model('d_shopunity/ocmod');
 		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 0);
 		$this->model_d_shopunity_ocmod->refreshCache();
-		//$this->getUpdate(0);	  
+		return false;
 	}
 }
 ?>

@@ -238,6 +238,14 @@ class ModelDShopunityExtension extends Model {
         return false;
     }
 
+    public function isActivated($codename) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE `code` = '" . $this->db->escape($codename) . "'");
+        if(!empty($query->row)){
+            return true;
+        }
+        return false;
+    }
+
     public function _extension($data){
 
         $result = array();
