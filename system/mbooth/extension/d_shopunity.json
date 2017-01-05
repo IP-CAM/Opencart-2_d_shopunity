@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "3.0.35",
+    "version": "3.0.36",
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease.",
     "index": "module/d_shopunity",
@@ -56,11 +56,8 @@
         "system/library/deploy_bitbucket.php",
         "system/library/deploy_github.php",
         "system/library/shopunity.php",
-				"system/library/modulegenerator.php",
-        "system/library/semver.php",
-
-        "vqmod/xml/a_vqmod_d_shopunity.xml",
-        "vqmod/xml/a_vqmod_d_compatibilty_fix_230.xml"
+        "system/library/modulegenerator.php",
+        "system/library/semver.php"
     ],
     "dirs": [
         "admin/controller/d_shopunity",
@@ -82,18 +79,22 @@
         "admin/view/javascript/shopunity"
     ],
     "changelog": [
-				{
-						"varsion":"3.0.35",
-						"change": "1. Fix lite version in model/mbooth"
-				},
-				{
-						"varsion":"3.0.34",
-						"change": "1. Fix Module Generator feature"
-				},
-				{
-						"varsion":"3.0.33",
-						"change": "1. Added Module Generator feature"
-				},
+        {
+            "varsion":"3.0.36",
+            "change": "1. Install ocmod xmls"
+        },
+        {
+            "varsion":"3.0.35",
+            "change": "1. Fix lite version in model/mbooth"
+        },
+        {
+            "varsion":"3.0.34",
+            "change": "1. Fix Module Generator feature"
+        },
+        {
+            "varsion":"3.0.33",
+            "change": "1. Added Module Generator feature"
+        },
         {
             "varsion":"3.0.32",
             "change": "1. Small fixes and debug"

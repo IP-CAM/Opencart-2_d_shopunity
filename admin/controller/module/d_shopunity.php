@@ -156,8 +156,9 @@ class ControllerModuleDShopunity extends Controller {
 	}
 
 	public function install() {
-		// $this->load->model('d_shopunity/vqmod');
-		// $this->model_d_shopunity_vqmod->setVqmod('a_vqmod_d_shopunity.xml', 1);
+		$this->load->model('d_shopunity/ocmod');
+		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 1);
+		$this->model_d_shopunity_ocmod->refreshCache();
 
 		$this->load->model('d_shopunity/setting');
 		$this->load->model('user/user_group');
@@ -193,8 +194,9 @@ class ControllerModuleDShopunity extends Controller {
 	}
 
 	public function uninstall() {
-		// $this->load->model('d_shopunity/vqmod');
-		// $this->model_d_shopunity_vqmod->setVqmod('a_vqmod_d_shopunity.xml', 0);	
+		$this->load->model('d_shopunity/ocmod');
+		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 0);
+		$this->model_d_shopunity_ocmod->refreshCache();
 		//$this->getUpdate(0);	  
 	}
 }
