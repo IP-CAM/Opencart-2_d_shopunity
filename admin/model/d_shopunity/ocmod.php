@@ -41,7 +41,7 @@ class ModelDShopunityOcmod extends Model {
                         $code = $code->nodeValue;
 
                         // Check to see if the modification is already installed or not.
-                        $modification_info = $this->model_extension_modification->getModificationByCode($code);
+                        $modification_info = $this->getModificationByCode($code);
 
                         if ($modification_info) {
                             $json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
@@ -85,7 +85,7 @@ class ModelDShopunityOcmod extends Model {
                     );
 
                     if (!$json) {
-                        $this->model_extension_modification->addModification($modification_data);
+                        $this->addModification($modification_data);
                     }
                 } catch(Exception $exception) {
                     return false;
@@ -489,5 +489,20 @@ class ModelDShopunityOcmod extends Model {
             $this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
 
         return false;
+    }
+
+    public function getModificationByCode($code) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "modification WHERE code = '" . $this->db->escape($code) . "'");
+
+        return $query->row;
+    }
+
+    public function addModification($data) {
+
+        if(VERSION <= '2.0.0.0'){
+            $this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', link = '" . $this->db->escape($data['link']) . "', code = '" . $this->db->escape($data['xml']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+        }else{
+            $this->db->query("INSERT INTO " . DB_PREFIX . "modification SET code = '" . $this->db->escape($data['code']) . "', name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', link = '" . $this->db->escape($data['link']) . "', xml = '" . $this->db->escape($data['xml']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+        }
     }
 }
