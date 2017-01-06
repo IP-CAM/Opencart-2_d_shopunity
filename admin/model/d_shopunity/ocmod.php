@@ -128,7 +128,7 @@ class ModelDShopunityOcmod extends Model {
         } else {
             $code = '';
         }
-        
+
         if ($code || $name) {
             if(VERSION <= '2.0.0.0'){
                 $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "modification WHERE name = '" . $this->db->escape($name) . "'");
@@ -215,7 +215,12 @@ class ModelDShopunityOcmod extends Model {
 
             foreach ($results as $result) {
                 if ($result['status']) {
-                    $xml[] = $result['xml'];
+                    if(VERSION <= '2.0.0.0'){
+                        $xml[] = $result['code'];
+                    }else{
+                        $xml[] = $result['xml'];
+                    }
+                    
                 }
             }
 
