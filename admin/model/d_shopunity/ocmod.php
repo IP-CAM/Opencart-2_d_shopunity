@@ -41,7 +41,11 @@ class ModelDShopunityOcmod extends Model {
                         $code = $code->nodeValue;
 
                         // Check to see if the modification is already installed or not.
-                        $modification_info = $this->getModificationByCode($code);
+                        if(VERSION <= '2.0.0.0'){
+                            $modification_info = $this->getModificationByName($Name);
+                        }else{
+                            $modification_info = $this->getModificationByCode($code);
+                        }
 
                         if ($modification_info) {
                             $json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
@@ -493,6 +497,12 @@ class ModelDShopunityOcmod extends Model {
 
     public function getModificationByCode($code) {
         $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "modification WHERE code = '" . $this->db->escape($code) . "'");
+
+        return $query->row;
+    }
+
+    public function getModificationByName($name) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "modification WHERE name = '" . $this->db->escape($name) . "'");
 
         return $query->row;
     }
