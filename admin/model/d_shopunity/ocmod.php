@@ -249,8 +249,11 @@ class ModelDShopunityOcmod extends Model {
 
                 foreach ($files as $file) {
                     $operations = $file->getElementsByTagName('operation');
-
-                    $files = explode('|', $file->getAttribute('path'));
+                    if(VERSION < "2.1.0.0"){
+                        $files = explode(',', $file->getAttribute('path'));
+                    }else{
+                        $files = explode('|', $file->getAttribute('path'));
+                    }
 
                     foreach ($files as $file) {
                         $path = '';
