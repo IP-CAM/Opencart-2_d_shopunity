@@ -249,7 +249,7 @@ class ModelDShopunityOcmod extends Model {
 
                 foreach ($files as $file) {
                     $operations = $file->getElementsByTagName('operation');
-                    if(VERSION < "2.1.0.0"){
+                    if(VERSION >= "2.0.2.0" && VERSION < "2.1.0.0" ){
                         $files = explode(',', $file->getAttribute('path'));
                     }else{
                         $files = explode('|', $file->getAttribute('path'));
