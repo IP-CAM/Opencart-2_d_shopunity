@@ -116,9 +116,26 @@ class ModelDShopunityOcmod extends Model {
         $dom->loadXml($xml);
 
         $code = $dom->getElementsByTagName('code')->item(0);
+        $name = $dom->getElementsByTagName('name')->item(0);
+        if ($name) {
+            $name = $name->nodeValue;
+        } else {
+            $name = '';
+        }
+
         if ($code) {
             $code = $code->nodeValue;
-            $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "modification WHERE code = '" . $this->db->escape($code) . "'");
+        } else {
+            $code = '';
+        }
+        
+        if ($code || $name) {
+            if(VERSION <= '2.0.0.0'){
+                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "modification WHERE name = '" . $this->db->escape($name) . "'");
+            }else{
+                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "modification WHERE code = '" . $this->db->escape($code) . "'");
+            }
+                
             if(isset($query->row['modification_id'])){
                 return $query->row['modification_id'];
             }
