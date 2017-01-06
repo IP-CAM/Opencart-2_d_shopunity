@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "3.0.36",
+    "version": "3.0.37",
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease.",
     "index": "module/d_shopunity",
@@ -57,7 +57,9 @@
         "system/library/deploy_github.php",
         "system/library/shopunity.php",
         "system/library/modulegenerator.php",
-        "system/library/semver.php"
+        "system/library/semver.php",
+
+        "vqmod/xml/a_vqmod_d_compatibilty_fix_230.xml"
     ],
     "dirs": [
         "admin/controller/d_shopunity",
@@ -79,6 +81,10 @@
         "admin/view/javascript/shopunity"
     ],
     "changelog": [
+        {
+            "varsion":"3.0.37",
+            "change": "1. Install ocmod xmls"
+        },
         {
             "varsion":"3.0.36",
             "change": "1. Install ocmod xmls"
