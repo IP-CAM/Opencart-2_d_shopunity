@@ -353,6 +353,8 @@ class ModelDShopunityExtension extends Model {
         $result = array();
 
         if(!empty($data)){
+            $this->load->model('d_shopunity/mbooth');
+            $mbooth = $this->model_d_shopunity_mbooth->getExtension($data['codename']);
             $this->load->model('tool/image');
             $image_thumb = (!empty($data['images']['thumb'])) ? $data['images']['thumb'] : $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 320, 200);
             $image_main = (!empty($data['images']['main'])) ? $data['images']['main'] : $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 640, 400);
@@ -379,21 +381,21 @@ class ModelDShopunityExtension extends Model {
             $result['admin'] = false;
             $result['activate'] = false;
             $result['deactivate'] = false;
-            if(isset($data['index'])){
-                $result['admin'] =  $this->_ajax($this->url->link($data['index'], 'token=' . $this->session->data['token'] , 'SSL'));
+            if(isset($mbooth['index'])){
+                $result['admin'] =  $this->_ajax($this->url->link($mbooth['index'], 'token=' . $this->session->data['token'] , 'SSL'));
             }
-            if(isset($data['install'])){
-                if(isset($data['install']['url'])){
-                    $parts = explode('&', $data['install']['url']);
+            if(isset($mbooth['install'])){
+                if(isset($mbooth['install']['url'])){
+                    $parts = explode('&', $mbooth['install']['url']);
                     $route = array_shift($parts);
 
                     $result['activate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));
                 }
             }
 
-            if(isset($data['uninstall'])){
-                if(isset($data['uninstall']['url'])){
-                    $parts = explode('&', $data['uninstall']['url']);
+            if(isset($mbooth['uninstall'])){
+                if(isset($mbooth['uninstall']['url'])){
+                    $parts = explode('&', $mbooth['uninstall']['url']);
                     $route = array_shift($parts);
 
                     $result['deactivate'] = str_replace('&amp;', '&', $this->url->link($route, implode('&', $parts).'&token='.$this->session->data['token'], 'SSL'));

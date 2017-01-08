@@ -148,11 +148,11 @@ class ModelDShopunityOcmod extends Model {
         $this->load->model('extension/modification');
 
             // Just before files are deleted, if config settings say maintenance mode is off then turn it on
-            $maintenance = $this->config->get('config_maintenance');
+            // $maintenance = $this->config->get('config_maintenance');
 
-            $this->load->model('setting/setting');
+            // $this->load->model('setting/setting');
 
-            $this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);
+            // $this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);
 
             //Log
             $log = array();
@@ -515,7 +515,7 @@ class ModelDShopunityOcmod extends Model {
             }
 
             // Maintance mode back to original settings
-            $this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
+            //$this->model_setting_setting->editSettingValue('config', 'config_maintenance', $maintenance);
 
         return false;
     }
