@@ -42,7 +42,7 @@ class ModelDShopunityOcmod extends Model {
 
                         // Check to see if the modification is already installed or not.
                         if(VERSION <= '2.0.0.0'){
-                            $modification_info = $this->getModificationByName($Name);
+                            $modification_info = $this->getModificationByName($name);
                         }else{
                             $modification_info = $this->getModificationByCode($code);
                         }
