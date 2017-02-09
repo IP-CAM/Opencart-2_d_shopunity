@@ -460,7 +460,7 @@ class ModelDShopunityMbooth extends Model {
     }
 
     public function validateDependencies($codename){
-				$extension =  $this->getExtensions($codename);
+				$extension =  $this->getExtension($codename);
         if(isset($extension['required'])){
             foreach($extension['required'] as $extension_codename => $version){
                 if(!file_exists(DIR_SYSTEM.'mbooth/extension/'.$extension_codename.'.json')){
