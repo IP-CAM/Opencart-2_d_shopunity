@@ -83,7 +83,7 @@
     "changelog": [
         {
             "varsion":"3.0.42",
-            "change": "1. Fix ocmod name var"
+            "change": "1. Fix ocmod name var. added events"
         },
         {
             "varsion":"3.0.41",
