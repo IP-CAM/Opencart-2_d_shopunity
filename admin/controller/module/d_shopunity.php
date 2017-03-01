@@ -160,10 +160,9 @@ class ControllerModuleDShopunity extends Controller {
 	}
 
 	public function install230(){
-
-		if(VERSION >= '2.3.0.0'
-		&& isset($this->request->get['route'])
-		&& strpos($this->request->get['route'], '/install') !== false ){
+		$this->load->model('d_shopunity/ocmod');
+		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopnity') || $this->model_d_shopunity_ocmod->getModificationByName('Shopunity');
+		if(VERSION >= '2.3.0.0' && !$compatibility ){
 			$this->install();
 			return true;
 		}
@@ -171,10 +170,10 @@ class ControllerModuleDShopunity extends Controller {
 	}
 
 	public function uninstall230(){
-
-		if(VERSION >= '2.3.0.0'
-		&& isset($this->request->get['route'])
-		&& strpos($this->request->get['route'], '/uninstall') !== false ){
+		$this->load->model('d_shopunity/ocmod');
+		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopnity') || $this->model_d_shopunity_ocmod->getModificationByName('Shopunity');
+		
+		if(VERSION >= '2.3.0.0' && !$compatibility ){
 			$this->uninstall();
 			return true;
 		}
