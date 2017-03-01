@@ -164,7 +164,7 @@ class ControllerModuleDShopunity extends Controller {
 		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopnity') || $this->model_d_shopunity_ocmod->getModificationByName('Shopunity');
 		if(VERSION >= '2.3.0.0' && !$compatibility ){
 			$this->install();
-			return $this->load->controller('extension/extension/module');
+			exit;
 		}
 		return false;
 	}
@@ -175,7 +175,7 @@ class ControllerModuleDShopunity extends Controller {
 		
 		if(VERSION >= '2.3.0.0' && $compatibility ){
 			$this->uninstall();
-			return $this->load->controller('extension/extension/module');
+			exit;
 		}
 		return false;
 	}
@@ -184,7 +184,7 @@ class ControllerModuleDShopunity extends Controller {
 
 		$this->load->model('d_shopunity/ocmod');
 		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 1);
-		$this->model_d_shopunity_ocmod->refreshCache();
+		
 
 		$this->load->model('d_shopunity/setting');
 		$this->load->model('user/user_group');
@@ -215,14 +215,14 @@ class ControllerModuleDShopunity extends Controller {
 
         $this->load->model('d_shopunity/mbooth');
 		$this->model_d_shopunity_mbooth->installDependencies($this->codename);
+		$this->model_d_shopunity_ocmod->refreshCache();
+
 	}
 
 	public function uninstall() {
 		$this->load->model('d_shopunity/ocmod');
 		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 0);
-		//$this->model_d_shopunity_ocmod->refreshCache();
-
-		return false;
+		$this->model_d_shopunity_ocmod->refreshCache();
 	}
 }
 ?>
