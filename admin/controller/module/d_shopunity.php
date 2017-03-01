@@ -164,7 +164,7 @@ class ControllerModuleDShopunity extends Controller {
 		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopnity') || $this->model_d_shopunity_ocmod->getModificationByName('Shopunity');
 		if(VERSION >= '2.3.0.0' && !$compatibility ){
 			$this->install();
-			return true;
+			return $this->load->controller('extension/extension/module');
 		}
 		return false;
 	}
@@ -175,7 +175,7 @@ class ControllerModuleDShopunity extends Controller {
 		
 		if(VERSION >= '2.3.0.0' && $compatibility ){
 			$this->uninstall();
-			return true;
+			return $this->load->controller('extension/extension/module');
 		}
 		return false;
 	}
