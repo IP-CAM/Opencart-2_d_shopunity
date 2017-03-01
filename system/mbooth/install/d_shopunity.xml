@@ -252,16 +252,8 @@
          <operation error="skip" info="remove errror for 2.3.0.x">
             <search ><![CDATA[public function view(&$route, &$data) {]]></search>
             <ignoreif><![CDATA[//d_compatibilty_fix_230.xml fix 2]]></ignoreif>
-            <add position="before"><![CDATA[
+            <add position="after" offset="8"><![CDATA[
             //d_compatibilty_fix_230.xml fix 2
-        public function view(&$route, &$data) {
-			$part = explode('/', $route);
-				
-			if (isset($part[0]) && isset($data['back'])) {
-				$data['back'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=' . $part[0], true);
-			}
-		}
-	}
 }
             ]]></add>
         </operation>
