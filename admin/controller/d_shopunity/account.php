@@ -50,6 +50,8 @@ class ControllerDShopunityAccount extends Controller {
 			'href' => $this->url->link($this->route.'/login', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
+
+
 		// Notification
 		if(!empty($this->session->data['success'])){
 			$data['success'] = $this->session->data['success'];
@@ -65,9 +67,14 @@ class ControllerDShopunityAccount extends Controller {
    		$data['heading_title'] = $this->language->get('heading_title');
    		$data['version'] = $this->model_d_shopunity_mbooth->getVersion($this->codename);
 		$data['text_edit'] = $this->language->get('text_edit');
-
+		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$data['action_connect'] = $this->model_d_shopunity_account->getAuthorizeUrl('d_shopunity/account/callback');
+		if(VERSION >= '2.3.0.0'){	
+			$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+		}else{
+			$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+		}
 		
 		$user = $this->model_user_user->getUser($this->user->getId());
 		$data['store_info'] = array(

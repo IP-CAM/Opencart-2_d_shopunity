@@ -1,6 +1,6 @@
 /**
- *	Bootstrap extras
- *	By Dreamvention
+ *  Bootstrap extras
+ *  By Dreamvention
  */
 
  /* callouts */
@@ -312,4 +312,37 @@
   padding: 8px;
   min-height: 35px;
   margin-bottom: 0px;
+}
+@media (min-width:1200px){
+    .row-clear .col-lg-1:nth-child(12n+1){clear:left;}
+    .row-clear .col-lg-2:nth-child(6n+1){clear:left;}
+    .row-clear .col-lg-3:nth-child(4n+1){clear:left;}
+    .row-clear .col-lg-4:nth-child(3n+1){clear:left;}
+    .row-clear .col-lg-6:nth-child(odd){clear:left;}
+    .row-clear .col-md-1:nth-child(12n+1){clear:left;}
+    .row-clear .col-md-2:nth-child(6n+1){clear:left;}
+    .row-clear .col-md-3:nth-child(4n+1){clear:left;}
+    .row-clear .col-md-4:nth-child(3n+1){clear:left;}
+    .row-clear .col-md-6:nth-child(odd){clear:left;}
+}
+@media (min-width:992px) and (max-width:1199px){
+    .row-clear .col-md-1:nth-child(12n+1){clear:left;}
+    .row-clear .col-md-2:nth-child(6n+1){clear:left;}
+    .row-clear .col-md-3:nth-child(4n+1){clear:left;}
+    .row-clear .col-md-4:nth-child(3n+1){clear:left;}
+    .row-clear .col-md-6:nth-child(odd){clear:left;}
+}
+@media (min-width:768px) and (max-width:991px){
+    .row-clear .col-sm-1:nth-child(12n+1){clear:left;}
+    .row-clear .col-sm-2:nth-child(6n+1){clear:left;}
+    .row-clear .col-sm-3:nth-child(4n+1){clear:left;}
+    .row-clear .col-sm-4:nth-child(3n+1){clear:left;}
+    .row-clear .col-sm-6:nth-child(odd){clear:left;}
+}
+@media (max-width:767px){
+    .row-clear .col-xs-1:nth-child(12n+1){clear:left;}
+    .row-clear .col-xs-2:nth-child(6n+1){clear:left;}
+    .row-clear .col-xs-3:nth-child(4n+1){clear:left;}
+    .row-clear .col-xs-4:nth-child(3n+1){clear:left;}
+    .row-clear .col-xs-6:nth-child(odd){clear:left;}
 }

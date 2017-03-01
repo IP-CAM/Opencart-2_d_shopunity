@@ -47,7 +47,7 @@
 			</div>
 		</div> -->
 		
-		<div class="row">
+		<div class="row row-clear">
 			<?php if($extensions) { ?>
 				<?php foreach($extensions as $extension) { ?>
 					<div class="col-md-3 col-sm-6">
