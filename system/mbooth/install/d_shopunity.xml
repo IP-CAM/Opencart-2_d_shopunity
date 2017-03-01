@@ -237,7 +237,7 @@
         </operation>
     </file>
     
-    <file path="admin/view/template/extension/module.php">
+    <file path="admin/view/template/extension/module.tpl">
          <operation error="skip" info="fix for 2.3.0.x">
             <search ><![CDATA[$('#extension').html(html);]]></search>
             <ignoreif><![CDATA[//d_compatibilty_fix_230.xml]]></ignoreif>
