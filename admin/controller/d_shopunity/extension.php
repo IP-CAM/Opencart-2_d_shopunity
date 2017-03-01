@@ -417,7 +417,7 @@ class ControllerDShopunityExtension extends Controller {
 			$this->load->model('d_shopunity/mbooth');
 
 			$extension = $this->model_d_shopunity_extension->getExtension($extension_id);
-			$this->_send('Get extension data ' . json_decode($extension));
+			$this->_send('Get extension data ' . json_encode($extension));
 
 			$download = $this->model_d_shopunity_extension->getExtensionDownloadByDownloadLinkIdForTesting($extension_id, $extension_download_link_id);
 
@@ -715,7 +715,7 @@ class ControllerDShopunityExtension extends Controller {
 		$result = array();
 
 		if(!empty($download['errors'])){
-			throw new Exception('Error! We cound not get the download link: '.$download);
+			throw new Exception('Error! We cound not get the download link: '.json_encode($download));
 		}
 
 		if(empty($download['download'])){
