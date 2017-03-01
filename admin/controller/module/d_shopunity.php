@@ -164,7 +164,7 @@ class ControllerModuleDShopunity extends Controller {
 		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopnity') || $this->model_d_shopunity_ocmod->getModificationByName('Shopunity');
 		if(VERSION >= '2.3.0.0' && !$compatibility ){
 			$this->install();
-			exit;
+			return true;
 		}
 		return false;
 	}
@@ -175,7 +175,7 @@ class ControllerModuleDShopunity extends Controller {
 		
 		if(VERSION >= '2.3.0.0' && $compatibility ){
 			$this->uninstall();
-			exit;
+			return true;
 		}
 		return false;
 	}
@@ -222,7 +222,7 @@ class ControllerModuleDShopunity extends Controller {
 	public function uninstall() {
 		$this->load->model('d_shopunity/ocmod');
 		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 0);
-		$this->model_d_shopunity_ocmod->refreshCache();
+		//$this->model_d_shopunity_ocmod->refreshCache();
 	}
 }
 ?>
