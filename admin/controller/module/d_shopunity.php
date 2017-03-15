@@ -16,6 +16,7 @@ class ControllerModuleDShopunity extends Controller {
 		parent::__construct($registry);
 		$this->load->model('d_shopunity/mbooth');
 		$this->load->model('d_shopunity/account');
+		
 		//$this->load->model('d_shopunity/config');
 
 		//extension.json
@@ -25,7 +26,7 @@ class ControllerModuleDShopunity extends Controller {
 		if (isset($this->request->get['store_id'])) { 
 			$this->store_id = $this->request->get['store_id']; 
 		}
-
+		
 		//Config File (example: d_shopunity)
 		//$this->config_file = $this->model_d_shopunity_config->getConfigFile($this->codename);
 
@@ -34,10 +35,14 @@ class ControllerModuleDShopunity extends Controller {
 
 	}
 
+
+
 	public function index(){
 
 		if(!$this->model_d_shopunity_account->isLogged()){
-			$this->install230();
+			if($this->install230()){
+				return true;
+			}
 			$this->uninstall230();
 			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
