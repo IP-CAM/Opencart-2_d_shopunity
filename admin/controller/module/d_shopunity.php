@@ -43,7 +43,6 @@ class ControllerModuleDShopunity extends Controller {
 			if($this->install230()){
 				return true;
 			}
-			$this->uninstall230();
 			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
@@ -166,20 +165,9 @@ class ControllerModuleDShopunity extends Controller {
 
 	public function install230(){
 		$this->load->model('d_shopunity/ocmod');
-		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopnity') || $this->model_d_shopunity_ocmod->getModificationByName('Shopunity');
+		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopunity') || $this->model_d_shopunity_ocmod->getModificationByName('Shopunity');
 		if(VERSION >= '2.3.0.0' && !$compatibility ){
 			$this->install();
-			return true;
-		}
-		return false;
-	}
-
-	public function uninstall230(){
-		$this->load->model('d_shopunity/ocmod');
-		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopnity') || $this->model_d_shopunity_ocmod->getModificationByName('Shopunity');
-		
-		if(VERSION >= '2.3.0.0' && $compatibility ){
-			$this->uninstall();
 			return true;
 		}
 		return false;
