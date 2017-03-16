@@ -51,6 +51,11 @@
 						<button class="btn btn-success btn-lg"><span class="fa fa-plug"></span> Connect to <strong>Shopunity</strong></button>
 					</form>
 					<?php if($extensions) { ?>
+					<style>
+						.extension-thumb .pull-right{
+							display:none;
+						}
+					</style>
 					<br/><br/><br/><br/>
 					<h1>What are you waiting for?</h1>
 					<h3>These are just some of free module waiting for you inside.</h3>

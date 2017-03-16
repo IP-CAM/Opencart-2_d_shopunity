@@ -38,7 +38,8 @@ class ControllerDShopunityExtension extends Controller {
 			$data['extensions'] = $this->model_d_shopunity_extension->getExtensions($filter_data);
 			unset($this->session->data['welcome_extensions']);
    		}
-
+   		$data['href_market'] =  $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
+		
 		$data['store_extensions'] = $this->model_d_shopunity_extension->getStoreExtensions();
 		$data['local_extensions'] = $this->model_d_shopunity_extension->getLocalExtensions();
 		$data['unregestered_extensions'] = $this->model_d_shopunity_extension->getUnregisteredExtensions();
