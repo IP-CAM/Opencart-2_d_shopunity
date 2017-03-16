@@ -43,15 +43,32 @@
 						notification, subscribtion to commercial extensions and more. Now 
 						managing your modules is as simple as pushing a button.
 					</p>
+					
 					<form action="<?php echo $action_connect; ?>" method="post">
 						<?php foreach($store_info as $key => $value) {?>
 							<input type="hidden" name="<?php echo $key; ?>" value="<?php echo $value; ?>"/>
 						<?php } ?>
 						<button class="btn btn-success btn-lg"><span class="fa fa-plug"></span> Connect to <strong>Shopunity</strong></button>
 					</form>
+					<?php if($extensions) { ?>
+					<br/><br/><br/><br/>
+					<h1>What are you waiting for?</h1>
+					<h3>These are just some of free module waiting for you inside.</h3>
+					<br/>
+					<div class="row row-clear" style="max-width:1200px; display:inline-block">
+						
+							<?php foreach($extensions as $extension) { ?>
+								<div class="col-md-3 col-sm-6">
+									<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+								</div>
+							<?php } ?>
+						
+					</div>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 <?php echo $footer; ?>

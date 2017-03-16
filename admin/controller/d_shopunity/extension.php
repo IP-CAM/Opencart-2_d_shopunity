@@ -31,6 +31,14 @@ class ControllerDShopunityExtension extends Controller {
 
    		$this->load->model('d_shopunity/extension');
 
+   		$data['extensions'] = false;
+   		if(isset($this->session->data['welcome_extensions'])){
+   			$filter_data = $this->session->data['welcome_extensions'];
+   		
+			$data['extensions'] = $this->model_d_shopunity_extension->getExtensions($filter_data);
+			unset($this->session->data['welcome_extensions']);
+   		}
+
 		$data['store_extensions'] = $this->model_d_shopunity_extension->getStoreExtensions();
 		$data['local_extensions'] = $this->model_d_shopunity_extension->getLocalExtensions();
 		$data['unregestered_extensions'] = $this->model_d_shopunity_extension->getUnregisteredExtensions();

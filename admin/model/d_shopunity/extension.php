@@ -25,6 +25,10 @@ class ModelDShopunityExtension extends Model {
         
         $json = $this->api->get('extensions', $filter_data);
 
+        if(!$this->validate($json)){
+            return false;
+        }
+
         if($json){
             foreach($json as $key => $value){
                 $json[$key] = $this->_extension($value);
@@ -33,13 +37,16 @@ class ModelDShopunityExtension extends Model {
         return $json;  
     }
 
-
     public function getStoreExtensions($store_id = false){
         if(!$store_id){
             $store_id = $this->store_id;
         }
         $json = $this->api->get('stores/'.$store_id.'/extensions');
 
+        if(!$this->validate($json)){
+            return false;
+        }
+        
         if($json){
             foreach($json as $key => $value){
                 $json[$key] = $this->_extension($value);
@@ -47,6 +54,16 @@ class ModelDShopunityExtension extends Model {
         }
         
         return $json;
+    }
+
+    public function validate($json){
+        if(!empty($json['errors'])){
+            $this->session->data['error'] = $json['errors'][0]['message'];
+            $this->load->model('d_shopunity/account');
+            $this->model_d_shopunity_account->logout();
+            return false;
+        }
+        return true;
     }
 
     public function getLocalExtensions(){

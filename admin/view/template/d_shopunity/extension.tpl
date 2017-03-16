@@ -7,6 +7,26 @@
 <div class="row">
 
 	<div class="col-md-12">
+		<?php if($extensions) { ?>
+		<div class="text-center">
+			<h1>Hooray! You have made it</h1>
+			<h3>Now click the install button and how easy it is to install extensions!</h3>
+			
+			<br/>
+			<div class="row row-clear" style="max-width:1200px; display:inline-block">
+				
+					<?php foreach($extensions as $extension) { ?>
+						<div class="col-md-3 col-sm-6">
+							<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+						</div>
+					<?php } ?>
+				
+			</div>
+			<p>You can install more extensions in the market section both free and commercial. Enjoy!</p>
+			<br/>
+		</div>
+		<?php } ?>
+		
 		<div class="ibox">
 			<div class="ibox-title">
 				<h4>Search for extensions</h4>
@@ -16,6 +36,7 @@
 			</div>
 		</div>
 		<?php echo $developer_generate_module; ?>
+
 		<div  id="list_search_1" class="ibox">
 			<?php if($store_extensions){ ?>
 			<div class="ibox-title">

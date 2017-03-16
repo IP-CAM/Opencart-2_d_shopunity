@@ -26,7 +26,13 @@ class ControllerDShopunityAccount extends Controller {
 			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
+		//documentation http://t4t5.github.io/sweetalert/
+		$this->document->addStyle('view/javascript/d_shopunity/library/sweetalert/sweetalert.css');
+		$this->document->addScript('view/javascript/d_shopunity/library/sweetalert/sweetalert.min.js');
+
+		$this->document->addStyle('view/stylesheet/shopunity/bootstrap.css');
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
+		$this->document->addScript('view/javascript/d_shopunity/d_shopunity.js');
 		
 		$this->load->language('module/d_shopunity');
    		$this->load->language('d_shopunity/account');
@@ -68,6 +74,24 @@ class ControllerDShopunityAccount extends Controller {
    		$data['version'] = $this->model_d_shopunity_mbooth->getVersion($this->codename);
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$this->load->model('d_shopunity/extension');
+
+		$data['extensions'] = false;
+		if(!$this->config->get('welcome_extensions_visited')){
+		$filter_data = array(
+			'codename'=> array(
+				'd_visual_designer',
+				'd_blog_module',
+				'd_quickcheckout_lite',
+				'd_seo_module'
+			)
+		);
+		$data['extensions'] = $this->model_d_shopunity_extension->getExtensions($filter_data);
+		
+			$this->session->data['welcome_extensions'] = $filter_data;
+			$this->load->model('setting/setting');
+			$this->model_setting_setting->editSetting('welcome_extensions', array('welcome_extensions_visited' => '1'));
+		}
 
 		$data['action_connect'] = $this->model_d_shopunity_account->getAuthorizeUrl('d_shopunity/account/callback');
 		if(VERSION >= '2.3.0.0'){	
