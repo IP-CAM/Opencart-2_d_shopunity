@@ -58,7 +58,7 @@
 					</style>
 					<br/><br/><br/><br/>
 					<h1>What are you waiting for?</h1>
-					<h3>These are just some of free module waiting for you inside.</h3>
+					<h3>These are just some of the free modules that are waiting for you inside.</h3>
 					<br/>
 					<div class="row row-clear" style="max-width:1200px; display:inline-block">
 						<?php foreach($extensions as $extension) { ?>
