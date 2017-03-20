@@ -399,7 +399,7 @@ class ModelDShopunityMbooth extends Model {
         try{
             $semver = new Semver;
             if(!empty($extension['version'])){
-                $satisfies = $semver->expression($version_expression)->satisfiedBy($semver->version($extension['version']));
+                $satisfies = $semver->satisfies($extension['version'], $version_expression);
             }
 
         }catch(Exception $e){
@@ -424,7 +424,7 @@ class ModelDShopunityMbooth extends Model {
                 try{
                     $semver = new Semver;
                     if(!empty($extension['version'])){
-                        $satisfies = $semver->expression($require['version'])->satisfiedBy($semver->version($extension['version']));
+                        $satisfies = $semver->satisfies($extension['version'], $require['version']);
                     }
 
                 }catch(Exception $e){
