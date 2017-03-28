@@ -259,4 +259,17 @@
         </operation>
     </file>
     
+    <file path="admin/model/localisation/language.php">
+         <operation error="skip" info="fix errror for 2.3.0.x">
+            <search ><![CDATA[$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image_description WHERE language_id = '" . (int)$language_id . "'");]]></search>
+            <ignoreif><![CDATA[//d_compatibilty_fix_230.xml fix]]></ignoreif>
+            <add position="replace"><![CDATA[
+            //d_compatibilty_fix_230.xml fix
+            if(VERSION < 2.3.0.0){
+                $this->db->query("DELETE FROM " . DB_PREFIX . "banner_image_description WHERE language_id = '" . (int)$language_id . "'");
+            }
+            ]]></add>
+        </operation>
+    </file>
+    
 </modification>
