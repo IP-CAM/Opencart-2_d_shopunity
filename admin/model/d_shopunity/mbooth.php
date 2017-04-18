@@ -280,14 +280,15 @@ class ModelDShopunityMbooth extends Model {
                         $result['error'][] = $file;
                     }
 
-                    $dir = dirname($this->base_dir . $file);
-                    while (strlen($dir) > strlen($this->base_dir)) {
+                    $dir = dirname($this->dir_root . $file);
+                    while (strlen($dir) > strlen($this->dir_root)) {
                         if (is_dir($dir)) {
                             if ($this->isDirEmpty($dir)) {
                                 if (@rmdir($dir)) {
                                     $result['success'][] = dirname($dir);
                                     $dir = dirname($dir);
                                 } else {
+                                    FB::log('not deleted');
                                     $result['error'][] = dirname($dir);
                                 }
                             } else {
