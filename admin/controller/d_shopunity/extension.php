@@ -107,6 +107,18 @@ class ControllerDShopunityExtension extends Controller {
         return $this->load->view('d_shopunity/extension_thumb.tpl', $data);
     }
 
+    public function show_thumb(){
+        if(isset($this->request->get['extension_id'])){
+            $extension_id = $this->request->get['extension_id'];
+            $data['extension'] = $this->thumb($extension_id);
+            $data['links'] = $this->document->getLinks();
+            $data['styles'] = $this->document->getStyles();
+            $data['scripts'] = $this->document->getScripts();
+            
+            $this->response->setOutput($this->load->view('d_shopunity/extension_show_thumb.tpl', $data));
+        }
+    }
+
 	public function dependency(){
 
 		if(!$this->model_d_shopunity_account->isLogged()){

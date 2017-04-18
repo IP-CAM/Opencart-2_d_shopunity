@@ -61,7 +61,8 @@ class ControllerModuleDShopunity extends Controller {
 		$this->document->addScript('view/javascript/d_shopunity/library/syntaxhighlight/syntaxhighlight.js');
 
 		$this->document->addStyle('view/stylesheet/shopunity/bootstrap.css');
-		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
+        $this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
+		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity_layout.css');
 		$this->document->addScript('view/javascript/d_shopunity/d_shopunity.js');
 
 		// Breadcrumbs
