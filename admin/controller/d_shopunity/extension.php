@@ -111,6 +111,7 @@ class ControllerDShopunityExtension extends Controller {
         if(isset($this->request->get['extension_id'])){
             $extension_id = $this->request->get['extension_id'];
             $data['extension'] = $this->thumb($extension_id);
+            $data['purchase_url'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/purchase', 'token='.$this->session->data['token'], 'SSL')); 
             $data['links'] = $this->document->getLinks();
             $data['styles'] = $this->document->getStyles();
             $data['scripts'] = $this->document->getScripts();
