@@ -32,6 +32,7 @@ class ControllerDShopunityAccount extends Controller {
 
 		$this->document->addStyle('view/stylesheet/shopunity/bootstrap.css');
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
+        $this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity_layout.css');
 		$this->document->addScript('view/javascript/d_shopunity/d_shopunity.js');
 		
 		$this->load->language('module/d_shopunity');
