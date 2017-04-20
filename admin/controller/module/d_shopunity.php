@@ -92,6 +92,11 @@ class ControllerModuleDShopunity extends Controller {
 			unset($this->session->data['success']);
 		}
 
+
+        if (!extension_loaded('zip')) { 
+            $data['error'] = $this->language->get('error_no_zip_extension');
+        }
+
    		$this->document->setTitle($this->language->get('heading_title_main'));
    		$data['heading_title'] = $this->language->get('heading_title_main');
    		$data['version'] = $this->model_d_shopunity_mbooth->getVersion($this->codename);
@@ -122,6 +127,7 @@ class ControllerModuleDShopunity extends Controller {
 			$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		}
 		$account = $this->config->get('d_shopunity_account');
+
 
 		$data['tester'] = false;
 		if(!empty($account['tester'])){

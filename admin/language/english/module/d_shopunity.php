@@ -20,6 +20,8 @@ $_['tab_setting']				= 'Settings';
 $_['tab_tester']				= 'Tester';
 $_['tab_developer']				= 'Developer';
 
+$_['error_no_zip_extension']    = 'The Zip PHP extension is not installed. Please contact your hosting provider to install it and try again.';
+
 //buttons
 $_['button_logout']             = 'Logout out of <b>Shopunity</b>';
 $_['button_cancel'] 			= 'Cancel';
