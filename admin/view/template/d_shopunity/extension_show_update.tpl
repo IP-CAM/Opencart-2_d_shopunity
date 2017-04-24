@@ -29,10 +29,8 @@
                 <div class="row">
                     <div class="col-md-8">
                         <h4>New version available.</h4>
-                        <?php foreach($extension['mbooth']['changelog'] as $changelog){ ?>
-                            <?php if($changelog['version'] > $extension['current_version']){?>
-                               <p><strong><?php echo $changelog['version']; ?></strong> <?php echo $changelog['change']; ?></p>
-                            <?php } ?>
+                        <?php foreach($extension['changelog'] as $changelog){ ?>
+                            <p><strong><?php echo $changelog['version']; ?></strong> <?php echo $changelog['change']; ?></p>
                         <?php } ?>
                     </div>
                     <div class="col-md-4">
