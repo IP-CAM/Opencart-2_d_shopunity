@@ -23,7 +23,7 @@
 <div class="extension-show-thumb">
 
     <?php if($extension['updatable'] && $extension['installed']){ ?>
-        <?php if($extension['version'] > $extension['current_version']){?>
+        <?php if($extension['update_available']){?>
             <!-- update -->
             <div class="alert alert-info">
                 <div class="row">
