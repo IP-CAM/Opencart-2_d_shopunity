@@ -24,6 +24,17 @@
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
 		</div>
 		<?php } ?>
+        <div class="d_shopunity_widget_update"></div>
+        <script src="view/javascript/d_shopunity/d_shopunity_widget.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var d_shopunity_widget_update = jQuery.extend(true, {}, d_shopunity_widget);
+            d_shopunity_widget_update.init({
+                class: '.d_shopunity_widget_update',
+                token: '<?php echo $_GET['token']; ?>',
+                action: 'loadUpdate',
+                extension_id: '1'
+            })
+        </script>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				
