@@ -78,7 +78,7 @@
     "changelog": [
         {
             "varsion":"3.0.53",
-            "change": "1. Validate zip php extension"
+            "change": "1. Validate zip php extension. 2. Added Shopunity update widget"
         },
         {
             "varsion":"3.0.52",

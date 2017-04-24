@@ -3,11 +3,16 @@ d_shopunity_widget = {
         'http' : '',
         'class' : '.d_shopunity_widget',
         'extension_id' : '', //set admin url with token
+        'action' : 'loadExtension',
         'token': ''
     },
 
     loadExtension: function($extension_id){
         $( this.setting.class ).load( this.setting.http+"index.php?route=d_shopunity/extension/show_thumb&extension_id="+$extension_id+"&token="+this.setting.token );
+    },
+
+    loadUpdate: function($extension_id){
+        $( this.setting.class ).load( this.setting.http+"index.php?route=d_shopunity/extension/show_update&extension_id="+$extension_id+"&token="+this.setting.token );
     },
 
     init: function(setting){
@@ -25,7 +30,12 @@ d_shopunity_widget = {
     },
 
     render: function(){
-        this.loadExtension(this.setting.extension_id);
+        if(this.setting.action == 'loadUpdate'){
+            this.loadUpdate(this.setting.extension_id);
+        }else{
+            this.loadExtension(this.setting.extension_id);
+        }
+        
     }
 
 }
