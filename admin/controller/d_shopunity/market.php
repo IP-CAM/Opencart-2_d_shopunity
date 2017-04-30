@@ -41,7 +41,7 @@ class ControllerDShopunityMarket extends Controller {
 		if(isset($this->request->get['search'])){
 			$filter_data['search'] = $this->request->get['search'];
 			$data['search'] = $this->request->get['search'];
-			$url['category_id'] = $this->request->get['search'];
+			$url['search'] = $this->request->get['search'];
 		}
 		$data['page'] = 1;
 		if(isset($this->request->get['page'])){
