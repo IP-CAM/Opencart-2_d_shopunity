@@ -38,7 +38,7 @@
 			       
 					<?php if($extension['purchasable'] ){ ?>
 			        	<!-- purchase -->
-			        	<div class="purchase-extension btn-group form-inline">
+			        	<div class=" btn-group form-inline">
 							<?php if(!empty($extension['price'])){ ?>
 				             <select class="form-control input-sm">
 								<?php foreach($extension['prices'] as $price){ ?>
@@ -47,7 +47,7 @@
 							</select>
 				          
 				            <?php } ?>
-				            <a class="btn btn-primary btn-sm pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
+				            <a class="btn btn-primary btn-sm pull-right popup-purchase"  data-href="<?php echo $extension['popup_purchase']; ?>&theme=extension_thumb" data-extension-id="<?php echo $extension['extension_id'];?>">Get it</a>
 						</div>
 					<?php } ?>
 

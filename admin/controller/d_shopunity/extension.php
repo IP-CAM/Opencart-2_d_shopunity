@@ -231,9 +231,13 @@ class ControllerDShopunityExtension extends Controller {
 				$this->session->data['error'] = $result['error'];
 			}elseif(!empty($result['invoice_id'])){
 				$this->session->data['success'] = $result['success'];
+                $invoice_id = $result['invoice_id'];
 
+                if(!empty($this->request->get['voucher_id'])){
+                    //add voucher to invoice is avalible.
+                    $result = $this->model_d_shopunity_billing->applyVoucher($this->request->get['voucher_id'], $invoice_id);
+                }
 				//make a purchase
-				$invoice_id = $result['invoice_id'];
 		   		$invoice = $this->model_d_shopunity_billing->payInvoice($invoice_id);
 
 		   		if(!empty($invoice['error'])){
@@ -247,6 +251,102 @@ class ControllerDShopunityExtension extends Controller {
 		$this->response->redirect($this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
 
 	}
+
+    public function popup_purchase(){
+        try{
+            if(!$this->model_d_shopunity_account->isLogged()){
+                throw new Exception('Error! you are not logged in');
+            }
+
+            if(!isset($this->request->get['extension_id'])){
+                throw new Exception('Error! extension_id missing');
+            }
+
+            if(!isset($this->request->get['extension_recurring_price_id'])){
+                throw new Exception('Error! extension_recurring_price_id missing');
+            }
+
+            $extension_id = $this->request->get['extension_id'];
+            $data = array();
+            $data['extension'] = $this->model_d_shopunity_extension->getExtension($extension_id);
+
+            $data['account'] = $this->model_d_shopunity_account->getAccount();
+
+            $data['add_money'] = 'https://shopunity.net/index.php?route=billing/transaction';
+            $data['claim_external_order'] =  str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/claim_external_order', 'token='.$this->session->data['token'] . '&extension_id='.$extension_id, 'SSL')); 
+
+            $json['content'] = $this->load->view($this->route.'_popup_purchase.tpl', $data);
+        }catch(Exception $e){
+            $json['error'] = $e->getMessage();
+        }
+
+        $this->response->setOutput(json_encode($json));
+
+    }
+
+    public function claim_external_order(){
+        $json = array();
+        try{
+            if(!$this->model_d_shopunity_account->isLogged()){
+                throw new Exception('Error! you are not logged in');
+            }
+
+            if(!isset($this->request->post['market'])){
+                throw new Exception('Error! market missing');
+            }
+
+            if(!isset($this->request->post['user_id'])){
+                throw new Exception('Error! user_id missing');
+            }
+
+            if(!isset($this->request->post['order_id'])){
+                throw new Exception('Error! order_id missing');
+            }
+
+            $data = array(
+                'market' => $this->request->post['market'],
+                'user_id' => $this->request->post['user_id'],
+                'order_id' => $this->request->post['order_id']
+            );
+            $this->load->model('d_shopunity/billing');
+            $voucher = $this->model_d_shopunity_billing->claimExternalOrder($data);
+
+            if(!empty($voucher['error'])){
+                $system_message = (isset($voucher['errors'][0]['system_message'])) ? $voucher['errors'][0]['system_message'] : '';
+                throw new Exception('Error! '.$voucher['errors'][0]['message'] .'. '. $system_message);
+            }
+
+            if(!empty($voucher['extension_id'])){
+                $json['extension'] = $this->model_d_shopunity_extension->getExtension($voucher['extension_id']);
+                $json['voucher'] = $voucher;
+                $json['text'] = 'You have reclaimed your voucher for '.$json['extension']['name'].' for a period of ' . $voucher['recurring_duration'] .'days.';
+
+                $extension_recurring_price_id = false;
+                foreach($json['extension']['prices'] as $price){
+                    if($price['recurring_duration'] == $voucher['recurring_duration']){
+                        $extension_recurring_price_id = $price['extension_recurring_price_id'];
+                    }
+                }
+
+                if(!$extension_recurring_price_id){
+                    throw new Exception('Error! extension_recurring_price_id for this voucher is not available');
+                }else{
+                    $json['apply'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $voucher['extension_id'] . '&extension_recurring_price_id='. $extension_recurring_price_id . '&voucher_id='. $voucher['voucher_id'] , 'SSL'));
+                    $json['success'] = true;
+                }
+
+                
+
+            }else{
+                throw new Exception('Error! extension_id missing');
+            }
+        }catch(Exception $e){
+
+            $json['error'] = $e->getMessage();
+        }
+
+        $this->response->setOutput(json_encode($json));
+    }
 
 	public function popup(){
 		try{

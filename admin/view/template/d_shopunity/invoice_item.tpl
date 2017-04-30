@@ -51,11 +51,34 @@
 								</td>
 							</tr>
 						<?php } ?>
+
+                        <?php $i = 0; foreach($invoice['invoice_vouchers'] as $voucher){ ?>
+                            <tr>
+                                <td>
+                                    <?php echo ++$i; ?>
+                                </td>
+                                <td>
+                                    <?php echo $voucher['name'] ?> 
+                                </td>
+                                <td>
+                                    1
+                                </td>
+                                <td>
+                                    -<?php echo $order['recurring_price'] ?>
+                                </td>
+                                <td>
+                                    -<?php echo $order['recurring_price'] ?>
+                                </td>
+                            </tr>
+                        <?php } ?>
+
 							<tr>
 								<td colspan="4"></td>
 								<td><?php echo $invoice['total_format'] ?></td>
 							</tr>
 						</tbody>
+
+                        
 					</table>
 					<?php } ?>
 				</div>

@@ -68,7 +68,12 @@ class ModelDShopunityBilling extends Model {
 			if($result['store_extension']){
 				$this->load->model('d_shopunity/extension');
 				$result['store_extension'] = $this->model_d_shopunity_extension->_extension($result['store_extension']);
-				$result['activate'] = $result['store_extension']['purchase'] . '&extension_recurring_price_id='.$result['store_extension']['price']['extension_recurring_price_id'];
+                //in case a module was paid and became free.
+                if(isset($result['store_extension']['price'])){
+                    $result['activate'] = $result['store_extension']['purchase'] . '&extension_recurring_price_id='.$result['store_extension']['price']['extension_recurring_price_id'];
+                }else{
+                    $result['activate'] = false;
+                }
 				$result['suspend'] = $result['store_extension']['suspend'];
 			}
 
@@ -128,6 +133,27 @@ class ModelDShopunityBilling extends Model {
 		
 	}
 
+    public function claimExternalOrder($data){
+
+    
+        $send = array(
+            'market' => (isset($data['market'])) ? $data['market']: '',
+            'user_id' => (isset($data['user_id'])) ? $data['user_id']: '',
+            'order_id' => (isset($data['order_id'])) ? $data['order_id']: '',
+            );
+        $result = $this->api->post('external/claim', $send);
+        return $result;
+        
+    }
+
+    public function applyVoucher($voucher_id, $invoice_id){
+        $send = array(
+            'voucher_id' => $voucher_id,
+            'invoice_id' => $invoice_id
+        );
+        $result = $this->api->post('account/invoices/'.$invoice_id.'/voucher', $send);
+        return $result;
+    }
 	
 
 	private function _invoice($data){

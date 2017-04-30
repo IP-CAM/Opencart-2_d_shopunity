@@ -98,7 +98,7 @@
 			       
 					<?php if($extension['purchasable'] ){ ?>
 			        	<!-- purchase -->
-			        	<div class="purchase-extension btn-group">
+			        	<div class=" btn-group">
 							<?php if(!empty($extension['price'])){ ?>
 				             <select class="form-control">
 								<?php foreach($extension['prices'] as $price){ ?>
@@ -108,9 +108,10 @@
 				          
 				            <?php } ?>
 				           
-				            <a class="btn btn-primary pull-right" data-extension-id="<?php echo $extension['extension_id'];?>">Buy</a>
+				            <a class="btn btn-primary pull-right popup-purchase" data-href="<?php echo $extension['popup_purchase']; ?>&theme=extension_thumb_row" data-extension-id="<?php echo $extension['extension_id'];?>">Get it</a>
 						</div>
 					<?php } ?>
+
 
 		            <?php if($extension['installed']){ ?>
 						<!-- delete -->
