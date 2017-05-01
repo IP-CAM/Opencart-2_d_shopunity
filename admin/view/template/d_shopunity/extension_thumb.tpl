@@ -24,6 +24,10 @@
 		        	<?php } ?>
 		        </p>
 
+                <?php if($extension['part_of_pack']) {?>
+                    <p class="info">Part of pack</p>
+                <?php } ?>
+
 				<div class="pull-right">
 					<?php if($extension['installable'] && !$extension['installed']){ ?>
 		            	<!-- install -->
