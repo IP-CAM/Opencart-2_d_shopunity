@@ -66,7 +66,7 @@ class ModelDShopunityExtension extends Model {
         return true;
     }
 
-    public function getLocalExtensions(){
+    public function getLocalExtensions($type = false){
 
         //Return mbooth files.
         $codenames = array();
@@ -74,7 +74,13 @@ class ModelDShopunityExtension extends Model {
 
         $installed_extensions = $this->model_d_shopunity_mbooth->getExtensions();
         foreach($installed_extensions as $extension){
-            $codenames[] = $extension['codename'];
+            if($type){
+               if($type == $extension['type']){
+                    $codenames[] = $extension['codename'];
+               }
+            }else{
+                $codenames[] = $extension['codename'];
+            } 
         }
         
         $filter_data = array(
@@ -138,6 +144,19 @@ class ModelDShopunityExtension extends Model {
 
         return $json;
 
+    }
+
+    public function getLibraryExtensionsCount(){
+        $this->load->model('d_shopunity/mbooth');
+
+        $installed_extensions = $this->model_d_shopunity_mbooth->getExtensions();
+        $count = 0;
+        foreach($installed_extensions as $extension){
+           if($extension['type'] == 'library'){
+                $count++;
+           }
+        }
+        return $count;
     }
 
     public function getExtension($extension_id){
@@ -374,13 +393,14 @@ class ModelDShopunityExtension extends Model {
             $this->load->model('d_shopunity/mbooth');
             $mbooth = $this->model_d_shopunity_mbooth->getExtension($data['codename']);
             $this->load->model('tool/image');
-            $image_thumb = (!empty($data['images']['thumb'])) ? $data['images']['thumb'] : $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 320, 200);
-            $image_main = (!empty($data['images']['main'])) ? $data['images']['main'] : $this->model_tool_image->resize('catalog/d_shopunity/no_image.jpg', 640, 400);
+            $image_thumb = (!empty($data['images']['thumb'])) ? $data['images']['thumb'] : 'https://shopunity.net/image/cache/no_image-640x400.jpg';
+            $image_main = (!empty($data['images']['main'])) ? $data['images']['main'] : 'https://shopunity.net/image/cache/no_image-640x400.jpg';
             $result = $data;
             $result['name'] = trim($data['name']);
             $result['description_short'] = trim($data['description']);
             $result['url'] = '';
             $result['prices'] = '';
+            $result['part_of_pack'] = '';
             $result['image'] = $image_main;
             $result['processed_images'] = array(
                 0 => array(

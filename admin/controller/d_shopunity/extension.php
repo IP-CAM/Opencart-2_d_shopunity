@@ -41,8 +41,11 @@ class ControllerDShopunityExtension extends Controller {
    		$data['href_market'] =  $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$data['store_extensions'] = $this->model_d_shopunity_extension->getStoreExtensions();
-		$data['local_extensions'] = $this->model_d_shopunity_extension->getLocalExtensions();
+		$data['local_extensions'] = $this->model_d_shopunity_extension->getLocalExtensions('module');
 		$data['unregestered_extensions'] = $this->model_d_shopunity_extension->getUnregisteredExtensions();
+        $data['library_extensions_count'] = $this->model_d_shopunity_extension->getLibraryExtensionsCount();
+
+        $data['load_libraries'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/load_libraries', 'token='.$this->session->data['token'], 'SSL')); 
 		$data['developer_generate_module'] = $this->load->controller('d_shopunity/developer/generate_module');
 		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
@@ -105,6 +108,15 @@ class ControllerDShopunityExtension extends Controller {
 
         $data['extension'] = $this->model_d_shopunity_extension->getExtension($extension_id);
         return $this->load->view('d_shopunity/extension_thumb.tpl', $data);
+    }
+
+    public function load_libraries(){
+        $data = array();
+        $this->load->model('d_shopunity/extension');
+        $data['extensions'] = $this->model_d_shopunity_extension->getLocalExtensions('library');
+        $data = $this->_productThumb($data);
+        $this->response->setOutput($this->load->view('d_shopunity/extension_show_thumb_row.tpl', $data));
+
     }
 
     public function show_thumb(){
@@ -817,6 +829,7 @@ class ControllerDShopunityExtension extends Controller {
 	}
 
 
+
 	public function _productThumb($data){
 
 		$this->load->language('d_shopunity/extension');
@@ -911,7 +924,7 @@ class ControllerDShopunityExtension extends Controller {
 		//start testing
 		//download the extension to system/mbooth/download
 		$extension_zip = $this->model_d_shopunity_mbooth->downloadExtensionFromServer($download['download']);
-		if(isset($extension_zip['errors'])){
+		if(is_array($extension_zip) && isset($extension_zip['errors'])){
 			throw new Exception('Error! downloadExtensionFromServer failed: '.json_encode($extension_zip));
 		}
 
@@ -919,7 +932,7 @@ class ControllerDShopunityExtension extends Controller {
 
 		//unzip the downloaded file to system/mbooth/download and remove the zip file
 		$extracted = $this->model_d_shopunity_mbooth->extractExtension($extension_zip);
-		if(isset($extracted['errors'])){
+		if(is_array($extracted) && isset($extracted['errors'])){
 			throw new Exception('Error! extractExtension failed: ' .json_encode($extracted) . ' download from '.$download['download']);
 		}
 

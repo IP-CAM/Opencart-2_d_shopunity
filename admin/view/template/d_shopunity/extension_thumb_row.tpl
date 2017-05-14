@@ -27,7 +27,7 @@
 		<div class="col-md-2">
 			<strong class="name"><?php echo $extension['name']; ?></strong>
 			<span class="label label-default"><?php echo $extension['current_version']; ?></span> 
-			<?php if($extension['part_of_pack']) {?>
+			<?php if(!empty($extension['part_of_pack'])) {?>
                 <span class="label label-info">Part of pack</span>
             <?php } ?>
 			<p class="m-t m-b">
