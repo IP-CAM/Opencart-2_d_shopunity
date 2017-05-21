@@ -155,11 +155,11 @@ class ControllerDShopunityInvoice extends Controller {
 
    		$this->load->model('d_shopunity/billing');
 
-        if(isset($this->request->get['voicher_id'])){
-            $invoice = $this->model_d_shopunity_billing->applyVoucher($this->request->get['voicher_id'], $invoice_id);
-        }else{
-            $invoice = $this->model_d_shopunity_billing->payInvoice($invoice_id);
+        if(isset($this->request->get['voucher_id'])){
+            $invoice = $this->model_d_shopunity_billing->applyVoucher($this->request->get['voucher_id'], $invoice_id);
         }
+        
+        $invoice = $this->model_d_shopunity_billing->payInvoice($invoice_id);
 
    		if(!empty($invoice['error'])){
 			$this->session->data['error'] = $invoice['error'];
