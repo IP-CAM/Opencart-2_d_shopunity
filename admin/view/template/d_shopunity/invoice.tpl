@@ -70,7 +70,7 @@
 								
 						        <div class="pull-right">
 					                <?php if($invoice['invoice_status_id'] == 0){ ?>
-					                <a class="btn btn-success" href="<?php echo $invoice['pay']; ?>" data-toggle="tooltip" data-original-title="Pay"><span class="fa fa-money"></span></a>
+					                <a class="btn btn-success popup-pay-invoice" data-href="<?php echo $invoice['popup_pay_invoice']; ?>" data-toggle="tooltip" data-original-title="Pay"><span class="fa fa-money"></span></a>
 						       		<?php }elseif($invoice['refundable']){ ?>
 						       		<a class="btn btn-warning" href="<?php echo $invoice['refund']; ?>" data-toggle="tooltip" data-original-title="Refund"><span class="fa fa-repeat"></span></a>
 						       		<?php } ?>

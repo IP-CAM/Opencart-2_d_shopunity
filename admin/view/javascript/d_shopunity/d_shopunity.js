@@ -44,6 +44,25 @@ d_shopunity = {
         return false;
     },
 
+    popupPayInvoice: function($node){
+
+        this.popupStart('Pay invoice');
+        var that = this;
+        $.ajax({
+            url: $node.data('href'),
+            dataType: 'json',
+            method: 'get',
+            success: function(json) {
+                
+                if(json['content']){
+                    that.popupShow(json['content']);
+                }
+            }
+        }); 
+
+        return false;
+    },
+
     popup: function($node){
 
         this.popupStart('Install extension');
@@ -554,6 +573,10 @@ d_shopunity = {
 
         $(document).on('click', '.popup-purchase', function(){
             that.popupPurchase($(this));
+        });
+
+        $(document).on('click', '.popup-pay-invoice', function(){
+            that.popupPayInvoice($(this));
         });
 
         $(document).on('click', '.popup-extension', function(){

@@ -163,6 +163,7 @@ class ModelDShopunityBilling extends Model {
 			$result['date_added'] = date($this->language->get('date_format_short'), strtotime($data['date_added']));
 			$result['url'] = $this->url->link('d_shopunity/invoice/item', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
 			$result['pay'] = $this->url->link('d_shopunity/invoice/pay', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
+            $result['popup_pay_invoice'] = $this->url->link('d_shopunity/invoice/popup_pay_invoice', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
 			$result['refund'] = $this->url->link('d_shopunity/invoice/refund', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
 			$result['cancel'] = $this->url->link('d_shopunity/invoice/cancel', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
 

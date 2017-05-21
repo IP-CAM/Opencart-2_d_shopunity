@@ -112,6 +112,33 @@ class ControllerDShopunityInvoice extends Controller {
 		$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 	}
 
+    public function popup_pay_invoice(){
+        try{
+            if(!$this->model_d_shopunity_account->isLogged()){
+                throw new Exception('Error! you are not logged in');
+            }
+
+            if(!isset($this->request->get['invoice_id'])){
+                throw new Exception('Error! invoice_id missing');
+            }
+
+            $this->load->model('d_shopunity/billing');
+            $invoice_id = $this->request->get['invoice_id'];
+            $data = array();
+            $data['invoice'] = $this->model_d_shopunity_billing->getInvoice($invoice_id);
+
+            $data['account'] = $this->model_d_shopunity_account->getAccount();
+
+            $data['add_money'] = 'https://shopunity.net/index.php?route=billing/transaction';
+            $data['claim_external_order'] =  str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/claim_external_order', 'token='.$this->session->data['token'] . '&invoice_id='.$invoice_id, 'SSL')); 
+
+            $json['content'] = $this->load->view($this->route.'_popup_pay.tpl', $data);
+        }catch(Exception $e){
+            $json['error'] = $e->getMessage();
+        }
+
+        $this->response->setOutput(json_encode($json));
+    }
 	public function pay(){
 
 		if(!$this->model_d_shopunity_account->isLogged()){
@@ -122,14 +149,17 @@ class ControllerDShopunityInvoice extends Controller {
 
 			$this->session->data['error'] = 'order_id missing!';
 			$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
-
 		}
 
 		$invoice_id = $this->request->get['invoice_id'];
 
    		$this->load->model('d_shopunity/billing');
 
-   		$invoice = $this->model_d_shopunity_billing->payInvoice($invoice_id);
+        if(isset($this->request->get['voicher_id'])){
+            $invoice = $this->model_d_shopunity_billing->applyVoucher($this->request->get['voicher_id'], $invoice_id);
+        }else{
+            $invoice = $this->model_d_shopunity_billing->payInvoice($invoice_id);
+        }
 
    		if(!empty($invoice['error'])){
 			$this->session->data['error'] = $invoice['error'];

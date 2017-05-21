@@ -343,7 +343,13 @@ class ControllerDShopunityExtension extends Controller {
                 if(!$extension_recurring_price_id){
                     throw new Exception('Error! extension_recurring_price_id for this voucher is not available');
                 }else{
-                    $json['apply'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $voucher['extension_id'] . '&extension_recurring_price_id='. $extension_recurring_price_id . '&voucher_id='. $voucher['voucher_id'] , 'SSL'));
+
+                    if(isset($this->request->get['invoice_id'])){
+                        $json['apply'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/invoice/pay', 'token=' . $this->session->data['token'] . '&extension_id=' . $voucher['extension_id'] . '&extension_recurring_price_id='. $extension_recurring_price_id . '&voucher_id='. $voucher['voucher_id'].'&invoice_id=' . $this->request->get['invoice_id'] , 'SSL'));
+                    }else{
+                        $json['apply'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $voucher['extension_id'] . '&extension_recurring_price_id='. $extension_recurring_price_id . '&voucher_id='. $voucher['voucher_id'] , 'SSL'));
+                    }
+                    
                     $json['success'] = true;
                 }
 
