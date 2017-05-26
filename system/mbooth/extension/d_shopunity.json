@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "3.0.56",
+    "version": "3.0.57",
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease",
     "index": "module/d_shopunity",
@@ -76,6 +76,10 @@
         "admin/view/javascript/shopunity"
     ],
     "changelog": [
+        {
+            "version":"3.0.57",
+            "change": "1. Added isense labs support"
+        },
         {
             "version":"3.0.56",
             "change": "1.Added vouchers in billing/invoice "
