@@ -843,6 +843,7 @@ class ControllerDShopunityExtension extends Controller {
 
         $this->load->model('d_shopunity/ocmod');
         $this->model_d_shopunity_ocmod->setOcmod($codename.'.xml', 1);
+        $this->model_d_shopunity_ocmod->refreshCache();
         return true;
     }
 
@@ -855,6 +856,7 @@ class ControllerDShopunityExtension extends Controller {
 
         $this->load->model('d_shopunity/ocmod');
         $this->model_d_shopunity_ocmod->setOcmod($codename.'.xml', 0);
+        $this->model_d_shopunity_ocmod->refreshCache();
         return true;
     }
 
