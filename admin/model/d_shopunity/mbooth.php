@@ -519,21 +519,21 @@ class ModelDShopunityMbooth extends Model {
             }
 
             if(isset($result['install']) && isset($result['install']['url'])){
-                if(VERSION < '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') !== false) {
+                if(VERSION < '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') !== false && strpos($result['install']['url'], 'd_shopunity/') === false) {
                     $result['install']['url'] = str_replace('extension/extension/', "extension/", $result['install']['url']);
                 }
 
-                if(VERSION >= '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') === false) {
+                if(VERSION >= '2.3.0.0' && strpos($result['install']['url'], 'extension/extension/') === false && strpos($result['install']['url'], 'd_shopunity/') === false) {
                     $result['install']['url'] = str_replace('extension/', 'extension/extension/', $result['install']['url']);
                 }
             }
 
             if(isset($result['uninstall']) && isset($result['uninstall']['url'])){
-                if(VERSION < '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') !== false) {
+                if(VERSION < '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') !== false && strpos($result['install']['url'], 'd_shopunity/') === false) {
                     $result['uninstall']['url'] = str_replace('extension/extension/', "extension/", $result['uninstall']['url']);
                 }
 
-                if(VERSION >= '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') === false) {
+                if(VERSION >= '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') === false && strpos($result['install']['url'], 'd_shopunity/') === false) {
                     $result['uninstall']['url'] = str_replace('extension/', 'extension/extension/', $result['uninstall']['url']);
                 }
             }
