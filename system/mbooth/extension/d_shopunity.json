@@ -78,7 +78,7 @@
     "changelog": [
         {
             "version":"3.0.57",
-            "change": "1. Added isense labs support"
+            "change": "1. Added isense labs support. Added ocmod install/uninstall"
         },
         {
             "version":"3.0.56",

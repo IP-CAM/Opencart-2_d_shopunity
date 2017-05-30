@@ -834,7 +834,29 @@ class ControllerDShopunityExtension extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+    public function install_ocmod(){
+        if(isset($this->request->get['codename'])){
+            $codename = $this->request->get['codename'];
+        }else{
+            return false;
+        }
 
+        $this->load->model('d_shopunity/ocmod');
+        $this->model_d_shopunity_ocmod->setOcmod($codename.'.xml', 1);
+        return true;
+    }
+
+    public function uninstall_ocmod(){
+        if(isset($this->request->get['codename'])){
+            $codename = $this->request->get['codename'];
+        }else{
+            return false;
+        }
+
+        $this->load->model('d_shopunity/ocmod');
+        $this->model_d_shopunity_ocmod->setOcmod($codename.'.xml', 0);
+        return true;
+    }
 
 	public function _productThumb($data){
 
