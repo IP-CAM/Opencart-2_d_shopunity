@@ -149,16 +149,18 @@ class ControllerDShopunityExtension extends Controller {
             $data['extension'] = $this->model_d_shopunity_extension->getExtension($extension_id);
             $semver = new Semver;
             $data['extension']['changelog'] = array();
-            foreach($data['extension']['mbooth']['changelog'] as $changelog){
-                if(isset($changelog['version']) && isset($changelog['change']) && $semver->gt($changelog['version'], $data['extension']['current_version'])){
-                    $data['extension']['changelog'][] = array(
-                        'version' => $changelog['version'],
-                        'change' => $changelog['change']
-                    );
+            if(isset($data['extension']['mbooth']['changelog'])){
+                foreach($data['extension']['mbooth']['changelog'] as $changelog){
+                    if(isset($changelog['version']) && isset($changelog['change']) && $semver->gt($changelog['version'], $data['extension']['current_version'])){
+                        $data['extension']['changelog'][] = array(
+                            'version' => $changelog['version'],
+                            'change' => $changelog['change']
+                        );
+                    }
+
                 }
-
             }
-
+            
             $data['purchase_url'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/purchase', 'token='.$this->session->data['token'], 'SSL')); 
             $data['links'] = $this->document->getLinks();
             $data['styles'] = $this->document->getStyles();
