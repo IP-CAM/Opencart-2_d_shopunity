@@ -80,7 +80,7 @@
         {
             "version":"3.1.0",
             "change": "1. Added d_shopunity_oc2_patch"
-        }
+        },
         {
             "version":"3.0.57",
             "change": "1. Added isense labs support. Added ocmod install/uninstall"
