@@ -172,7 +172,7 @@ class ControllerModuleDShopunity extends Controller {
 
 	public function install230(){
 		$this->load->model('d_shopunity/ocmod');
-		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopunity') || $this->model_d_shopunity_ocmod->getModificationByName('Shopunity');
+		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopunity_oc230_patch');
 		if(VERSION >= '2.3.0.0' && !$compatibility ){
 			$this->install();
 			return true;
@@ -183,10 +183,15 @@ class ControllerModuleDShopunity extends Controller {
 	public function install() {
 
 		$this->load->model('d_shopunity/ocmod');
+        $this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 0);
 		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 1);
 
         if(VERSION < "2.3.0.0"){
+            $this->model_d_shopunity_ocmod->setOcmod('d_shopunity_oc2_patch.xml', 0);
             $this->model_d_shopunity_ocmod->setOcmod('d_shopunity_oc2_patch.xml', 1);
+        }elseif(VERSION < "3.0.0.0"){
+            $this->model_d_shopunity_ocmod->setOcmod('d_shopunity_oc230_patch.xml', 0);
+            $this->model_d_shopunity_ocmod->setOcmod('d_shopunity_oc230_patch.xml', 1);
         }
 
 		$this->load->model('d_shopunity/setting');
@@ -226,6 +231,7 @@ class ControllerModuleDShopunity extends Controller {
 		$this->load->model('d_shopunity/ocmod');
 		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 0);
         $this->model_d_shopunity_ocmod->setOcmod('d_shopunity_oc2_patch.xml', 0);
+        $this->model_d_shopunity_ocmod->setOcmod('d_shopunity_oc230_patch.xml', 0);
 		//$this->model_d_shopunity_ocmod->refreshCache();
 	}
 }
