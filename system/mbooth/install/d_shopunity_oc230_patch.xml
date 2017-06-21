@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
-    <name>d_shopunity_oc2_patch</name>
-    <code>d_shopunity_oc2_patch</code>
+    <name>d_shopunity_oc230_patch</name>
+    <code>d_shopunity_oc230_patch</code>
     <description>Adds copmatibility fixes for old extensions on Opencarts 2.x</description>
     <version>1.0.0</version>
     <author>Dreamvention</author>
