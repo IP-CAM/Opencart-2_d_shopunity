@@ -270,4 +270,22 @@
             ]]></add>
         </operation>
     </file>
+
+    <file path="admin/view/template/extension/extension/analytics.tpl">
+         <operation error="skip" info="fix analytics tpl errror for 2.3.0.x">
+            <search index="3"><![CDATA[<?php } ?>]]></search>
+            <ignoreif><![CDATA[<!-- d_shopunity_oc230_patch.xml 1 -->]]></ignoreif>
+            <add position="replace"><![CDATA[
+            <!-- d_shopunity_oc230_patch.xml 1 -->
+            ]]></add>
+        </operation>
+        <operation error="skip" info="fix analytics tpl errror for 2.3.0.x">
+            <search index="1"><![CDATA[<?php } else { ?>]]></search>
+            <ignoreif><![CDATA[<!-- d_shopunity_oc230_patch.xml 2 -->]]></ignoreif>
+            <add position="before"><![CDATA[
+            <!-- d_shopunity_oc230_patch.xml 2 -->
+            <?php } ?>
+            ]]></add>
+        </operation>
+    </file>
 </modification>
