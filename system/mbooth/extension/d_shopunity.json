@@ -41,6 +41,7 @@
         "system/mbooth/extension/d_shopunity.json",
         "system/mbooth/install/d_shopunity.xml",
         "system/mbooth/install/d_shopunity_oc2_patch.xml",
+        "system/mbooth/install/d_shopunity_oc230_patch.xml",
         "system/mbooth/install/d_shopunity.php",
         "system/mbooth/install/d_shopunity.sql",
         "system/mbooth/readme/d_shopunity.md",
