@@ -184,7 +184,10 @@ class ControllerModuleDShopunity extends Controller {
 
 		$this->load->model('d_shopunity/ocmod');
 		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 1);
-		
+
+        if(VERSION < "2.3.0.0"){
+            $this->model_d_shopunity_ocmod->setOcmod('d_shopunity_oc2_patch.xml', 1);
+        }
 
 		$this->load->model('d_shopunity/setting');
 		$this->load->model('user/user_group');
@@ -222,6 +225,7 @@ class ControllerModuleDShopunity extends Controller {
 	public function uninstall() {
 		$this->load->model('d_shopunity/ocmod');
 		$this->model_d_shopunity_ocmod->setOcmod('d_shopunity.xml', 0);
+        $this->model_d_shopunity_ocmod->setOcmod('d_shopunity_oc2_patch.xml', 0);
 		//$this->model_d_shopunity_ocmod->refreshCache();
 	}
 }
