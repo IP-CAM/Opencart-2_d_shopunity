@@ -8,10 +8,28 @@
     <link>http://dreamvention.com</link>
 
     <file path="admin/controller/extension/extension/dashboard.php">
-        <operation error="skip" info="fix for 2.3.0.x">
+        <operation error="skip" info="fix for install and uninstall of dashboard extensions">
             <search ><![CDATA['dashboard_' . $this->request->get['extension']]]></search>
             <ignoreif><![CDATA[//d_shopunity_oc230_patch.xml 1]]></ignoreif>
             <add position="replace"><![CDATA[$this->request->get['extension']]]></add>
+        </operation>
+        <operation error="skip" info="fix for install and uninstall of dashboard extensions">
+            <search ><![CDATA[$this->load->controller('extension/dashboard/' . $this->request->get['extension'] . '/uninstall');]]></search>
+            <ignoreif><![CDATA[//d_shopunity_oc230_patch.xml 2]]></ignoreif>
+            <add position="before"><![CDATA[
+                //d_shopunity_oc230_patch.xml 2
+                $this->load->model('setting/setting');
+                $this->model_setting_setting->deleteSetting('dashboard_'.$this->request->get['extension']);
+            ]]></add>
+        </operation>
+        <operation error="skip" info="fix for install and uninstall of dashboard extensions">
+            <search ><![CDATA[$this->model_extension_extension->uninstall('dashboard', $value);]]></search>
+            <ignoreif><![CDATA[//d_shopunity_oc230_patch.xml 3]]></ignoreif>
+            <add position="after"><![CDATA[
+                //d_shopunity_oc230_patch.xml 3
+                $this->load->model('setting/setting');
+                $this->model_setting_setting->deleteSetting('dashboard_'.$value);
+            ]]></add>
         </operation>
     </file>
 
