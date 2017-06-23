@@ -4,7 +4,7 @@
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease",
     "index": "module/d_shopunity",
-    "readme": "system/mbooth/readme/d_shopunity.md",
+    "readme": "system/library/d_shopunity/readme/d_shopunity.md",
     "author": {
         "name": "Shopunity",
         "email": "info@shopunity.com",
@@ -41,15 +41,6 @@
         "d_opencart_patch": ">=1.0.0"
     },
     "files": [
-        "system/mbooth/extension/d_shopunity.json",
-        "system/mbooth/install/d_shopunity.xml",
-        "system/mbooth/install/d_shopunity_oc2_patch.xml",
-        "system/mbooth/install/d_shopunity_oc230_patch.xml",
-        "system/mbooth/install/d_shopunity.php",
-        "system/mbooth/install/d_shopunity.sql",
-        "system/mbooth/readme/d_shopunity.md",
-        "system/mbooth/download/index.php",
-        "system/mbooth/backup/index.php",
 
         "admin/controller/module/d_shopunity.php",
         "admin/language/english/module/d_shopunity.php",
@@ -63,10 +54,6 @@
         "system/library/d_shopunity/readme/d_shopunity.md",
         "system/library/d_shopunity/download/index.php",
         "system/library/d_shopunity/backup/index.php",
-
-        "admin/controller/extension/module/d_shopunity.php",
-        "admin/language/english/extension/module/d_shopunity.php",
-        "admin/view/template/extension/module/d_shopunity.tpl",
 
         "system/library/deploy_bitbucket.php",
         "system/library/deploy_github.php",
@@ -84,16 +71,13 @@
         "catalog/controller/d_shopunity",
         "catalog/model/d_shopunity",
 
-        "admin/controller/extension/module/d_shopunity",
-        "admin/language/en-gb/extension/module/d_shopunity",
-        "admin/model/extension/module/d_shopunity",
+       
 
-        "admin/view/template/extension/module/d_shopunity",
+       
         "admin/view/javascript/d_shopunity",
         "admin/view/stylesheet/d_shopunity",
 
-        "catalog/controller/extension/module/d_shopunity",
-        "catalog/model/extension/module/d_shopunity",
+        
 
         "system/library/httpful",
         "system/library/semver",
