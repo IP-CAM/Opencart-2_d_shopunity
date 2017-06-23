@@ -37,6 +37,9 @@
         "email": "support@shopunity.com",
         "url": "https://shopunity.net/"
     },
+    "required":{
+        "d_opencart_patch": ">=1.0.0"
+    },
     "files": [
         "system/mbooth/extension/d_shopunity.json",
         "system/mbooth/install/d_shopunity.xml",
@@ -52,6 +55,19 @@
         "admin/language/english/module/d_shopunity.php",
         "admin/view/template/module/d_shopunity.tpl",
 
+        "system/library/d_shopunity/api.php",
+        "system/library/d_shopunity/extension/d_shopunity.json",
+        "system/library/d_shopunity/install/d_shopunity.xml",
+        "system/library/d_shopunity/install/d_shopunity.php",
+        "system/library/d_shopunity/install/d_shopunity.sql",
+        "system/library/d_shopunity/readme/d_shopunity.md",
+        "system/library/d_shopunity/download/index.php",
+        "system/library/d_shopunity/backup/index.php",
+
+        "admin/controller/extension/module/d_shopunity.php",
+        "admin/language/english/extension/module/d_shopunity.php",
+        "admin/view/template/extension/module/d_shopunity.tpl",
+
         "system/library/deploy_bitbucket.php",
         "system/library/deploy_github.php",
         "system/library/shopunity.php",
@@ -64,18 +80,24 @@
         "admin/model/d_shopunity",
 
         "admin/view/template/d_shopunity",
-        "admin/view/javascript/d_shopunity",
-        "admin/view/stylesheet/d_shopunity",
 
         "catalog/controller/d_shopunity",
         "catalog/model/d_shopunity",
 
+        "admin/controller/extension/module/d_shopunity",
+        "admin/language/en-gb/extension/module/d_shopunity",
+        "admin/model/extension/module/d_shopunity",
+
+        "admin/view/template/extension/module/d_shopunity",
+        "admin/view/javascript/d_shopunity",
+        "admin/view/stylesheet/d_shopunity",
+
+        "catalog/controller/extension/module/d_shopunity",
+        "catalog/model/extension/module/d_shopunity",
+
         "system/library/httpful",
         "system/library/semver",
-
         "system/library/hyperlight",
-        "admin/view/stylesheet/shopunity",
-        "admin/view/javascript/shopunity"
     ],
     "changelog": [
         {
