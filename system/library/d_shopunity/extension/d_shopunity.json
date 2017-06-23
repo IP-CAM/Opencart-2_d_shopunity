@@ -42,7 +42,7 @@
     },
     "files": [
         "system/mbooth/extension/d_shopunity.json",
-        
+
         "admin/controller/module/d_shopunity.php",
         "admin/language/english/module/d_shopunity.php",
         "admin/view/template/module/d_shopunity.tpl",
@@ -82,7 +82,10 @@
 
         "system/library/httpful",
         "system/library/semver",
-        "system/library/hyperlight"
+        "system/library/hyperlight",
+
+        "admin/view/stylesheet/shopunity",
+        "admin/view/javascript/shopunity"
     ],
     "changelog": [
         {
