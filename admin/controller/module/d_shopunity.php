@@ -172,7 +172,7 @@ class ControllerModuleDShopunity extends Controller {
 
 	public function install230(){
 		$this->load->model('d_shopunity/ocmod');
-		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_shopunity_oc230_patch');
+		$compatibility = $this->model_d_shopunity_ocmod->getModificationByName('d_opencart_patch');
 		if(VERSION >= '2.3.0.0' && !$compatibility ){
 			$this->install();
 			return true;
