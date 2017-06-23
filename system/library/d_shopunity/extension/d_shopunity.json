@@ -97,7 +97,7 @@
 
         "system/library/httpful",
         "system/library/semver",
-        "system/library/hyperlight",
+        "system/library/hyperlight"
     ],
     "changelog": [
         {
