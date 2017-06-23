@@ -10,10 +10,21 @@ class ModelDShopunityOcmod extends Model {
     */
 
     public function setOcmod($xml, $action = 1){
-        $file =  DIR_SYSTEM.'mbooth/install/'.$xml;
+        //by full path.
+        $file = str_replace("system/", "", DIR_SYSTEM).$xml;
+        if (!file_exists($file)) {
+            $file =  DIR_SYSTEM.'library/d_shopunity/install/'.$xml;
+        }
+
+        //old format - depricated
+        if (!file_exists($file)) {
+            $file =  DIR_SYSTEM.'mbooth/install/'.$xml;
+        }
+
         if (!file_exists($file)) {
             return false;
         }
+        
         $json = array();
         $this->load->model('extension/modification');
         if($action){
@@ -105,7 +116,17 @@ class ModelDShopunityOcmod extends Model {
     }
 
     public function getModificationId($xml){
-        $file =  DIR_SYSTEM.'mbooth/install/'.$xml;
+        //by full path.
+        $file = str_replace("system/", "", DIR_SYSTEM).$xml;
+        if (!file_exists($file)) {
+            $file =  DIR_SYSTEM.'library/d_shopunity/install/'.$xml;
+        }
+
+        //old format - depricated
+        if (!file_exists($file)) {
+            $file =  DIR_SYSTEM.'mbooth/install/'.$xml;
+        }
+
         if (!file_exists($file)) {
             return false;
         }
