@@ -12,7 +12,12 @@ class ModelDShopunityMbooth extends Model {
     public function getExtensions(){
         $result = array();
 
+        //old location - depricated
         $files = glob(DIR_SYSTEM . 'mbooth/extension/*.json');
+
+        //new location
+        $files =  array_merge($files, glob(DIR_SYSTEM . 'library/d_shopunity/extension/*.json'));
+
 
         foreach($files as $file){
             $result[] = $this->_extension(json_decode(file_get_contents($file), true));
@@ -31,6 +36,21 @@ class ModelDShopunityMbooth extends Model {
     public function getExtensionJson($codename){
         $result = array();
 
+        //new location
+        $file = DIR_SYSTEM . 'library/d_shopunity/extension/'.$codename.'.json';
+
+        if(file_exists($file)){
+            return json_decode(file_get_contents($file), true);
+        }else{
+            foreach ($this->subversions as $subversion){
+                $file = DIR_SYSTEM . 'library/d_shopunity/extension/'.$codename.'_'.$subversion.'.json';
+                if (file_exists($file)) {
+                    return json_decode(file_get_contents($file), true);
+                }
+            }
+        }
+        
+        //old location - depricated
         $file = DIR_SYSTEM . 'mbooth/extension/'.$codename.'.json';
 
         if(file_exists($file)){
@@ -48,7 +68,7 @@ class ModelDShopunityMbooth extends Model {
 
     public function downloadExtensionFromServer($download_link){
 
-        $filename = DIR_SYSTEM . 'mbooth/download/extension.zip';
+        $filename = DIR_SYSTEM . 'library/d_shopunity/download/extension.zip';
         $userAgent = 'Googlebot/2.1 (http://www.googlebot.com/bot.html)';
 
         $ch = curl_init();
@@ -74,7 +94,7 @@ class ModelDShopunityMbooth extends Model {
 
      public function extractExtension($filename = false, $location = false) {
         if (!$filename) {
-            $filename = DIR_SYSTEM . 'mbooth/download/extension.zip';
+            $filename = DIR_SYSTEM . 'library/d_shopunity/download/extension.zip';
         }
         if (!$location) {
             $location = dirname($filename);
@@ -190,7 +210,7 @@ class ModelDShopunityMbooth extends Model {
 
     public function installExtension($result) {
         
-        return $this->moveFiles(DIR_SYSTEM . 'mbooth/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+        return $this->moveFiles(DIR_SYSTEM . 'library/d_shopunity/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
     }
 
     
@@ -434,10 +454,11 @@ class ModelDShopunityMbooth extends Model {
 
     public function validateDependencies($codename){
 
-        $extension = json_decode(file_get_contents(DIR_SYSTEM.'mbooth/extension/'.$codename.'.json'), true);
+        $extension =  $this->getExtension($codename);
         if(isset($extension['required'])){
             foreach($extension['required'] as $extension_codename => $version){
-                if(!file_exists(DIR_SYSTEM.'mbooth/extension/'.$extension_codename.'.json')){
+                if(!file_exists(DIR_SYSTEM.'mbooth/extension/'.$extension_codename.'.json')
+                && !file_exists(DIR_SYSTEM.'library/d_shopunity/extension/'.$extension_codename.'.json')){
                     $this->response->redirect($this->url->link('d_shopunity/extension/dependency', 'codename='.$codename.'&token='.$this->session->data['token'], 'SSL'));
                 }
             }
