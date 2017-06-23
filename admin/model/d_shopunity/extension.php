@@ -268,6 +268,10 @@ class ModelDShopunityExtension extends Model {
 
 
     public function isInstalled($codename){
+        if(file_exists(DIR_SYSTEM . 'library/d_shopunity/extension/'.$codename.'.json')){
+            return true;
+        }
+        //old format - depricated
         if(file_exists(DIR_SYSTEM . 'mbooth/extension/'.$codename.'.json')){
             return true;
         }
