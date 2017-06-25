@@ -1,8 +1,12 @@
 <?php 
 //Shopunity API
 //require('Httpful/Bootstrap.php');
+
+namespace d_shopunity;
+
 use \Httpful\Bootstrap;
 use \Httpful\Request;
+
 
 class Api {
 
