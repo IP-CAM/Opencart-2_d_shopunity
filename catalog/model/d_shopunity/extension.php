@@ -1,9 +1,10 @@
 <?php
 /*
  *  location: admin/model
+  DEPRECTED - WILL BE REMOVED IN v3.2.0
  */
 
-class ModelExtensionDShopunityExtension extends Model {
+class ModelDShopunityExtension extends Model {
 
     private $store_id = '';
     private $api = '';

@@ -21,12 +21,12 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 	public function index(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		if(!isset($this->request->get['codename'])){
 			$this->session->data['error'] = $this->language->get('error_extension_not_found');
-			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$this->document->addStyle('view/javascript/d_shopunity/library/codemirror/lib/codemirror.css');
@@ -60,7 +60,7 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 		if($path !== '/'){
 			$path_up = explode('/', ltrim( $path , '/' ));
 			$last_path = array_pop($path_up);
-			$data['path_up'] = $this->url->link('d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$this->request->get['codename'].'&path=/'.implode('/', $path_up), 'SSL');
+			$data['path_up'] = $this->url->link('extension/d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$this->request->get['codename'].'&path=/'.implode('/', $path_up), 'SSL');
 			
 			$build_path = '';
 			foreach($path_up as $folder){
@@ -68,7 +68,7 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 				$build_path .= '/'.$folder;
 				$data['paths'][] = array(
 					'name' => $folder,
-					'url' => $this->url->link('d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$this->request->get['codename'].'&path='.$build_path, 'SSL')
+					'url' => $this->url->link('extension/d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$this->request->get['codename'].'&path='.$build_path, 'SSL')
 				);
 			}
 
@@ -81,13 +81,13 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 
    		$this->load->model('extension/d_shopunity/mbooth');
 
-		$data['home'] = $this->url->link('d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$this->request->get['codename'], 'SSL');
+		$data['home'] = $this->url->link('extension/d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$this->request->get['codename'], 'SSL');
 
 		$data['files'] = $this->createFileStructure($data['files'], $path);
 
-		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+		$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
+   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
@@ -113,7 +113,7 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 				$result[$folders[0]] = array(
 					'name' => $folders[0],
 					'type' => $type,
-					'url' => $this->url->link('d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$this->request->get['codename'].'&path='.$path.'/'.$folders[0], 'SSL')
+					'url' => $this->url->link('extension/d_shopunity/filemanager', 'token='.$this->session->data['token'] . '&codename='.$this->request->get['codename'].'&path='.$path.'/'.$folders[0], 'SSL')
 				);
 			}
 		
@@ -131,12 +131,12 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 
  //   		//is logged in
 	// 	if(!$this->model_extension_d_shopunity_account->isLogged()){
-	// 		$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+	// 		$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 	// 	}
 	// 	//extension id provided
 	// 	if(!isset($this->request->get['extension_id'])){
 	// 		$this->session->data['error'] = $this->language->get('error_extension_not_found');
-	// 		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+	// 		$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
 	// 	}
 
 	// 	$extension_id = $this->request->get['extension_id'];
@@ -151,18 +151,18 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 	// 	$data['extension'] = $this->model_extension_d_shopunity_extension->getExtension($extension_id);
 
 	// 	if(isset($data['extension']['developer'])){
-	// 		$data['developer'] = $this->load->controller('d_shopunity/developer/profile', $data['extension']['developer']);
+	// 		$data['developer'] = $this->load->controller('extension/d_shopunity/developer/profile', $data['extension']['developer']);
 	// 	}else{
 	// 		$data['developer'] = '';
 	// 	}
 		
 	// 	//$extension_recurring_price_id = (isset($data['extension']['price'])) ? $data['extension']['price']['extension_recurring_price_id'] : 0;
 
-	// 	$data['purchase'] = $this->url->link('d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL');
-	// 	$data['install'] = $this->url->link('d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $extension_id , 'SSL');
+	// 	$data['purchase'] = $this->url->link('extension/d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL');
+	// 	$data['install'] = $this->url->link('extension/d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $extension_id , 'SSL');
 
- //   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
- //   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+ //   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+ //   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
 
  //   		$this->response->setOutput($this->load->view($this->route.'_item.tpl', $data));
 	// }
@@ -170,14 +170,14 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 	// public function edit(){
 
 	// 	if(!$this->model_extension_d_shopunity_account->isLogged()){
-	// 		$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+	// 		$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 	// 	}
 
 	// 	if($this->request->get['codename']){
 	// 		$codename = $this->request->get['codename'];
 	// 	}else{
 	// 		$this->session->data['error'] = 'Codename missing. Can not get Dependencies!';
-	// 		$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+	// 		$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
 	// 	}
 
  //   		$this->load->model('extension/d_shopunity/extension');
@@ -202,9 +202,9 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 	// 			);
 	// 	}
 
-	// 	$data['profile'] = $this->load->controller('d_shopunity/account/profile');
- //   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
- //   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+	// 	$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
+ //   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+ //   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
  //   		$data = $this->_productThumb($data);
  //   		$this->response->setOutput($this->load->view($this->route.'_dependency.tpl', $data));
 	// }

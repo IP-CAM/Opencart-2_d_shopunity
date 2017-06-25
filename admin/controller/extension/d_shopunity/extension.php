@@ -47,8 +47,8 @@ class ControllerExtensionDShopunityExtension extends Controller {
 
         $data['load_libraries'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension/load_libraries', 'token='.$this->session->data['token'], 'SSL')); 
 		$data['developer_generate_module'] = $this->load->controller('extension/d_shopunity/developer/generate_module');
-		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
    		$data = $this->_productThumb($data);
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
@@ -88,8 +88,8 @@ class ControllerExtensionDShopunityExtension extends Controller {
 		$data['purchase'] = $this->url->link('extension/d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL');
 		$data['install'] = $this->url->link('extension/d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $extension_id , 'SSL');
 
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
    		$data = $this->_productThumb($data);
    		$this->response->setOutput($this->load->view($this->route.'_item.tpl', $data));
 	}
@@ -989,7 +989,7 @@ class ControllerExtensionDShopunityExtension extends Controller {
 	// 	$json['installed'] = false;
 	// 	if(!isset($this->request->get['extension_id'])){
 	// 		$json['error'] = 'Error! extension_id missing';
-	// 		$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+	// 		$json['redirect'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 	// 	}
 
 	// 	$extension_id = $this->request->get['extension_id'];
@@ -1002,7 +1002,7 @@ class ControllerExtensionDShopunityExtension extends Controller {
 
 	// 		if(!$extension){
 	// 			$json['error'] = 'Error! this extension was not found on shopunity: '.$download['error'];
-	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
+	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
 	// 		}
 
 	// 		if(isset($this->request->get['extension_download_link_id'])){
@@ -1013,27 +1013,27 @@ class ControllerExtensionDShopunityExtension extends Controller {
 
 	// 		if(!empty($download['error']) || empty($download['download'])){
 	// 			$json['error'] = 'Error! We cound not get the download link: '.$download['error'];
-	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
+	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id='.$extension_id , 'SSL'));
 	// 		}
 
 	// 		$error_download = json_decode(file_get_contents($download['download']),true);
 	// 		if(isset($error_download['error'])){
 	// 			$json['error'] = 'Error! getExtensionDownload failed: '.json_encode($error_download['error']);
-	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 	// 		}
 
 	// 		//download the extension to system/mbooth/download
 	// 		$extension_zip = $this->model_extension_d_shopunity_mbooth->downloadExtensionFromServer($download['download']);
 	// 		if(isset($extension_zip['error'])){
 	// 			$json['error'] = 'Error! downloadExtensionFromServer failed: '.json_encode($extension_zip['error']);
-	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 	// 		}
 
 	// 		//unzip the downloaded file to system/mbooth/download and remove the zip file
 	// 		$extracted = $this->model_extension_d_shopunity_mbooth->extractExtension($extension_zip);
 	// 		if(isset($extracted['error'])){
 	// 			$json['error'] = 'Error! extractExtension failed: ' .json_encode($extracted['error']) . ' download from '.$download['download'];
-	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+	// 			$json['redirect'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 	// 		}
 
 	// 		$result = array();
@@ -1057,7 +1057,7 @@ class ControllerExtensionDShopunityExtension extends Controller {
 
 	// 			$json['installed'] = true;
 	// 			$json['text'] = "Extension ".$extension['codename']." has been successfuly installed";
-	// 			$json['view'] = str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
+	// 			$json['view'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension/item', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL'));
 
 	// 			$json['codename'] = $extension['codename'];
 	// 			$data['extension'] = $this->model_extension_d_shopunity_extension->getExtension($extension_id);

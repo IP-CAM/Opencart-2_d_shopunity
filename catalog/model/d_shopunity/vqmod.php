@@ -1,9 +1,10 @@
 <?php
 /*
  *  location: admin/model
+  DEPRECTED - WILL BE REMOVED IN v3.2.0
  */
 
-class ModelExtensionDShopunityVqmod extends Model {
+class ModelDShopunityVqmod extends Model {
 
     /*
     *   Vqmod: turn on or off

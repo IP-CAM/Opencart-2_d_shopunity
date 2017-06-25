@@ -19,7 +19,7 @@ class ControllerExtensionDShopunityMarket extends Controller {
 
 	public function index(){
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		//documentation http://t4t5.github.io/sweetalert/
@@ -65,18 +65,18 @@ class ControllerExtensionDShopunityMarket extends Controller {
 		$filter_data['store_version'] = VERSION;
 		
 		$data['extensions'] = $this->model_extension_d_shopunity_extension->getExtensions($filter_data);
-		$data['categories'] = $this->load->controller('d_shopunity/market/categories'); 
-		$data['search_href'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
+		$data['categories'] = $this->load->controller('extension/d_shopunity/market/categories'); 
+		$data['search_href'] = $this->url->link('extension/d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['all'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
-		$data['commercial'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&commercial=1', 'SSL');
-		$data['free'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&commercial=0', 'SSL');
+		$data['all'] = $this->url->link('extension/d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
+		$data['commercial'] = $this->url->link('extension/d_shopunity/market', 'token=' . $this->session->data['token'].'&commercial=1', 'SSL');
+		$data['free'] = $this->url->link('extension/d_shopunity/market', 'token=' . $this->session->data['token'].'&commercial=0', 'SSL');
 
-		$data['prev'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&'.http_build_query($url).'&page='.($data['page']-1), 'SSL');
-		$data['next'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&'.http_build_query($url).'&page='.($data['page']+1), 'SSL');
+		$data['prev'] = $this->url->link('extension/d_shopunity/market', 'token=' . $this->session->data['token'].'&'.http_build_query($url).'&page='.($data['page']-1), 'SSL');
+		$data['next'] = $this->url->link('extension/d_shopunity/market', 'token=' . $this->session->data['token'].'&'.http_build_query($url).'&page='.($data['page']+1), 'SSL');
 
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
@@ -86,7 +86,7 @@ class ControllerExtensionDShopunityMarket extends Controller {
 
 		$data['categories'] = $this->model_extension_d_shopunity_category->getCategories();
 		foreach($data['categories'] as $key => $category){
-			$data['categories'][$key]['href'] = $this->url->link('d_shopunity/market', 'token=' . $this->session->data['token'].'&category_id='. $category['category_id'], 'SSL');
+			$data['categories'][$key]['href'] = $this->url->link('extension/d_shopunity/market', 'token=' . $this->session->data['token'].'&category_id='. $category['category_id'], 'SSL');
 		}
 
 		return $this->load->view($this->route.'_categories.tpl', $data);

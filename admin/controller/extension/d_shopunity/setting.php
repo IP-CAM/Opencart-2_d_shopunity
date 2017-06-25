@@ -21,7 +21,7 @@ class ControllerExtensionDShopunitySetting extends Controller {
 	public function index(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
    		$this->load->language('extension/d_shopunity/setting');
@@ -37,8 +37,8 @@ class ControllerExtensionDShopunitySetting extends Controller {
         $data['enabled_ssl_url'] = str_replace('&amp;', '&', $this->url->link($this->route.'/enabledSslUrl', 'token=' . $this->session->data['token'], 'SSL'));
 
 
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}

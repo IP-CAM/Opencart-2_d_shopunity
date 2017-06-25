@@ -1,5 +1,5 @@
 <?php
-class ModelDShopunityMbooth extends Model {
+class ModelExtensionDShopunityMbooth extends Model {
     private $dir_root = '';
     private $subversions = array('lite', 'light', 'free');
 

@@ -20,7 +20,7 @@ class ControllerExtensionDShopunityTransaction extends Controller {
 
 	public function index(){
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
    		$this->load->language('extension/d_shopunity/billing');
@@ -31,9 +31,9 @@ class ControllerExtensionDShopunityTransaction extends Controller {
 		$data['tab_invoice'] =  $this->language->get('tab_invoice');
 		$data['tab_transaction'] =  $this->language->get('tab_transaction');
 
-		$data['href_order'] =  $this->url->link('d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
-		$data['href_invoice'] = $this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
-		$data['href_transaction'] = $this->url->link('d_shopunity/transaction', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_order'] =  $this->url->link('extension/d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_invoice'] = $this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_transaction'] = $this->url->link('extension/d_shopunity/transaction', 'token=' . $this->session->data['token'], 'SSL');
 
 		$filter_data = array();
 		$data['page'] = 1;
@@ -43,13 +43,13 @@ class ControllerExtensionDShopunityTransaction extends Controller {
 		}
 
 		$data['transactions'] = $this->model_extension_d_shopunity_billing->getTransactions($filter_data);
-		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
+		$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
 		
-		$data['prev'] = $this->url->link('d_shopunity/transaction', 'token=' . $this->session->data['token'].'&page='.($data['page']-1), 'SSL');
-		$data['next'] = $this->url->link('d_shopunity/transaction', 'token=' . $this->session->data['token'].'&page='.($data['page']+1), 'SSL');
+		$data['prev'] = $this->url->link('extension/d_shopunity/transaction', 'token=' . $this->session->data['token'].'&page='.($data['page']-1), 'SSL');
+		$data['next'] = $this->url->link('extension/d_shopunity/transaction', 'token=' . $this->session->data['token'].'&page='.($data['page']+1), 'SSL');
 
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}

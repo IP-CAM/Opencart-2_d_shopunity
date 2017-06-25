@@ -22,14 +22,14 @@ class ControllerExtensionDShopunityDependency extends Controller {
 	public function index(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		if($this->request->get['codename']){
 			$codename = $this->request->get['codename'];
 		}else{
 			$this->session->data['error'] = 'Codename missing. Can not get Dependencies!';
-			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 
@@ -63,10 +63,10 @@ class ControllerExtensionDShopunityDependency extends Controller {
 				);
 		}
 
-		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
+		$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
 
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}

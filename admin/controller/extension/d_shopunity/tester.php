@@ -21,13 +21,13 @@ class ControllerExtensionDShopunityTester extends Controller {
 	public function index(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$account = $this->config->get('d_shopunity_account');
 
 		if(empty($account['tester'])){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$tester_id = $account['tester']['tester_id'];
@@ -41,37 +41,37 @@ class ControllerExtensionDShopunityTester extends Controller {
    		
 		$data['extensions'] = $this->model_extension_d_shopunity_extension->getTastableExtensions($tester_id);
 
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
-   		$data = $this->load->controller('d_shopunity/extension/_productThumb',$data);
+   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+   		$data = $this->load->controller('extension/d_shopunity/extension/_productThumb',$data);
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
 
 	public function approve(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$account = $this->config->get('d_shopunity_account');
 
 		if(empty($account['tester'])){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		if(!isset($this->request->get['extension_download_link_id'])){
 			$this->session->data['error'] = 'Error! extension_download_link_id missing';
-			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
 
 		if(!isset($this->request->get['extension_id'])){
 			$this->session->data['error'] = 'Error! extension_id missing';
-			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
 
 		if(!isset($this->request->get['status'])){
 			$this->session->data['error'] = 'Error! status missing';
-			$this->response->redirect($this->url->link('d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
 		}
 
 		$tester_id = $account['tester']['tester_id'];
@@ -96,7 +96,7 @@ class ControllerExtensionDShopunityTester extends Controller {
 
 		//refactor
 		if($data['status']){
-			$this->response->redirect($this->url->link('d_shopunity/tester', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/tester', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 		
 	}

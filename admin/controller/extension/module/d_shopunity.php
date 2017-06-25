@@ -47,7 +47,7 @@ class ControllerExtensionModuleDShopunity extends Controller {
 
     public function content_top(){
 
-        $this->load->language('module/d_shopunity');
+        $this->load->language('extension/module/d_shopunity');
 
         //documentation http://t4t5.github.io/sweetalert/
         $this->document->addStyle('view/javascript/d_shopunity/library/sweetalert/sweetalert.css');

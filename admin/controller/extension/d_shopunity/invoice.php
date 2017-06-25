@@ -20,7 +20,7 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 	public function index(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
    		$this->load->language('extension/d_shopunity/billing');
@@ -36,9 +36,9 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 		$data['text_invoice_status_3'] =  $this->language->get('text_invoice_status_3');
 		$data['text_invoice_status_4'] =  $this->language->get('text_invoice_status_4');
 		
-		$data['href_order'] =  $this->url->link('d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
-		$data['href_invoice'] = $this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
-		$data['href_transaction'] = $this->url->link('d_shopunity/transaction', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_order'] =  $this->url->link('extension/d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_invoice'] = $this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_transaction'] = $this->url->link('extension/d_shopunity/transaction', 'token=' . $this->session->data['token'], 'SSL');
 
 		$filter_data = array();
 		$data['page'] = 1;
@@ -47,14 +47,14 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 			$data['page'] = $this->request->get['page'];
 		}
 
-		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
+		$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
 		$data['invoices'] = $this->model_extension_d_shopunity_billing->getInvoices($filter_data);
 	
-		$data['prev'] = $this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'].'&page='.($data['page']-1), 'SSL');
-		$data['next'] = $this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'].'&page='.($data['page']+1), 'SSL');
+		$data['prev'] = $this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'].'&page='.($data['page']-1), 'SSL');
+		$data['next'] = $this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'].'&page='.($data['page']+1), 'SSL');
 
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
@@ -62,13 +62,13 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 	public function item(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		if(!isset($this->request->get['invoice_id'])){
 
 			$this->session->data['error'] = 'Order_id missing!';
-			$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 
 		}
 
@@ -81,15 +81,15 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 		$data['tab_invoice'] =  $this->language->get('tab_invoice');
 		$data['tab_transaction'] =  $this->language->get('tab_transaction');
 		
-		$data['href_order'] =  $this->url->link('d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
-		$data['href_invoice'] = $this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
-		$data['href_transaction'] = $this->url->link('d_shopunity/transaction', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_order'] =  $this->url->link('extension/d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_invoice'] = $this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL');
+		$data['href_transaction'] = $this->url->link('extension/d_shopunity/transaction', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['invoice'] = $this->model_extension_d_shopunity_billing->getInvoice($invoice_id);
-		$data['profile'] = $this->load->controller('d_shopunity/account/profile');
+		$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
 
-   		$data['content_top'] = $this->load->controller('module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'_item.tpl', $data));
 	}
@@ -97,7 +97,7 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 	public function create(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$this->load->model('extension/d_shopunity/billing');
@@ -109,7 +109,7 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 			$this->session->data['success'] = $result['success'];
 		}
 
-		$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 	}
 
     public function popup_pay_invoice(){
@@ -130,7 +130,7 @@ class ControllerExtensionDShopunityInvoice extends Controller {
             $data['account'] = $this->model_extension_d_shopunity_account->getAccount();
 
             $data['add_money'] = 'https://shopunity.net/index.php?route=billing/transaction';
-            $data['claim_external_order'] =  str_replace('&amp;', '&', $this->url->link('d_shopunity/extension/claim_external_order', 'token='.$this->session->data['token'] . '&invoice_id='.$invoice_id, 'SSL')); 
+            $data['claim_external_order'] =  str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension/claim_external_order', 'token='.$this->session->data['token'] . '&invoice_id='.$invoice_id, 'SSL')); 
 
             $json['content'] = $this->load->view($this->route.'_popup_pay.tpl', $data);
         }catch(Exception $e){
@@ -142,13 +142,13 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 	public function pay(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		if(!isset($this->request->get['invoice_id'])){
 
 			$this->session->data['error'] = 'order_id missing!';
-			$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$invoice_id = $this->request->get['invoice_id'];
@@ -167,20 +167,20 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 			$this->session->data['success'] = $invoice['success'];
 		}
 
-		$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 
 	}
 
 	public function refund(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		if(!isset($this->request->get['invoice_id'])){
 
 			$this->session->data['error'] = 'order_id missing!';
-			$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 
 		}
 
@@ -196,20 +196,20 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 			$this->session->data['success'] = $invoice['success'];
 		}
 
-		$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 
 	}
 
 	public function cancel(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		if(!isset($this->request->get['invoice_id'])){
 
 			$this->session->data['error'] = 'order_id missing!';
-			$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 
 		}
 
@@ -225,7 +225,7 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 			$this->session->data['success'] = $invoice['success'];
 		}
 
-		$this->response->redirect($this->url->link('d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'], 'SSL'));
 
 	}
 

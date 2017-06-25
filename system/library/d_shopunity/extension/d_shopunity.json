@@ -1,9 +1,9 @@
 {
     "codename": "d_shopunity",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease",
-    "index": "module/d_shopunity",
+    "index": "extension/4module/d_shopunity",
     "readme": "system/library/d_shopunity/readme/d_shopunity.md",
     "author": {
         "name": "Shopunity",
@@ -42,12 +42,17 @@
     },
     "files": [
         "system/mbooth/extension/d_shopunity.json",
-
         "admin/controller/module/d_shopunity.php",
         "admin/language/english/module/d_shopunity.php",
-        "admin/view/template/module/d_shopunity.tpl",
+
+
+
+        "admin/controller/extension/module/d_shopunity.php",
+        "admin/language/en-gb/extension/module/d_shopunity.php",
 
         "system/library/d_shopunity/api.php",
+        "system/library/d_shopunity/bitbucket.php",
+        "system/library/d_shopunity/github.php",
         "system/library/d_shopunity/extension/d_shopunity.json",
         "system/library/d_shopunity/install/d_shopunity.xml",
         "system/library/d_shopunity/install/d_shopunity.php",
@@ -56,38 +61,38 @@
         "system/library/d_shopunity/download/index.php",
         "system/library/d_shopunity/backup/index.php",
 
-        "system/library/deploy_bitbucket.php",
-        "system/library/deploy_github.php",
-        "system/library/shopunity.php",
         "system/library/modulegenerator.php",
         "system/library/semver.php"
     ],
     "dirs": [
-        "admin/controller/d_shopunity",
-        "admin/language/english/d_shopunity",
-        "admin/model/d_shopunity",
-
-        "admin/view/template/d_shopunity",
-
         "catalog/controller/d_shopunity",
         "catalog/model/d_shopunity",
+        "admin/model/d_shopunity",
+        "admin/view/stylesheet/shopunity",
+        "admin/view/javascript/shopunity",
 
-       
 
-       
+        "admin/controller/extension/d_shopunity",
+        "admin/language/english/extension/d_shopunity",
+        "admin/language/en-gb/extension/d_shopunity",
+        "admin/model/extension/d_shopunity",
+        "admin/view/template/extension/d_shopunity",
+
+        "catalog/controller/extension/d_shopunity",
+        "catalog/model/extension/d_shopunity",
+
         "admin/view/javascript/d_shopunity",
         "admin/view/stylesheet/d_shopunity",
 
-        
-
         "system/library/httpful",
         "system/library/semver",
-        "system/library/hyperlight",
-
-        "admin/view/stylesheet/shopunity",
-        "admin/view/javascript/shopunity"
+        "system/library/hyperlight"
     ],
     "changelog": [
+        {
+            "version":"3.1.1",
+            "change": "1. Code refactored."
+        },
         {
             "version":"3.1.0",
             "change": "1. Added d_shopunity_oc2_patch"
