@@ -214,7 +214,7 @@ class ModelExtensionDShopunityMbooth extends Model {
     }
 
     public function installExtension($result) {
-        if($this->validateFTPConnection()){
+        if($this->validateFTPConnection() && decoct(fileperms(DIR_APPLICATION) & 0777) < 755){
             $result = $this->moveWithFTP();
             $this->deleteFiles(DIR_UPLOAD . 'upload/');
             return $result;
