@@ -121,7 +121,7 @@ class GitHub{
    */
   function unzip_repo(){
     // init zip archive helper
-    $zip = new ZipArchive;
+    $zip = new \ZipArchive;
  
     $res = $zip->open($this->download_name);
     if ($res === TRUE) {
@@ -199,9 +199,9 @@ class GitHub{
  
     $output = array();
  
-    $objects = new RecursiveIteratorIterator(
-      new RecursiveDirectoryIterator($real_src), 
-      RecursiveIteratorIterator::SELF_FIRST);
+    $objects = new \RecursiveIteratorIterator(
+      new \RecursiveDirectoryIterator($real_src), 
+      \RecursiveIteratorIterator::SELF_FIRST);
  
     foreach($objects as $name => $object){
  
@@ -246,9 +246,9 @@ class GitHub{
    * @return void
    */
   private function delete($path) {
-      $objects = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($path), 
-        RecursiveIteratorIterator::CHILD_FIRST);
+      $objects = new \RecursiveIteratorIterator(
+        new \RecursiveDirectoryIterator($path), 
+        \RecursiveIteratorIterator::CHILD_FIRST);
  
       foreach ($objects as $object) {
           if (in_array($object->getBasename(), array('.', '..'))) {
