@@ -53,8 +53,8 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 		$data['prev'] = $this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'].'&page='.($data['page']-1), 'SSL');
 		$data['next'] = $this->url->link('extension/d_shopunity/invoice', 'token=' . $this->session->data['token'].'&page='.($data['page']+1), 'SSL');
 
-   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
@@ -88,8 +88,8 @@ class ControllerExtensionDShopunityInvoice extends Controller {
 		$data['invoice'] = $this->model_extension_d_shopunity_billing->getInvoice($invoice_id);
 		$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
 
-   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'_item.tpl', $data));
 	}

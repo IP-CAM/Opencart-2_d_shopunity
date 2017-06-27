@@ -47,10 +47,10 @@ class ControllerExtensionDShopunityExtension extends Controller {
 
         $data['load_libraries'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension/load_libraries', 'token='.$this->session->data['token'], 'SSL')); 
 		$data['developer_generate_module'] = $this->load->controller('extension/d_shopunity/developer/generate_module');
-		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
    		$data = $this->_productThumb($data);
-   		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
+   		$this->response->setOutput($this->load->view('extension/d_shopunity/extension.tpl', $data));
 	}
 
 	public function item(){
@@ -88,8 +88,8 @@ class ControllerExtensionDShopunityExtension extends Controller {
 		$data['purchase'] = $this->url->link('extension/d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL');
 		$data['install'] = $this->url->link('extension/d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $extension_id , 'SSL');
 
-   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
    		$data = $this->_productThumb($data);
    		$this->response->setOutput($this->load->view($this->route.'_item.tpl', $data));
 	}
@@ -208,8 +208,8 @@ class ControllerExtensionDShopunityExtension extends Controller {
 		}
 
 		$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
-   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
    		$data = $this->_productThumb($data);
    		$this->response->setOutput($this->load->view($this->route.'_dependency.tpl', $data));
 	}

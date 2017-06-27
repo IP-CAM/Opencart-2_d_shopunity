@@ -6,7 +6,7 @@
 <?php echo $content_top; ?>
 <div class="row">
 	<div class="col-md-3">
-		<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+		<?php include(DIR_APPLICATION.'view/template/extension/d_shopunity/extension_thumb.tpl'); ?>
 
 		<?php echo $developer; ?>
 	</div>

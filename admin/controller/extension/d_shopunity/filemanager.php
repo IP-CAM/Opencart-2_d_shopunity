@@ -86,8 +86,8 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 		$data['files'] = $this->createFileStructure($data['files'], $path);
 
 		$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
-   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
@@ -161,8 +161,8 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 	// 	$data['purchase'] = $this->url->link('extension/d_shopunity/extension/purchase', 'token=' . $this->session->data['token'] . '&extension_id=' . $extension_id , 'SSL');
 	// 	$data['install'] = $this->url->link('extension/d_shopunity/extension/install', 'token=' . $this->session->data['token']  . '&extension_id=' . $extension_id , 'SSL');
 
- //   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
- //   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+ //   		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+ //   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
 
  //   		$this->response->setOutput($this->load->view($this->route.'_item.tpl', $data));
 	// }
@@ -203,8 +203,8 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 	// 	}
 
 	// 	$data['profile'] = $this->load->controller('extension/d_shopunity/account/profile');
- //   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
- //   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+ //   		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+ //   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
  //   		$data = $this->_productThumb($data);
  //   		$this->response->setOutput($this->load->view($this->route.'_dependency.tpl', $data));
 	// }

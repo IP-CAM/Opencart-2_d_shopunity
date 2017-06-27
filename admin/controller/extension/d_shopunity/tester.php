@@ -41,8 +41,8 @@ class ControllerExtensionDShopunityTester extends Controller {
    		
 		$data['extensions'] = $this->model_extension_d_shopunity_extension->getTastableExtensions($tester_id);
 
-   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
    		$data = $this->load->controller('extension/d_shopunity/extension/_productThumb',$data);
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}

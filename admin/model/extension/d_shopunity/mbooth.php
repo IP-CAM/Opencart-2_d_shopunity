@@ -214,13 +214,14 @@ class ModelExtensionDShopunityMbooth extends Model {
     }
 
     public function installExtension($result) {
-        if($this->validateFTPConnection() && decoct(fileperms(DIR_APPLICATION) & 0777) < 755){
-            $result = $this->moveWithFTP();
-            $this->deleteFiles(DIR_UPLOAD . 'upload/');
-            return $result;
-        }else{
-            return $this->moveFiles(DIR_UPLOAD . 'upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
-        }
+        // if($this->validateFTPConnection() && decoct(fileperms(DIR_APPLICATION) & 0777) < 755){
+        //     $result = $this->moveWithFTP();
+        //     $this->deleteFiles(DIR_UPLOAD . 'upload/');
+        //     return $result;
+        // }else{
+        //     return $this->moveFiles(DIR_UPLOAD . 'upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+        // }
+        return $this->moveFiles(DIR_UPLOAD . 'upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
     }
 
 
@@ -390,9 +391,9 @@ class ModelExtensionDShopunityMbooth extends Model {
         return $result;
     }
     public function validateFTPConnection(){
-        $connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+        $connection = @ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
         if($connection){
-            $login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
+            $login = @ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
             if($login){
                 ftp_close($connection);
                 return true;

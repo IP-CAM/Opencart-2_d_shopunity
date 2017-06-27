@@ -37,8 +37,8 @@ class ControllerExtensionDShopunitySetting extends Controller {
         $data['enabled_ssl_url'] = str_replace('&amp;', '&', $this->url->link($this->route.'/enabledSslUrl', 'token=' . $this->session->data['token'], 'SSL'));
 
 
-   		$data['content_top'] = $this->load->controller('extension/module/d_shopunity/content_top');
-   		$data['content_bottom'] = $this->load->controller('extension/module/d_shopunity/content_bottom');
+   		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
+   		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
 
    		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
 	}
