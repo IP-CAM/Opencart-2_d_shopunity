@@ -63,7 +63,7 @@
 					<div class="row row-clear" style="max-width:1200px; display:inline-block">
 						<?php foreach($extensions as $extension) { ?>
 							<div class="col-md-3 col-sm-6">
-								<?php include(DIR_APPLICATION.'view/template/d_shopunity/extension_thumb.tpl'); ?>
+								<?php include(DIR_APPLICATION.'view/template/extension/d_shopunity/extension_thumb.tpl'); ?>
 							</div>
 						<?php } ?>
 					</div>
