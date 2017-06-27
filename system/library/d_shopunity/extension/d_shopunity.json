@@ -3,7 +3,7 @@
     "version": "3.1.1",
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease",
-    "index": "extension/module/d_shopunity",
+    "index": "extension/d_shopunity",
     "readme": "system/library/d_shopunity/readme/d_shopunity.md",
     "author": {
         "name": "Shopunity",
