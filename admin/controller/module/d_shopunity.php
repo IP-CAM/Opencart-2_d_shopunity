@@ -2,8 +2,8 @@
 /*
 *  location: admin/controller
 */
-require_once(DIR_APPLICATION.'controller/extension/module/d_shopunity.php');
-class ControllerModuleDShopunity extends ControllerExtensionModuleDShopunity
+require_once(DIR_APPLICATION.'controller/extension/d_shopunity.php');
+class ControllerModuleDShopunity extends ControllerExtensionDShopunity
 {   
     public function __construct($registry)
     {

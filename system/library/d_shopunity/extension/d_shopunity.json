@@ -48,7 +48,7 @@
 
 
 
-        "admin/controller/extension/module/d_shopunity.php",
+        "admin/controller/extension/d_shopunity.php",
         "admin/language/en-gb/extension/module/d_shopunity.php",
 
         "system/library/d_shopunity/api.php",
