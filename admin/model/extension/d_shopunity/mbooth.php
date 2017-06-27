@@ -9,28 +9,28 @@ class ModelExtensionDShopunityMbooth extends Model {
 
     }
 
-	public function getExtensions(){
-		$result = array();
+    public function getExtensions(){
+        $result = array();
 
         //old location - depricated
-		$files = glob(DIR_SYSTEM . 'mbooth/extension/*.json');
+        $files = glob(DIR_SYSTEM . 'mbooth/extension/*.json');
 
         //new location
         $files =  array_merge($files, glob(DIR_SYSTEM . 'library/d_shopunity/extension/*.json'));
 
-		foreach($files as $file){
-			$result[] = $this->_extension(json_decode(file_get_contents($file), true));
-		}
+        foreach($files as $file){
+            $result[] = $this->_extension(json_decode(file_get_contents($file), true));
+        }
 
         return $result;
 
-	}
+    }
 
-	public function getExtension($codename){
+    public function getExtension($codename){
 
         $file = $this->getExtensionJson($codename);
-		return $this->_extension($file);
-	}
+        return $this->_extension($file);
+    }
 
     public function getExtensionJson($codename){
         $result = array();
@@ -66,7 +66,7 @@ class ModelExtensionDShopunityMbooth extends Model {
         return false;
     }
 
-	public function downloadExtensionFromServer($download_link){
+    public function downloadExtensionFromServer($download_link){
 
         //check if it is possible to download
         $error_download = json_decode(file_get_contents($download_link),true);
@@ -74,7 +74,7 @@ class ModelExtensionDShopunityMbooth extends Model {
             throw new Exception('Error! downloadExtensionFromServer failed: '.$error_download['error'].' link: '.htmlspecialchars_decode($download_link));
         }
 
-        $filename = DIR_SYSTEM . 'library/d_shopunity/download/extension.zip';
+        $filename = DIR_UPLOAD . 'extension.zip';
         $userAgent = 'Googlebot/2.1 (http://www.googlebot.com/bot.html)';
 
         $ch = curl_init();
@@ -100,7 +100,7 @@ class ModelExtensionDShopunityMbooth extends Model {
 
      public function extractExtension($filename = false, $location = false) {
         if (!$filename) {
-            $filename = DIR_SYSTEM . 'library/d_shopunity/download/extension.zip';
+            $filename = DIR_UPLOAD . 'extension.zip';
         }
         if (!$location) {
             $location = dirname($filename);
@@ -136,13 +136,12 @@ class ModelExtensionDShopunityMbooth extends Model {
         if(isset($result['error'])){
             throw new Exception('Error! extractExtension failed: filename: '. $filename. ', message: '.json_encode($result['error']));
         }
-
         unlink($filename);
 
         return $result;
     }
 
-	public function downloadExtension($codename){
+    public function downloadExtension($codename){
 
         $mbooth = $this->getExtension($codename);
         if($mbooth){
@@ -169,29 +168,29 @@ class ModelExtensionDShopunityMbooth extends Model {
             //add install.xml file for opencart automatic installer.
             if(isset($mbooth['install'])){
 
-            	if(isset($mbooth['install']['php'])){
-            		if(file_exists($this->dir_root . $mbooth['install']['php'])){
-            			$zip->addFile($this->dir_root . $mbooth['install']['php'], 'install.php');
-            		}
-            	}
+                if(isset($mbooth['install']['php'])){
+                    if(file_exists($this->dir_root . $mbooth['install']['php'])){
+                        $zip->addFile($this->dir_root . $mbooth['install']['php'], 'install.php');
+                    }
+                }
 
-            	if(isset($mbooth['install']['sql'])){
-            		if(file_exists($this->dir_root . $mbooth['install']['sql'])){
-            			$zip->addFile($this->dir_root . $mbooth['install']['sql'], 'install.sql');
-            		}
-            	}
+                if(isset($mbooth['install']['sql'])){
+                    if(file_exists($this->dir_root . $mbooth['install']['sql'])){
+                        $zip->addFile($this->dir_root . $mbooth['install']['sql'], 'install.sql');
+                    }
+                }
 
-            	if(isset($mbooth['install']['xml'])){
-            		if(file_exists($this->dir_root . $mbooth['install']['xml'])){
-            			$zip->addFile($this->dir_root . $mbooth['install']['xml'], 'install.xml');
-            		}
-            	}
+                if(isset($mbooth['install']['xml'])){
+                    if(file_exists($this->dir_root . $mbooth['install']['xml'])){
+                        $zip->addFile($this->dir_root . $mbooth['install']['xml'], 'install.xml');
+                    }
+                }
             }
 
             if(isset($mbooth['readme'])){
-            	if(file_exists($this->dir_root . $mbooth['readme'])){
-        			$zip->addFile($this->dir_root . $mbooth['readme'], 'readme.md');
-        		}
+                if(file_exists($this->dir_root . $mbooth['readme'])){
+                    $zip->addFile($this->dir_root . $mbooth['readme'], 'readme.md');
+                }
             }
 
             $zip->close();
@@ -212,11 +211,16 @@ class ModelExtensionDShopunityMbooth extends Model {
             return false;
         }
 
-	}
+    }
 
     public function installExtension($result) {
-
-        return $this->moveFiles(DIR_SYSTEM . 'library/d_shopunity/download/upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+        if($this->validateFTPConnection()){
+            $result = $this->moveWithFTP();
+            $this->deleteFiles(DIR_UPLOAD . 'upload/');
+            return $result;
+        }else{
+            return $this->moveFiles(DIR_UPLOAD . 'upload/', substr_replace(DIR_SYSTEM, '/', -8), $result);
+        }
     }
 
 
@@ -329,14 +333,14 @@ class ModelExtensionDShopunityMbooth extends Model {
             $result = false;
         }
         return $result;
-	}
+    }
 
-	public function backupExtension($codename){
+    public function backupExtension($codename){
 
 
-	}
+    }
 
-	public function getFiles($dir, &$arr_files) {
+    public function getFiles($dir, &$arr_files) {
 
         if (is_dir($dir)) {
             $handle = opendir($dir);
@@ -355,7 +359,6 @@ class ModelExtensionDShopunityMbooth extends Model {
     }
 
     public function moveFiles($from, $to, $result) {
-
         if(file_exists($from)){
             $files = scandir($from);
 
@@ -366,12 +369,15 @@ class ModelExtensionDShopunityMbooth extends Model {
 
                 if (is_dir($from . $file)) {
                     if (!file_exists($to . $file . '/')) {
-                        mkdir($to . $file . '/', 0777, true);
+                        @mkdir($to . $file . '/', 0777, true);
                     }
                     $result = $this->moveFiles($from . $file . '/', $to . $file . '/', $result);
                 } elseif (rename($from . $file, $to . $file)) {
                     $result['success'][] = str_replace($this->dir_root, '', $to . $file);
                 } else {
+                    if(decoct(fileperms($to) & 0777) < 777){
+                        $result['error'][] = decoct(fileperms($to) & 0777) . ': ' . $to;
+                    }
                     $result['error'][] = str_replace($this->dir_root, '', $to . $file);
                 }
             }
@@ -379,6 +385,111 @@ class ModelExtensionDShopunityMbooth extends Model {
             $this->deleteFiles($from);
         }else{
             $result['error'][] = $from;
+        }
+
+        return $result;
+    }
+    public function validateFTPConnection(){
+        $connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+        if($connection){
+            $login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
+            if($login){
+                ftp_close($connection);
+                return true;
+            }
+        }
+        return false;
+
+    }
+    public function moveWithFTP(){
+        $this->load->language('extension/installer');
+        $result = array();
+        $directory = DIR_UPLOAD . 'upload/';
+        // Connect to the site via FTP
+
+        $files = array();
+        $path = array($directory . '*');
+
+        while (count($path) != 0) {
+            $next = array_shift($path);
+
+            foreach ((array)glob($next) as $file) {
+                if (is_dir($file)) {
+                    $path[] = $file . '/*';
+                }
+
+                $files[] = $file;
+            }
+        }
+
+        $connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+
+        if ($connection) {
+            $login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
+
+            if ($login) {
+                if ($this->config->get('config_ftp_root')) {
+                    $root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
+                } else {
+                    $root = ftp_chdir($connection, '/');
+                }
+
+                if ($root) {
+                    foreach ($files as $file) {
+                        $destination = substr($file, strlen($directory));
+
+                        // Upload everything in the upload directory
+                        // Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
+                        // the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
+                        if (substr($destination, 0, 5) == 'admin') {
+                            $destination = basename(DIR_APPLICATION) . substr($destination, 5);
+                        }
+
+                        if (substr($destination, 0, 7) == 'catalog') {
+                            $destination = basename(DIR_CATALOG) . substr($destination, 7);
+                        }
+
+                        if (substr($destination, 0, 5) == 'image') {
+                            $destination = basename(DIR_IMAGE) . substr($destination, 5);
+                        }
+
+                        if (substr($destination, 0, 6) == 'system') {
+                            $destination = basename(DIR_SYSTEM) . substr($destination, 6);
+                        }
+
+                        if (is_dir($file)) {
+                            $lists = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
+
+                            // Basename all the directories because on some servers they don't return the fulll paths.
+                            $list_data = array();
+
+                            foreach ($lists as $list) {
+                                $list_data[] = basename($list);
+                            }
+
+                            if (!in_array(basename($destination), $list_data)) {
+                                if (!ftp_mkdir($connection, $destination)) {
+                                    $result['error'][] = sprintf($this->language->get('error_ftp_directory'), $destination);
+                                }
+                            }
+                        }
+
+                        if (is_file($file)) {
+                            if (!ftp_put($connection, $destination, $file, FTP_BINARY)) {
+                                $result['error'][] = sprintf($this->language->get('error_ftp_file'), $file);
+                            }
+                        }
+                    }
+                } else {
+                    $result['error'][] = sprintf($this->language->get('error_ftp_root'), $root);
+                }
+            } else {
+                $result['error'][] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
+            }
+
+            ftp_close($connection);
+        } else {
+            $result['error'][] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
         }
 
         return $result;
@@ -392,7 +503,7 @@ class ModelExtensionDShopunityMbooth extends Model {
                     if (filetype($path . "/" . $object) == "dir")
                         $this->delete_dir($path . "/" . $object);
                     else
-                        unlink($path . "/" . $object);
+                        @unlink($path . "/" . $object);
                 }
             }
             reset($objects);
@@ -481,7 +592,7 @@ class ModelExtensionDShopunityMbooth extends Model {
     }
 
     public function validateDependencies($codename){
-		$extension =  $this->getExtension($codename);
+        $extension =  $this->getExtension($codename);
         if(isset($extension['required'])){
             foreach($extension['required'] as $extension_codename => $version){
                 if(!file_exists(DIR_SYSTEM.'mbooth/extension/'.$extension_codename.'.json')
@@ -524,11 +635,11 @@ class ModelExtensionDShopunityMbooth extends Model {
     }
 
 
-	public function _extension($data){
+    public function _extension($data){
 
-		$result = array();
-		if(!empty($data)){
-			$result = $data;
+        $result = array();
+        if(!empty($data)){
+            $result = $data;
             if(isset($data['index'])){
                 if(VERSION < '2.3.0.0' && strpos($result['index'], 'extension/module/') !== false) {
                     $result['index'] = str_replace('extension/module/', "module/", $result['index']);
@@ -575,9 +686,9 @@ class ModelExtensionDShopunityMbooth extends Model {
                 }
             }
 
-		}
-		return $result;
+        }
+        return $result;
 
-	}
+    }
 
 }
