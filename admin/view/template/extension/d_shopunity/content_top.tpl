@@ -35,28 +35,28 @@
 				</div>
 				<div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
 					<ul  class="nav nav-pills">
-						<li <?php if ($route == 'd_shopunity/extension') { ?>class="active" <?php } ?>><a href="<?php echo $href_extension; ?>" >
+						<li <?php if ($route == 'extension/d_shopunity/extension') { ?>class="active" <?php } ?>><a href="<?php echo $href_extension; ?>" >
 							<span class="fa fa-puzzle-piece"></span> 
 							<?php echo $tab_extension; ?>
 						</a></li>
-						<li <?php if ($route == 'd_shopunity/market') { ?>class="active" <?php } ?>><a href="<?php echo $href_market; ?>" >
+						<li <?php if ($route == 'extension/d_shopunity/market') { ?>class="active" <?php } ?>><a href="<?php echo $href_market; ?>" >
 							<span class="fa fa-flask"></span> 
 							<?php echo $tab_market; ?>
 						</a></li>
 						
 						<?php if($developer) {?>
-						<li <?php if ($route == 'd_shopunity/developer') { ?>class="active" <?php } ?>><a href="<?php echo $href_developer; ?>" >
+						<li <?php if ($route == 'extension/d_shopunity/developer') { ?>class="active" <?php } ?>><a href="<?php echo $href_developer; ?>" >
 							<span class="fa fa-code"></span> 
 							<?php echo $tab_developer; ?>
 						</a></li>
 						<?php } ?>
 						<?php if($tester) {?>
-						<li <?php if ($route == 'd_shopunity/tester') { ?>class="active" <?php } ?>><a href="<?php echo $href_tester; ?>" >
+						<li <?php if ($route == 'extension/d_shopunity/tester') { ?>class="active" <?php } ?>><a href="<?php echo $href_tester; ?>" >
 							<span class="fa fa-rocket"></span> 
 							<?php echo $tab_tester; ?>
 						</a></li>
 						<?php } ?>
-						<li <?php if ($route == 'd_shopunity/order' || $route == 'd_shopunity/invoice' || $route == 'd_shopunity/transaction'  ) { ?>class="active" <?php } ?>><a href="<?php echo $href_billing; ?>" >
+						<li <?php if ($route == 'extension/d_shopunity/order' || $route == 'd_shopunity/invoice' || $route == 'd_shopunity/transaction'  ) { ?>class="active" <?php } ?>><a href="<?php echo $href_billing; ?>" >
 							<span class="fa fa-money"></span> 
 							<?php echo $tab_billing; ?>
 						</a></li>
