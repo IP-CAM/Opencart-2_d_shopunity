@@ -1,4 +1,3 @@
-
 <?php
 /*
 *  location: admin/model
