@@ -502,7 +502,7 @@ class ModelExtensionDShopunityMbooth extends Model {
             foreach ($objects as $object) {
                 if ($object != "." && $object != "..") {
                     if (filetype($path . "/" . $object) == "dir")
-                        $this->delete_dir($path . "/" . $object);
+                        $this->deleteFiles($path . "/" . $object);
                     else
                         @unlink($path . "/" . $object);
                 }
@@ -511,7 +511,7 @@ class ModelExtensionDShopunityMbooth extends Model {
             rmdir($path);
         }
     }
-
+    
     public function isDirEmpty($dir) {
         if (!is_readable($dir))
             return true;
