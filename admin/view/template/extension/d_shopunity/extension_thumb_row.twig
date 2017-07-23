@@ -4,7 +4,7 @@
             <a href="{{ extension.url }} ">
                <img class="img-responsive img-rounded m-b" src="{{ extension.processed_images.1.url }} " alt="" />
             </a>
-            {% if extension.downloadable  and  extension.tester_status_id%}
+            {% if extension.downloadable  and  extension.tester_status_id %}
             <p class="m-b m-t text-center">
                 {% if extension.tester_status_id == 0  or  extension.tester_status_id == 3  or  extension.tester_status_id  == 6 %} 
                     <span class="label label-danger">
@@ -75,7 +75,7 @@
             {% if extension.update_available %}
                 <div class="alert alert-info">{{ text_new_version_available }}  {{ extension.version }} </div>
             {% endif %} 
-    </div>
+        </div>
         <div class="col-md-1 col-xs-3">
             {% if extension.developer %} 
                 <a class="developer">
