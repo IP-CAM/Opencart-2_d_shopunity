@@ -16,6 +16,8 @@ class ModelExtensionDShopunityBilling extends Model {
 		$this->api = new d_shopunity\API($registry);
 		$this->store_id = $this->api->getStoreId();
 		$this->dir_root = substr_replace(DIR_SYSTEM, '/', -8);
+        $this->load->model('extension/d_shopunity/setting');
+        $this->url_token = $this->model_extension_d_shopunity_setting->getUrlToken();
 	}
 
 	public function getOrders($filter_data = array()){
@@ -62,9 +64,9 @@ class ModelExtensionDShopunityBilling extends Model {
 			$result = $data;
 			$result['date_added'] = date($this->language->get('date_format_short'), strtotime($data['date_added']));
 			$result['date_next_invoice'] = date($this->language->get('date_format_short'), strtotime($data['date_next_invoice']));
-			// $result['suspend'] = $this->url->link('d_shopunity/order/suspend', 'token='.$this->session->data['token'].'&order_id='.$data['order_id']);
-			// $result['activate'] = $this->url->link('d_shopunity/order/activate', 'token='.$this->session->data['token'].'&order_id='.$data['order_id']);
-			$result['url'] = $this->url->link('extension/d_shopunity/order/item', 'token='.$this->session->data['token'].'&order_id='.$data['order_id']);
+			// $result['suspend'] = $this->url->link('d_shopunity/order/suspend', $this->url_token.'&order_id='.$data['order_id']);
+			// $result['activate'] = $this->url->link('d_shopunity/order/activate', $this->url_token.'&order_id='.$data['order_id']);
+			$result['url'] = $this->url->link('extension/d_shopunity/order/item', $this->url_token.'&order_id='.$data['order_id']);
 			if($result['store_extension']){
 				$this->load->model('extension/d_shopunity/extension');
 				$result['store_extension'] = $this->model_extension_d_shopunity_extension->_extension($result['store_extension']);
@@ -161,11 +163,11 @@ class ModelExtensionDShopunityBilling extends Model {
 		if(!empty($data)){
 			$result = $data;
 			$result['date_added'] = date($this->language->get('date_format_short'), strtotime($data['date_added']));
-			$result['url'] = $this->url->link('extension/d_shopunity/invoice/item', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
-			$result['pay'] = $this->url->link('extension/d_shopunity/invoice/pay', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
-            $result['popup_pay_invoice'] = $this->url->link('extension/d_shopunity/invoice/popup_pay_invoice', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
-			$result['refund'] = $this->url->link('extension/d_shopunity/invoice/refund', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
-			$result['cancel'] = $this->url->link('extension/d_shopunity/invoice/cancel', 'token='.$this->session->data['token'].'&invoice_id='.$data['invoice_id']);
+			$result['url'] = $this->url->link('extension/d_shopunity/invoice/item', $this->url_token.'&invoice_id='.$data['invoice_id']);
+			$result['pay'] = $this->url->link('extension/d_shopunity/invoice/pay', $this->url_token.'&invoice_id='.$data['invoice_id']);
+            $result['popup_pay_invoice'] = $this->url->link('extension/d_shopunity/invoice/popup_pay_invoice', $this->url_token.'&invoice_id='.$data['invoice_id']);
+			$result['refund'] = $this->url->link('extension/d_shopunity/invoice/refund', $this->url_token.'&invoice_id='.$data['invoice_id']);
+			$result['cancel'] = $this->url->link('extension/d_shopunity/invoice/cancel', $this->url_token.'&invoice_id='.$data['invoice_id']);
 
 		}	
 		return $result;

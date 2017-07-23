@@ -14,6 +14,8 @@ class ControllerExtensionDShopunityDependency extends Controller {
 		$this->load->model('extension/d_shopunity/mbooth');
 		$this->load->model('extension/d_shopunity/account');
 		$this->load->model('extension/d_shopunity/extension');
+        $this->load->model('extension/d_shopunity/setting');
+        $this->url_token = $this->model_extension_d_shopunity_setting->getUrlToken();
 
 		$this->extension = $this->model_extension_d_shopunity_mbooth->getExtension($this->codename);
 
@@ -22,14 +24,14 @@ class ControllerExtensionDShopunityDependency extends Controller {
 	public function index(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', $this->url_token, 'SSL'));
 		}
 
 		if($this->request->get['codename']){
 			$codename = $this->request->get['codename'];
 		}else{
 			$this->session->data['error'] = 'Codename missing. Can not get Dependencies!';
-			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL'));
 		}
 
 
@@ -68,6 +70,6 @@ class ControllerExtensionDShopunityDependency extends Controller {
    		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
 
-   		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
+   		$this->response->setOutput($this->load->view($this->route, $data));
 	}
 }

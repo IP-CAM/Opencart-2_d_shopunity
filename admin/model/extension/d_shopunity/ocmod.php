@@ -16,17 +16,12 @@ class ModelExtensionDShopunityOcmod extends Model {
             $file =  DIR_SYSTEM.'library/d_shopunity/install/'.$xml;
         }
 
-        //old format - depricated
-        if (!file_exists($file)) {
-            $file =  DIR_SYSTEM.'mbooth/install/'.$xml;
-        }
-
         if (!file_exists($file)) {
             return false;
         }
         
         $json = array();
-        $this->load->model('extension/modification');
+        $this->load->model('setting/modification');
         if($action){
            
 
@@ -109,7 +104,7 @@ class ModelExtensionDShopunityOcmod extends Model {
         }else{
             $modification_id = $this->getModificationId($xml);
             if($modification_id){
-                $this->model_extension_modification->deleteModification($modification_id);
+                $this->model_setting_modification->deleteModification($modification_id);
             }
         }
         return false;
@@ -164,9 +159,9 @@ class ModelExtensionDShopunityOcmod extends Model {
     }
 
     public function refreshCache(){
-        $this->load->language('extension/modification');
+        $this->load->language('marketplace/modification');
 
-        $this->load->model('extension/modification');
+        $this->load->model('setting/modification');
 
             // Just before files are deleted, if config settings say maintenance mode is off then turn it on
             // $maintenance = $this->config->get('config_maintenance');
@@ -232,7 +227,7 @@ class ModelExtensionDShopunityOcmod extends Model {
             }
 
             // Get the default modification file
-            $results = $this->model_extension_modification->getModifications();
+            $results = $this->model_setting_modification->getModifications();
 
             foreach ($results as $result) {
                 if ($result['status']) {

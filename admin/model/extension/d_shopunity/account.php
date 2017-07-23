@@ -14,6 +14,8 @@ class ModelExtensionDShopunityAccount extends Model {
 		$this->api = new d_shopunity\API($registry);
 		$this->store_id = $this->api->getStoreId();
 		$this->dir_root = substr_replace(DIR_SYSTEM, '/', -8);
+        $this->load->model('extension/d_shopunity/setting');
+        $this->url_token = $this->model_extension_d_shopunity_setting->getUrlToken();
 	}
 
 	public function isLogged(){
@@ -125,7 +127,7 @@ class ModelExtensionDShopunityAccount extends Model {
 
 	//TODO
 	public function getAuthorizeUrl($callback_route){
-		return $this->api->getAuthorizeUrl($this->url->link($callback_route, 'token=' . $this->session->data['token'], 'SSL'));
+		return $this->api->getAuthorizeUrl($this->url->link($callback_route, $this->url_token, 'SSL'));
 	}
 
 	public function getToken($callback_route){
@@ -136,7 +138,7 @@ class ModelExtensionDShopunityAccount extends Model {
 		    	'client_id' => $this->api->getClientId(),
 				'code' => $this->request->get['code'],
 		        'state' => $this->request->get['state'],
-		        'redirect_uri' => urlencode($this->url->link($callback_route, 'token=' . $this->session->data['token'], 'SSL'))
+		        'redirect_uri' => urlencode($this->url->link($callback_route, $this->url_token, 'SSL'))
 			);
 
 			$json = $this->api->post('oauth/token', $resource);

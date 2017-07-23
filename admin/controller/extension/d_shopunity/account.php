@@ -12,8 +12,11 @@ class ControllerExtensionDShopunityAccount extends Controller {
 		parent::__construct($registry);
 		$this->load->model('extension/d_shopunity/mbooth');
 		$this->load->model('extension/d_shopunity/account');
+        $this->load->model('extension/d_shopunity/setting');
+        $this->url_token = $this->model_extension_d_shopunity_setting->getUrlToken();
 
 		$this->extension = $this->model_extension_d_shopunity_mbooth->getExtension($this->codename);
+
 	}
 
 	public function index(){
@@ -23,7 +26,7 @@ class ControllerExtensionDShopunityAccount extends Controller {
 	public function login(){
 
    		if($this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL'));
 		}
 
 		//documentation http://t4t5.github.io/sweetalert/
@@ -44,17 +47,17 @@ class ControllerExtensionDShopunityAccount extends Controller {
 		$data['breadcrumbs'] = array(); 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/home', $this->url_token, 'SSL')
 			);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_module'),
-			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
+			'href'      => $this->url->link('extension/module', $this->url_token, 'SSL')
 			);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link($this->route.'/login', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link($this->route.'/login', $this->url_token, 'SSL')
 			);
 
 
@@ -68,7 +71,30 @@ class ControllerExtensionDShopunityAccount extends Controller {
 			$data['error'] = $this->session->data['error'];
 			unset($this->session->data['error']);
 		}
-		
+
+        if (!extension_loaded('gd')) {
+            $data['warning'] = $this->language->get('error_gd');
+        }
+
+        if (!extension_loaded('curl')) {
+            $data['warning'] = $this->language->get('error_curl');
+        }
+
+        if (!function_exists('openssl_encrypt')) {
+            $data['warning'] = $this->language->get('error_openssl');
+        }
+
+        if (!extension_loaded('zlib')) {
+            $data['warning'] = $this->language->get('error_zlib');
+        }
+
+        if (!extension_loaded('zip')) {
+            $data['warning'] = $this->language->get('error_zip');
+        }
+        
+        if (!function_exists('iconv') && !extension_loaded('mbstring')) {
+            $data['warning'] = $this->language->get('error_mbstring');
+        }
 
    		$this->document->setTitle($this->language->get('heading_title'));
    		$data['heading_title'] = $this->language->get('heading_title');
@@ -96,9 +122,9 @@ class ControllerExtensionDShopunityAccount extends Controller {
 
 		$data['action_connect'] = $this->model_extension_d_shopunity_account->getAuthorizeUrl('extension/d_shopunity/account/callback');
 		if(VERSION >= '2.3.0.0'){	
-			$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+			$data['cancel'] = $this->url->link('extension/extension', $this->url_token . '&type=module', true);
 		}else{
-			$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+			$data['cancel'] = $this->url->link('extension/module', $this->url_token, 'SSL');
 		}
 		
 		$user = $this->model_user_user->getUser($this->user->getId());
@@ -127,7 +153,7 @@ class ControllerExtensionDShopunityAccount extends Controller {
    		$data['column_left'] = $this->load->controller('common/column_left');
    		$data['footer'] = $this->load->controller('common/footer');
 
-   		$this->response->setOutput($this->load->view($this->route.'_login.tpl', $data));
+   		$this->response->setOutput($this->load->view($this->route.'_login', $data));
    	}
 
    	public function callback(){
@@ -137,7 +163,7 @@ class ControllerExtensionDShopunityAccount extends Controller {
 		if ($json) {
 			if(isset($json['access_token'])){
 				$this->model_extension_d_shopunity_account->login($json);
-				$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+				$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL'));
 	
 			}else{
 				$this->session->data['error']   = $this->language->get('error_connection_failed');
@@ -147,7 +173,7 @@ class ControllerExtensionDShopunityAccount extends Controller {
 			$this->session->data['error']   = $this->language->get('error_not_json');
 		}
 			
-		$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('extension/d_shopunity/account/login', $this->url_token, 'SSL'));
 	}
 
 	public function profile(){
@@ -156,11 +182,11 @@ class ControllerExtensionDShopunityAccount extends Controller {
 
 		$data['add_money'] = 'https://shopunity.net/index.php?route=billing/transaction';
 
-		return $this->load->view('extension/d_shopunity/account_profile.tpl', $data);
+		return $this->load->view('extension/d_shopunity/account_profile', $data);
 	}
 
 	public function logout(){
 		$this->model_extension_d_shopunity_account->logout();
-		$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('extension/d_shopunity/account/login', $this->url_token, 'SSL'));
 	}
 }

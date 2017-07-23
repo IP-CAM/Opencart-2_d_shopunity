@@ -14,20 +14,23 @@ class ControllerExtensionDShopunityDeveloper extends Controller {
 		$this->load->model('extension/d_shopunity/mbooth');
 		$this->load->model('extension/d_shopunity/account');
 		$this->load->model('extension/d_shopunity/extension');
+        $this->load->model('extension/d_shopunity/setting');
+        $this->url_token = $this->model_extension_d_shopunity_setting->getUrlToken();
 
 		$this->extension = $this->model_extension_d_shopunity_mbooth->getExtension($this->codename);
+
 	}
 
 	public function index(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', $this->url_token, 'SSL'));
 		}
 
 		$account = $this->config->get('d_shopunity_account');
 
 		if(empty($account['developer'])){
-			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', $this->url_token, 'SSL'));
 		}
 
 		$this->document->addScript('view/javascript/d_shopunity/library/list/list.min.js');
@@ -44,7 +47,7 @@ class ControllerExtensionDShopunityDeveloper extends Controller {
    		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
    		$data = $this->load->controller('extension/d_shopunity/extension/_productThumb',$data);
-   		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
+   		$this->response->setOutput($this->load->view($this->route, $data));
 	}
 
 	/**
@@ -53,12 +56,12 @@ class ControllerExtensionDShopunityDeveloper extends Controller {
 	public function update(){
 		if(!isset($this->request->get['extension_id'])){
 			$this->session->data['error'] = 'Error! extension_id missing';
-			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token , 'SSL'));
 		}
 
 		if(!isset($this->request->get['developer_id'])){
 			$this->session->data['error'] = 'Error! developer_id missing';
-			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token , 'SSL'));
 		}
 		$json = array();
 		try{
@@ -83,7 +86,7 @@ class ControllerExtensionDShopunityDeveloper extends Controller {
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
 		$data['developer'] = $developer;
 
-		return $this->load->view($this->route.'_profile.tpl', $data);
+		return $this->load->view($this->route.'_profile', $data);
 	}
 
 	public function generate_module(){
@@ -93,9 +96,9 @@ class ControllerExtensionDShopunityDeveloper extends Controller {
 			$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
 			$this->load->model('extension/d_shopunity/mbooth');
 			$data['extensions'] = $this->model_extension_d_shopunity_mbooth->getExtensions();
-			$data['action'] = $this->url->link('extension/d_shopunity/developer/generate', 'token=' . $this->session->data['token'], 'SSL');
+			$data['action'] = $this->url->link('extension/d_shopunity/developer/generate', $this->url_token, 'SSL');
 
-			return $this->load->view($this->route.'_generate_module.tpl', $data);
+			return $this->load->view($this->route.'_generate_module', $data);
 		}
 		return false;
   }
@@ -103,12 +106,12 @@ class ControllerExtensionDShopunityDeveloper extends Controller {
 	public function generate(){
 		if(!isset($this->request->post['codename'])){
 			$this->session->data['error'] = 'Error! codename missing';
-			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL'));
 		}
 
 		if(!isset($this->request->post['template_codename'])){
 			$this->session->data['error'] = 'Error! template_codename missing';
-			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL'));
 		}
 		$codename = $this->request->post['codename'];
 		$template_codename = $this->request->post['template_codename'];
@@ -117,18 +120,18 @@ class ControllerExtensionDShopunityDeveloper extends Controller {
 		$template_extension = $this->model_extension_d_shopunity_mbooth->getExtension($template_codename);
 		if(!$template_extension){
 			$this->session->data['error'] = 'Error! '. $template_codename .' does not exist';
-			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token , 'SSL'));
 		}
 
 		$extension = $this->model_extension_d_shopunity_mbooth->getExtension($codename);
 		if($extension){
 			$this->session->data['error'] = 'Error! '. $codename.' already exists';
-			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token , 'SSL'));
 		}
 
 		if(!$template_extension['files']){
 			$this->session->data['error'] = 'Error! '. $template_codename.' has no files';
-			$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token , 'SSL'));
 		}
 
 		$files = $template_extension['files'];
@@ -148,6 +151,6 @@ class ControllerExtensionDShopunityDeveloper extends Controller {
 			$this->session->data['error'] = 'Error!'.' Sorry, there was an error with these files: ' . json_encode($modelgen->error);
 		}
 
-		$this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'] , 'SSL'));
+		$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL'));
 	}
 }

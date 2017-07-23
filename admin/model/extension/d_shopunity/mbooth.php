@@ -12,11 +12,7 @@ class ModelExtensionDShopunityMbooth extends Model {
     public function getExtensions(){
         $result = array();
 
-        //old location - depricated
-        $files = glob(DIR_SYSTEM . 'mbooth/extension/*.json');
-
-        //new location
-        $files =  array_merge($files, glob(DIR_SYSTEM . 'library/d_shopunity/extension/*.json'));
+        $files = glob(DIR_SYSTEM . 'library/d_shopunity/extension/*.json');
 
         foreach($files as $file){
             $result[] = $this->_extension(json_decode(file_get_contents($file), true));

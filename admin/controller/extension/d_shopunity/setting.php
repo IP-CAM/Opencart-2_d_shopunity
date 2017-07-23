@@ -14,6 +14,8 @@ class ControllerExtensionDShopunitySetting extends Controller {
 		$this->load->model('extension/d_shopunity/mbooth');
 		$this->load->model('extension/d_shopunity/account');
 		$this->load->model('extension/d_shopunity/extension');
+        $this->load->model('extension/d_shopunity/setting');
+        $this->url_token = $this->model_extension_d_shopunity_setting->getUrlToken();
 
 		$this->extension = $this->model_extension_d_shopunity_mbooth->getExtension($this->codename);
 	}
@@ -21,7 +23,7 @@ class ControllerExtensionDShopunitySetting extends Controller {
 	public function index(){
 
 		if(!$this->model_extension_d_shopunity_account->isLogged()){
-			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/d_shopunity/account/login', $this->url_token, 'SSL'));
 		}
 
    		$this->load->language('extension/d_shopunity/setting');
@@ -30,17 +32,17 @@ class ControllerExtensionDShopunitySetting extends Controller {
    		//update
         $data['entry_update'] = sprintf($this->language->get('entry_update'), $data['version']);
         $data['button_update'] = $this->language->get('button_update');
-        $data['update'] = str_replace('&amp;', '&', $this->url->link($this->route.'/getUpdate', 'token=' . $this->session->data['token'], 'SSL'));
+        $data['update'] = str_replace('&amp;', '&', $this->url->link($this->route.'/getUpdate', $this->url_token, 'SSL'));
         $data['entry_install_demo_data'] = $this->language->get('entry_install_demo_data');
         $data['button_install_demo_data'] = $this->language->get('button_install_demo_data');
-        $data['install_demo_data'] = str_replace('&amp;', '&', $this->url->link($this->route.'/installDemoData', 'token=' . $this->session->data['token'], 'SSL'));
-        $data['enabled_ssl_url'] = str_replace('&amp;', '&', $this->url->link($this->route.'/enabledSslUrl', 'token=' . $this->session->data['token'], 'SSL'));
+        $data['install_demo_data'] = str_replace('&amp;', '&', $this->url->link($this->route.'/installDemoData', $this->url_token, 'SSL'));
+        $data['enabled_ssl_url'] = str_replace('&amp;', '&', $this->url->link($this->route.'/enabledSslUrl', $this->url_token, 'SSL'));
 
 
    		$data['content_top'] = $this->load->controller('extension/d_shopunity/content_top');
    		$data['content_bottom'] = $this->load->controller('extension/d_shopunity/content_bottom');
 
-   		$this->response->setOutput($this->load->view($this->route.'.tpl', $data));
+   		$this->response->setOutput($this->load->view($this->route, $data));
 	}
 
 	/*

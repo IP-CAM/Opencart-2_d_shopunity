@@ -1,4 +1,5 @@
 $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
 d_shopunity = {
 
     setting: {
@@ -177,13 +178,14 @@ d_shopunity = {
         var codename = $node.data('codename');
         var $log = $('#extension_popup_'+codename+' .log');
         var $popup = $('#extension_popup_'+codename);
-
+        
         $popup
             .find('.text-start').addClass('hide').parent()
             .find('.text-process').removeClass('hide');
         
         if (!!window.EventSource) {
             var source = new EventSource( $node.data('href'));
+            console.log('source');
         }
 
         //listen to message

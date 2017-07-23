@@ -10,6 +10,7 @@ class ControllerExtensionDShopunity extends Controller {
     private $route = 'extension/d_shopunity';
     private $extension = array();
     private $store_id = 0;
+    private $url_token = '';
     //private $config_file = '';
 
     public function __construct($registry) {
@@ -27,8 +28,9 @@ class ControllerExtensionDShopunity extends Controller {
             $this->store_id = $this->request->get['store_id']; 
         }
         
-        //Config File (example: d_shopunity)
-        //$this->config_file = $this->model_extension_d_shopunity_config->getConfigFile($this->codename);
+        //token
+        $this->load->model('extension/d_shopunity/setting');
+        $this->url_token = $this->model_extension_d_shopunity_setting->getUrlToken();
 
         //Check if all dependencies are installed
         $this->model_extension_d_shopunity_mbooth->installDependencies($this->codename);
@@ -39,10 +41,10 @@ class ControllerExtensionDShopunity extends Controller {
             if($this->install230()){
                 return true;
             }
-            $this->response->redirect($this->url->link('extension/d_shopunity/account/login', 'token=' . $this->session->data['token'], 'SSL'));
+            $this->response->redirect($this->url->link('extension/d_shopunity/account/login', $this->url_token, 'SSL'));
         }
 
-        $this->response->redirect($this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL'));
+        $this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL'));
     }
 
     public function content_top(){
@@ -64,17 +66,17 @@ class ControllerExtensionDShopunity extends Controller {
         $data['breadcrumbs'] = array(); 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+            'href' => $this->url->link('common/home', $this->url_token, 'SSL')
             );
 
         $data['breadcrumbs'][] = array(
             'text'      => $this->language->get('text_module'),
-            'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
+            'href'      => $this->url->link('extension/module', $this->url_token, 'SSL')
             );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title_main'),
-            'href' => $this->url->link($this->route, 'token=' . $this->session->data['token'], 'SSL')
+            'href' => $this->url->link($this->route, $this->url_token, 'SSL')
             );
 
         if(!empty($this->session->data['error'])){
@@ -104,21 +106,21 @@ class ControllerExtensionDShopunity extends Controller {
         $data['tab_tester'] =  $this->language->get('tab_tester');
         $data['tab_developer'] =  $this->language->get('tab_developer');
 
-        $data['href_extension'] =  $this->url->link('extension/d_shopunity/extension', 'token=' . $this->session->data['token'], 'SSL');
-        $data['href_market'] =  $this->url->link('extension/d_shopunity/market', 'token=' . $this->session->data['token'], 'SSL');
-        $data['href_billing'] =  $this->url->link('extension/d_shopunity/order', 'token=' . $this->session->data['token'], 'SSL');
-        $data['href_backup'] = $this->url->link('extension/d_shopunity/backup', 'token=' . $this->session->data['token'], 'SSL');
-        $data['href_setting'] = $this->url->link('extension/d_shopunity/setting', 'token=' . $this->session->data['token'], 'SSL');
-        $data['href_tester'] = $this->url->link('extension/d_shopunity/tester', 'token=' . $this->session->data['token'], 'SSL');
-        $data['href_developer'] = $this->url->link('extension/d_shopunity/developer', 'token=' . $this->session->data['token'], 'SSL');
+        $data['href_extension'] =  $this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL');
+        $data['href_market'] =  $this->url->link('extension/d_shopunity/market', $this->url_token, 'SSL');
+        $data['href_billing'] =  $this->url->link('extension/d_shopunity/order', $this->url_token, 'SSL');
+        $data['href_backup'] = $this->url->link('extension/d_shopunity/backup', $this->url_token, 'SSL');
+        $data['href_setting'] = $this->url->link('extension/d_shopunity/setting', $this->url_token, 'SSL');
+        $data['href_tester'] = $this->url->link('extension/d_shopunity/tester', $this->url_token, 'SSL');
+        $data['href_developer'] = $this->url->link('extension/d_shopunity/developer', $this->url_token, 'SSL');
 
         $data['button_logout'] =  $this->language->get('button_logout');
-        $data['logout'] = $this->url->link('extension/d_shopunity/account/logout', 'token=' . $this->session->data['token'], 'SSL');
+        $data['logout'] = $this->url->link('extension/d_shopunity/account/logout', $this->url_token, 'SSL');
         $data['button_cancel'] = $this->language->get('button_cancel');
         if(VERSION >= '2.3.0.0'){   
-            $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
+            $data['cancel'] = $this->url->link('extension/extension', $this->url_token . '&type=module', true);
         }else{
-            $data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+            $data['cancel'] = $this->url->link('extension/module', $this->url_token, 'SSL');
         }
         $account = $this->config->get('d_shopunity_account');
 
@@ -133,15 +135,15 @@ class ControllerExtensionDShopunity extends Controller {
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
 
-        return $this->load->view('extension/d_shopunity/content_top.tpl', $data);
+        return $this->load->view('extension/d_shopunity/content_top', $data);
     }
 
     public function content_bottom(){
 
-        $data['purchase_url'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension/purchase', 'token='.$this->session->data['token'], 'SSL')); 
+        $data['purchase_url'] = str_replace('&amp;', '&', $this->url->link('extension/d_shopunity/extension/purchase', $this->url_token, 'SSL')); 
 
         $data['footer'] = $this->load->controller('common/footer');
-        return $this->load->view('extension/d_shopunity/content_bottom.tpl', $data);
+        return $this->load->view('extension/d_shopunity/content_bottom', $data);
     }
 
 
@@ -163,7 +165,7 @@ class ControllerExtensionDShopunity extends Controller {
     public function install230(){
         $this->load->model('extension/d_shopunity/ocmod');
         $compatibility = $this->model_extension_d_shopunity_ocmod->getModificationByName('d_opencart_patch');
-        if(VERSION >= '2.3.0.0' && !$compatibility ){
+        if(VERSION >= '2.3.0.0' && VERSION < '3.0.0.0' && !$compatibility ){
             $this->install();
             return true;
         }
