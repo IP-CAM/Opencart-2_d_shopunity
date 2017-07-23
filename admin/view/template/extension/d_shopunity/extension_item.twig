@@ -134,7 +134,7 @@
         <div class="col-md-9">
             <div class="ibox">
                 <div class="ibox-content">
-                    {% ifextension.downloadable  and  extension.tester_comment%} 
+                    {% if extension.downloadable  and  extension.tester_comment %} 
                         <div class="alert alert-info">{{ extension.tester_comment }} </div>
                     {% endif %} 
                     <div class="description">{{ extension.description|raw }} </div>
