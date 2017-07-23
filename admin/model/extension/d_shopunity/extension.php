@@ -305,6 +305,8 @@ class ModelExtensionDShopunityExtension extends Model {
                     }
                 }
             }
+
+            $result['description'] = html_entity_decode($data['description']);
             $result['registered'] = true;
             $result['installed'] = $this->isInstalled($data['codename']);
             $result['admin'] = false;
