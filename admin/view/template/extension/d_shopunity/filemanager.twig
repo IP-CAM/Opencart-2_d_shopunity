@@ -8,7 +8,7 @@
             <li class="list-group-item list-group-item-info">Upload folder</li>
         {% endif %}
         {% for file in files %}
-            <li class="list-group-item"><a href="{{ file.url }} "><i class="fa {% if file.type  == 'file %} fa-file-text-o {% else %} fa-folder-o {% endif %} '  "></i>   {{ file.name }} </a></li>
+            <li class="list-group-item"><a href="{{ file.url }} "><i class="fa {% if file.type  == 'file' %} fa-file-text-o {% else %} fa-folder-o {% endif %}"></i>   {{ file.name }} </a></li>
         {% endfor %} 
         </u>
 
