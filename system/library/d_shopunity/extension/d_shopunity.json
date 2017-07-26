@@ -19,9 +19,10 @@
         "2.1.0.1",
         "2.1.0.2",
         "2.2.0.0",
+        "2.3.0.0",
+        "2.3.0.1",
         "2.3.0.2"
     ],
-    "mbooth_version": "^4.0.0",
     "type": "module",
     "license": {
         "type": "free",
@@ -45,8 +46,6 @@
         "admin/controller/module/d_shopunity.php",
         "admin/language/english/module/d_shopunity.php",
         "admin/language/english/extension/module/d_shopunity.php",
-
-
 
         "admin/controller/extension/d_shopunity.php",
         "admin/language/en-gb/extension/module/d_shopunity.php",
