@@ -31,10 +31,10 @@
                 </small></h2>
             </div>
             <div class="ibox-content">
-                {% if file_type  is not 'dir' %} 
-                    <textarea id="code">{{ file_content }} </textarea>
-                {% else %}  
+                {% if file_type == 'dir' %} 
                     <div class="alert alert-info">This is a folder</div>
+                {% else %}  
+                    <textarea id="code">{{ file_content }} </textarea>
                 {% endif %}
             </div>
         </div>
