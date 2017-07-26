@@ -50,12 +50,16 @@ class ControllerExtensionDShopunityFilemanager extends Controller {
 		}
 
 		$data['file_content'] = false;
-		$data['file_type'] = 'dir';
-		$file = substr_replace(DIR_SYSTEM, '/', -8) . '/' . ltrim( $path , '/' );
-		if(file_exists($file)){
-			$data['file_content'] = file_get_contents($file, true);
-			$data['file_type'] = filetype($file);
-		}
+        $data['file_type'] = 'dir';
+        $file = substr_replace(DIR_SYSTEM, '/', -8) . '/' . ltrim( $path , '/' );
+        if(file_exists($file)){
+            if (filetype($file) == 'file') {
+                $data['file_content'] = file_get_contents($file, true);
+            } else {
+                $data['file_content'] = '';
+            }
+        $data['file_type'] = filetype($file);
+        }
 
 		$data['path_up'] = false;
 		$data['paths'] = array();
