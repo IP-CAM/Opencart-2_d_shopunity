@@ -4,9 +4,9 @@
         <ul class="list-group">
         {% if path_up %} 
             <li class="list-group-item list-group-item-info"><a href="{{ path_up }} "><i class="fa fa-long-arrow-left"></i> Back</a></li>
-        {% endif %}{% else %}  
+        {% else %}  
             <li class="list-group-item list-group-item-info">Upload folder</li>
-         
+        {% endif %}
         {% for file in files %}
             <li class="list-group-item"><a href="{{ file.url }} "><i class="fa {{ file.type  is  'file' ? 'fa-file-text-o' : }} 'fa-folder-o'  "></i>   {{ file.name }} </a></li>
         {% endfor %} 
