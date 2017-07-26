@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "4.0.2",
+    "version": "4.0.3",
     "name": "Shopunity Extension manager",
     "description": "Allows you to connect his opencart store to shopunity network and purchase modules with ease",
     "index": "extension/d_shopunity",
@@ -30,6 +30,9 @@
     "support": {
         "email": "support@shopunity.com",
         "url": "https://shopunity.net/"
+    },
+    "required":{
+        "d_opencart_patch": ">=1.0.0"
     },
     "files": [
         "system/library/d_shopunity/extension/d_shopunity.json",
@@ -73,6 +76,10 @@
         "system/library/hyperlight"
     ],
     "changelog": [
+        {
+            "version":"4.0.3",
+            "change": "Added d_opencart_patch as dependency."
+        },
         {
             "version":"4.0.2",
             "change": "Hotfix. twig error."
