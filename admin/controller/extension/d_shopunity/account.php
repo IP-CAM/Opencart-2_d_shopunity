@@ -57,7 +57,17 @@ class ControllerExtensionDShopunityAccount extends Controller {
 			'href' => $this->url->link($this->route.'/login', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
+        if (!extension_loaded('curl')) {
+            $data['error'] = $this->language->get('error_curl');
+        }
 
+        if (!extension_loaded('zlib')) {
+            $data['error'] = $this->language->get('error_zlib');
+        }
+
+        if (!extension_loaded('zip')) {
+            $data['error'] = $this->language->get('error_zip');
+        }
 
 		// Notification
 		if(!empty($this->session->data['success'])){

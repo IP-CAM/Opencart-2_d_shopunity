@@ -311,6 +311,7 @@ class ModelExtensionDShopunityExtension extends Model {
             $result['current_version'] = $result['version'];
 
             if($result['installed']){
+                $this->load->model('extension/d_shopunity/mbooth');
                 $mbooth = $this->model_extension_d_shopunity_mbooth->getExtension($data['codename']);
 
                 try{

@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "3.1.1",
+    "version": "3.1.2",
     "name": "Shopunity Extension manager",
     "description": "Allows the user to connect his opencart store to shopunity network and purchase modules with ease",
     "index": "extension/d_shopunity",
@@ -12,7 +12,7 @@
     },
     "opencart_version": [
         "2.0.0.0",
-        "2.0.1.1",
+        "2.0.1.0",
         "2.0.1.1",
         "2.0.2.0",
         "2.0.3.1",
@@ -90,6 +90,10 @@
         "system/library/hyperlight"
     ],
     "changelog": [
+        {
+            "version":"3.1.2",
+            "change": "1. Added modification install/uninstall."
+        },
         {
             "version":"3.1.1",
             "change": "1. Code refactored."
