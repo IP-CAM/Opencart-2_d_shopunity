@@ -163,6 +163,10 @@ class ModelExtensionDShopunityOcmod extends Model {
 
         $this->load->model('setting/modification');
 
+        //remove conflict with third-pary extensions;
+        if(file_exists(DIR_MODIFICATION.'admin/controller/extension/modification.php')){
+            unlink(DIR_MODIFICATION.'admin/controller/extension/modification.php');
+        }
             // Just before files are deleted, if config settings say maintenance mode is off then turn it on
             // $maintenance = $this->config->get('config_maintenance');
 
