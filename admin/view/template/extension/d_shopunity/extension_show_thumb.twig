@@ -3,10 +3,10 @@
 <head>
 
     {% for style in styles %} 
-    <link type="text/css" href="{{ style.href }} " rel="{{ style.rel }} " media="{{ style.media }} " />
+    <link type="text/css" href="{{ style.href }}" rel="{{ style.rel }}" media="{{ style.media }}" />
     {% endfor %} 
     {% for script in scripts %} 
-    <script type="text/javascript" src="{{ script }} "></script>
+    <script type="text/javascript" src="{{ script }}"></script>
     {% endfor %} 
     <style>
         .extension-show-thumb{
@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="extension-show-thumb">
-    {{ extension }} 
+    {{ extension }}
     {% include 'extension/d_shopunity/purchase_modal.twig' %}
 </div>
 <script type="text/javascript">

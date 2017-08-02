@@ -1,25 +1,25 @@
-{{ content_top }} 
+{{ content_top }}
 <div class="row">
     <div class="col-md-3">
         {% include 'extension/d_shopunity/extension_thumb.twig' with extension %}
 
-        {{ developer }} 
+        {{ developer }}
     </div>
     <div class="col-md-9">
         <div class="ibox">
 
             <div class="ibox-title">
-                <h2><strong>#{{ order.order_id }} </strong>: {{ order.name }} </h2>
+                <h2><strong>#{{ order.order_id }}</strong>: {{ order.name }}</h2>
             </div>
             <div class="ibox-content">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tab_history" data-toggle="tab">
                         <span class="fa fa-user"></span> 
-                        {{ tab_history }} 
+                        {{ tab_history }}
                     </a></li>
                     <li><a href="#tab_invoice" data-toggle="tab">
                         <span class="fa fa-user"></span> 
-                        {{ tab_invoice }} 
+                        {{ tab_invoice }}
                     </a></li>
                 </ul>
                 <div class="tab-content">
@@ -104,8 +104,8 @@
                                         {{ invoice.invoice_status_id }}
                                     </td>
                                     <td>
-                                        {{ invoice_order.recurring_price }} 
-                                        ({{ invoice.total_format }} )
+                                        {{ invoice_order.recurring_price }}
+                                        ({{ invoice.total_format }})
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -118,4 +118,4 @@
         </div>
     </div>
 </div>
-{{ content_bottom }} 
+{{ content_bottom }}

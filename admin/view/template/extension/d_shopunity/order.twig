@@ -1,7 +1,7 @@
-{{ content_top }} 
+{{ content_top }}
 <div class="row">
     <div class="col-md-3">
-        {{ profile }} 
+        {{ profile }}
     </div>
     <div class="col-md-9">
         
@@ -9,25 +9,25 @@
 
             <div class="ibox-title">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="{{ href_order }} " >
+                    <li class="active"><a href="{{ href_order }}" >
                         <span class="fa fa-user"></span> 
-                        {{ tab_order }} 
+                        {{ tab_order }}
                     </a></li>
-                    <li><a href="{{ href_invoice }} " >
+                    <li><a href="{{ href_invoice }}" >
                         <span class="fa fa-user"></span> 
-                        {{ tab_invoice }} 
+                        {{ tab_invoice }}
                     </a></li>
-                    <li><a href="{{ href_transaction }} " >
+                    <li><a href="{{ href_transaction }}" >
                         <span class="fa fa-user"></span> 
-                        {{ tab_transaction }} 
+                        {{ tab_transaction }}
                     </a></li>
                 </ul>
                 <h2>Orders</h2>
                 <p>These are the purchases for the current shop. You may have more purchases for other shops. To view them, visit your account.</p>
                 {% if orders_overdue.count %} 
-                <div>You have {{ orders_overdue.count }}  orders overdue with a total of {{ orders_overdue.total_format }}  </div>
+                <div>You have {{ orders_overdue.count }} orders overdue with a total of {{ orders_overdue.total_format }} </div>
                     <br/>
-                    <a href="{{ create_invoice }} " class="btn btn-primary">Create Invoice</a>
+                    <a href="{{ create_invoice }}" class="btn btn-primary">Create Invoice</a>
                 {% endif %} 
             </div>
             <div class="ibox-content">
@@ -50,15 +50,15 @@
                             </td>
                             <td>
                                 <div class="img-sm">
-                                    <img src="{{ order.store_extension.processed_images.0.url }} " class="img-responsive img-rounded" />
+                                    <img src="{{ order.store_extension.processed_images.0.url }}" class="img-responsive img-rounded" />
                                 </div>
                             </td>
                             <td>
-                                <a  href="{{ order.url }} " >
+                                <a  href="{{ order.url }}" >
                                     <div class="h4 name">{{ order.name }}</div>
                                 </a>
                                  {% if order.order_active %} 
-                                    <p class="description">Payment due on {{ order.date_next_invoice }} : {{ order.store_extension.store_extension.recurring_price_format }} </p>
+                                    <p class="description">Payment due on {{ order.date_next_invoice }}: {{ order.store_extension.store_extension.recurring_price_format }}</p>
                                     {% if order.order_invoiced  and  not order.order_paid %} 
                                         <div class="alert alert-danger">Payment is overdue. Please pay the invoice</div>
                                     {% endif %} 
@@ -93,14 +93,14 @@
                 {% endif %}
                 <div class="clearfix">
                     {% if page == 1 %}
-                    <a class="btn btn-default" href="{{ prev }} "><span class="fa fa-chevron-left"></span> Prev</a>
+                    <a class="btn btn-default" href="{{ prev }}"><span class="fa fa-chevron-left"></span> Prev</a>
                     {% endif %} 
                     {% if orders %} 
-                    <a class="btn btn-default pull-right" href="{{ next }} ">Next <span class="fa fa-chevron-right"></span></a>
+                    <a class="btn btn-default pull-right" href="{{ next }}">Next <span class="fa fa-chevron-right"></span></a>
                     {% endif %} 
                 </div>
             </div>
         </div>
     </div>
 </div>
-{{ content_bottom }} 
+{{ content_bottom }}

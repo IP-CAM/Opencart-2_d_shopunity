@@ -1,13 +1,13 @@
-{{ content_top }} 
+{{ content_top }}
 <div class="row">
     <div class="col-md-3">
         <ul class="list-group">
  
-            <li class="list-group-item"><a href="{{ all }} "><h4>All</h4><small>All extensions</small></a></li>
-            <li class="list-group-item"><a href="{{ commercial }} "><h4>Commercial</h4><small>List of commercial extensions</small></a></li>
-            <li class="list-group-item"><a href="{{ free }} "><h4>Free</h4><small>List of free extensions</small></a></li>
+            <li class="list-group-item"><a href="{{ all }}"><h4>All</h4><small>All extensions</small></a></li>
+            <li class="list-group-item"><a href="{{ commercial }}"><h4>Commercial</h4><small>List of commercial extensions</small></a></li>
+            <li class="list-group-item"><a href="{{ free }}"><h4>Free</h4><small>List of free extensions</small></a></li>
         </ul>
-        {{ categories }} 
+        {{ categories }}
     </div>
 
     <div class="col-md-9">
@@ -16,9 +16,9 @@
                 <h4>Search for extensions</h4>
                 <p>
                     <div class="input-group input-group-lg">
-                        <input type="text" name="search" class="form-control" value="{{ search }} " placeholder="Search for...">
+                        <input type="text" name="search" class="form-control" value="{{ search }}" placeholder="Search for...">
                         <span class="input-group-btn">
-                            <button class="btn btn-default search" data-href="{{ search_href }} " type="button">Search</button>
+                            <button class="btn btn-default search" data-href="{{ search_href }}" type="button">Search</button>
                         </span>
                     </div><!-- /input-group -->
                 </p>
@@ -34,13 +34,13 @@
             </div>
             <div>
                 {% if page == 1 %}
-                <a class="btn btn-default" href="{{ prev }} "><span class="fa fa-chevron-left"></span> Prev</a>
+                <a class="btn btn-default" href="{{ prev }}"><span class="fa fa-chevron-left"></span> Prev</a>
                 {% endif %} 
                 {% if extensions|length == 12 %}
-                <a class="btn btn-default pull-right" href="{{ next}} ">Next <span class="fa fa-chevron-right"></span></a>
+                <a class="btn btn-default pull-right" href="{{ next}}">Next <span class="fa fa-chevron-right"></span></a>
                 {% endif %} 
             </div>
          {% endif %} 
     </div>
 </div>
-{{ content_bottom }} 
+{{ content_bottom }}

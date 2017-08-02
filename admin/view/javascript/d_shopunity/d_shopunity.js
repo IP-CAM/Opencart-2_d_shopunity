@@ -204,7 +204,6 @@ d_shopunity = {
                 }
            }
            if(data.activate){
-            console.log($('#extension_thumb_'+data.activate).find('.activate-extension'));
                 that.activateExtension($('#extension_thumb_'+data.activate).find('.activate-extension'));
                 that.activateExtension($('#required_'+data.activate).find('.activate-extension'));  
            }
@@ -232,6 +231,7 @@ d_shopunity = {
     },
 
     activateExtension: function($node){
+        console.log($node.data('href'));
         $.ajax({
             url: $node.data('href'),
             dataType: 'json',

@@ -1,23 +1,23 @@
-{{ content_top }} 
+{{ content_top }}
 <div class="row">
     <div class="col-md-3">
-        {{ profile }} 
+        {{ profile }}
     </div>
     <div class="col-md-9">
         <div class="ibox">
             <div class="ibox-title">
                 <ul class="nav nav-tabs">
-                    <li><a href="{{ href_order }} " >
+                    <li><a href="{{ href_order }}" >
                         <span class="fa fa-user"></span> 
-                        {{ tab_order }} 
+                        {{ tab_order }}
                     </a></li>
-                    <li><a href="{{ href_invoice }} " >
+                    <li><a href="{{ href_invoice }}" >
                         <span class="fa fa-user"></span> 
-                        {{ tab_invoice }} 
+                        {{ tab_invoice }}
                     </a></li>
-                    <li class="active"><a href="{{ href_transaction }} " >
+                    <li class="active"><a href="{{ href_transaction }}" >
                         <span class="fa fa-user"></span> 
-                        {{ tab_transaction }} 
+                        {{ tab_transaction }}
                     </a></li>
                 </ul>
                 <h2>Transactions</h2>
@@ -53,14 +53,14 @@
                 {% endif %} 
                 <div class="clearfix">
                     {% if page == 1 %}
-                    <a class="btn btn-default" href="{{ prev }} "><span class="fa fa-chevron-left"></span> Prev</a>
+                    <a class="btn btn-default" href="{{ prev }}"><span class="fa fa-chevron-left"></span> Prev</a>
                     {% endif %} 
                     {% if transactions %} 
-                    <a class="btn btn-default pull-right" href="{{ next }} ">Next <span class="fa fa-chevron-right"></span></a>
+                    <a class="btn btn-default pull-right" href="{{ next }}">Next <span class="fa fa-chevron-right"></span></a>
                     {% endif %} 
                 </div>
             </div>
         </div>
     </div>
 </div>
-{{ content_bottom }} 
+{{ content_bottom }}
