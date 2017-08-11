@@ -642,9 +642,6 @@ class ModelExtensionDShopunityMbooth extends Model {
         if(!empty($data)){
             $result = $data;
             if(isset($data['index'])){
-                if(VERSION < '2.3.0.0' && strpos($result['index'], 'extension/module/') !== false) {
-                    $result['index'] = str_replace('extension/module/', "module/", $result['index']);
-                }
 
                 if(VERSION >= '2.3.0.0' && strpos($result['index'], 'extension/module/') === false) {
                     $result['index'] = str_replace('module/', 'extension/module/', $result['index']);
@@ -662,11 +659,11 @@ class ModelExtensionDShopunityMbooth extends Model {
             }
 
             if(isset($result['uninstall']) && isset($result['uninstall']['url'])){
-                if(VERSION < '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') !== false && strpos($result['install']['url'], 'd_shopunity/') === false) {
+                if(VERSION < '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') !== false && strpos($result['uninstall']['url'], 'd_shopunity/') === false) {
                     $result['uninstall']['url'] = str_replace('extension/extension/', "extension/", $result['uninstall']['url']);
                 }
 
-                if(VERSION >= '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') === false && strpos($result['install']['url'], 'd_shopunity/') === false) {
+                if(VERSION >= '2.3.0.0' && strpos($result['uninstall']['url'], 'extension/extension/') === false && strpos($result['uninstall']['url'], 'd_shopunity/') === false) {
                     $result['uninstall']['url'] = str_replace('extension/', 'extension/extension/', $result['uninstall']['url']);
                 }
             }
