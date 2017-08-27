@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "3.1.4",
+    "version": "3.1.5",
     "name": "Shopunity Extension manager",
     "description": "Connect your Opencart shop to Shopunity Network and start installing hundrads of modules with a click of a button",
     "index": "extension/d_shopunity",
@@ -89,6 +89,10 @@
         "system/library/hyperlight"
     ],
     "changelog": [
+        {
+            "version":"3.1.5",
+            "change": "Added support for Dreamvention.ee"
+        },
         {
             "version":"3.1.4",
             "change": "fix uninstall error."
