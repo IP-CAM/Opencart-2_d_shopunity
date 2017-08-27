@@ -118,7 +118,7 @@ d_shopunity = {
         var that = this;
         swal({  
             title: "Find your External order", 
-            text: "<p>If you have a license from Opencart or any other regestered External Marketplace, you can claim it in Shopuniy. Provide your External Market Email and Order Id (Purchase Id)</p><br/><form id=\"claim_external_order\" class=\"form\"><select class=\"form-control show\"  name=\"market\" id=\"market\"><option value=\"opencart\">Opencart.com</option><option value=\"isenselabs\">Isenselabs.com</option></select><input class=\"form-control show\" placeholder=\"E-mail\" name=\"user_id\" id=\"user_id\" type=\"email\" /><input class=\"form-control show\" placeholder=\"Order Id\" name=\"order_id\" id=\"order_id\" type=\"text\" /></form>",
+            text: "<p>If you have a license from Opencart or any other regestered External Marketplace, you can claim it in Shopuniy. Provide your External Market Email and Order Id (Purchase Id)</p><br/><form id=\"claim_external_order\" class=\"form\"><select class=\"form-control show\"  name=\"market\" id=\"market\"><option value=\"opencart\">Opencart.com</option><option value=\"isenselabs\">Isenselabs.com</option><option value=\"dreamvention\">Dreamvention.ee</option></select><input class=\"form-control show\" placeholder=\"E-mail\" name=\"user_id\" id=\"user_id\" type=\"email\" /><input class=\"form-control show\" placeholder=\"Order Id\" name=\"order_id\" id=\"order_id\" type=\"text\" /></form>",
             html: true,
             showCancelButton: true, 
             confirmButtonColor: "#8fbb6c",  
@@ -231,7 +231,6 @@ d_shopunity = {
     },
 
     activateExtension: function($node){
-        console.log($node.data('href'));
         $.ajax({
             url: $node.data('href'),
             dataType: 'json',
