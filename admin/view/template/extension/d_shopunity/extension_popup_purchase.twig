@@ -17,7 +17,7 @@
             <div class="purchase-extension  form-inline">
                 {% if extension.price %} 
                      <select class="form-control input-lg pull-left hide">
-                        {% for price in extension %}
+                        {% for price in extension.prices %}
                         <option value="{{ price.extension_recurring_price_id }}">{{ price.recurring_price_format }} / {{ price.recurring_duration }} days</option>
                         {% endfor %}
                     </select>
