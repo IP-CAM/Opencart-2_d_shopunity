@@ -594,7 +594,7 @@ class ModelExtensionDShopunityMbooth extends Model {
             foreach($extension['required'] as $extension_codename => $version){
                 if(!file_exists(DIR_SYSTEM.'mbooth/extension/'.$extension_codename.'.json')
                 && !file_exists(DIR_SYSTEM.'library/d_shopunity/extension/'.$extension_codename.'.json')){
-                    $this->response->redirect($this->url->link('extension/d_shopunity/extension/dependency', 'codename='.$codename.'&token='.$this->session->data['token'], 'SSL'));
+                    $this->response->redirect($this->url->link('extension/d_shopunity/extension/dependency', 'codename='.$codename.'&user_token='.$this->session->data['user_token'], 'SSL'));
                 }
             }
         }
