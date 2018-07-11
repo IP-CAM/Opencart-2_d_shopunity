@@ -23,6 +23,7 @@ class ControllerExtensionDShopunityModification extends Controller {
         }
 
         $this->load->model('extension/d_opencart_patch/modification');
+        $this->model_extension_d_opencart_patch_modification->setModification($codename.'.xml', 0);
         $this->model_extension_d_opencart_patch_modification->setModification($codename.'.xml', 1);
         $this->model_extension_d_opencart_patch_modification->refreshCache();
         return true;
