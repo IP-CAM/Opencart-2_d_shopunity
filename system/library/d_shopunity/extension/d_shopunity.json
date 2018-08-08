@@ -1,10 +1,9 @@
 {
     "codename": "d_shopunity",
-    "version": "3.1.6",
+    "version": "3.1.7",
     "name": "Shopunity Extension manager",
     "description": "Connect your Opencart shop to Shopunity Network and start installing hundrads of modules with a click of a button",
     "index": "extension/d_shopunity",
-    "readme": "system/library/d_shopunity/readme/d_shopunity.md",
     "author": {
         "name": "Shopunity",
         "email": "info@shopunity.com",
@@ -89,6 +88,10 @@
         "system/library/hyperlight"
     ],
     "changelog": [
+        {
+            "version":"3.1.7",
+            "change": "Removed readme"
+        },
         {
             "version":"3.1.6",
             "change": "Modification install clear old version fix"
