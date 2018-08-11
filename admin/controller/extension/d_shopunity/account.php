@@ -93,7 +93,7 @@ class ControllerExtensionDShopunityAccount extends Controller {
 			'codename'=> array(
 				'd_visual_designer',
 				'd_blog_module',
-				'd_quickcheckout_lite',
+				'd_quickcheckout',
 				'd_seo_module'
 			)
 		);
