@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "4.0.10",
+    "version": "4.0.11",
     "name": "Shopunity Extension manager",
     "description": "Allows you to connect his opencart store to shopunity network and purchase modules with ease",
     "index": "extension/d_shopunity",
@@ -75,6 +75,10 @@
         "system/library/hyperlight"
     ],
     "changelog": [
+        {
+            "version":"4.0.11",
+            "change": "Fixed widget"
+        },
         {
             "version":"4.0.10",
             "change": "Removed readme and added another module to welcome"
