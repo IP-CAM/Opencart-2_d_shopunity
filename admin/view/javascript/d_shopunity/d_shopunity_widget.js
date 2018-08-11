@@ -9,18 +9,21 @@ d_shopunity_widget = {
 
     loadExtension: function($extension_id){
         $( this.setting.class ).hide();
-        $( this.setting.class ).load( this.setting.http+"index.php?route=extension/d_shopunity/extension/show_thumb&extension_id="+$extension_id+"&user_token="+this.setting.token);
-        if($( this.setting.class ).find(" .extension-show-thumb") != 'undefined'){
-            $( this.setting.class ).show();
-        }
+        $( this.setting.class ).load( this.setting.http+"index.php?route=extension/d_shopunity/extension/show_thumb&extension_id="+$extension_id+"&user_token="+this.setting.token, function(){
+            if($( this.setting.class ).find(" .extension-show-thumb").html() != undefined){
+                $( this.setting.class ).show();
+            }
+        }.bind(this));
     },
 
     loadUpdate: function($extension_id){
+        
         $( this.setting.class ).hide();
-        $( this.setting.class ).load( this.setting.http+"index.php?route=extension/d_shopunity/extension/show_update&extension_id="+$extension_id+"&user_token="+this.setting.token);
-        if($( this.setting.class ).find(" .extension-show-thumb") != 'undefined'){
-            $( this.setting.class ).show();
-        }
+        $( this.setting.class ).load( this.setting.http+"index.php?route=extension/d_shopunity/extension/show_update&extension_id="+$extension_id+"&user_token="+this.setting.token, function(){
+            if($( this.setting.class ).find(" .extension-show-thumb").html() != undefined){
+                $( this.setting.class ).show();
+            }
+        }.bind(this));
     },
 
     init: function(setting){
