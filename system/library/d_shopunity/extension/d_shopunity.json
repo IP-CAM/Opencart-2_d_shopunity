@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "3.1.9",
+    "version": "3.1.10",
     "name": "Shopunity Extension manager",
     "description": "Connect your Opencart shop to Shopunity Network and start installing hundrads of modules with a click of a button",
     "index": "extension/d_shopunity",
@@ -59,6 +59,8 @@
         "system/library/d_shopunity/readme/d_shopunity.md",
         "system/library/d_shopunity/download/index.php",
         "system/library/d_shopunity/backup/index.php",
+        "system/library/d_shopunity/develop/gulpfile.js",
+        "system/library/d_shopunity/develop/package.json",
 
         "system/library/modulegenerator.php",
         "system/library/semver.php"
@@ -88,6 +90,10 @@
         "system/library/hyperlight"
     ],
     "changelog": [
+        {
+            "version":"3.1.10",
+            "change": "FiAdded develop gulp"
+        },
         {
             "version":"3.1.9",
             "change": "Fix d_shopunity_widget.js"
