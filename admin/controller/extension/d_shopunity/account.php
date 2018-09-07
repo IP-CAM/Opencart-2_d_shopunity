@@ -121,11 +121,8 @@ class ControllerExtensionDShopunityAccount extends Controller {
 		}
 
 		$data['action_connect'] = $this->model_extension_d_shopunity_account->getAuthorizeUrl('extension/d_shopunity/account/callback');
-		if(VERSION >= '2.3.0.0'){	
-			$data['cancel'] = $this->url->link('extension/extension', $this->url_token . '&type=module', true);
-		}else{
-			$data['cancel'] = $this->url->link('extension/module', $this->url_token, 'SSL');
-		}
+		$this->load->model('extension/d_opencart_patch/url');
+        $data['cancel'] = $this->model_extension_d_opencart_patch_url->getExtensionLink('module');
 		
 		$user = $this->model_user_user->getUser($this->user->getId());
 		$data['store_info'] = array(
