@@ -6,29 +6,29 @@ var fs = require("fs");
 if (typeof process.env.HOST === "undefined") {
     process.env.HOST = 'localhost';
 }
-var base_dir = path.resolve(__dirname, "../../../../") ;
+var base_dir = path.resolve(__dirname, "../../../../");
 var shopunity_dir = base_dir + '/system/library/d_shopunity/';
 if (typeof process.env.extension === "undefined") {
     process.env.extension = 'd_shopunity';
 }
 
-gulp.task('change', function (e, data) {
+gulp.task('change', function(e, data) {
     console.log(e);
     console.log(data);
 });
-gulp.task('default', function () {
+gulp.task('default', function() {
     // получить git
     var extension = process.env.extension;
     var extension_path = shopunity_dir + 'extension/' + extension + '.json';
-    fs.readFile(extension_path, function (err, data) {
+    fs.readFile(extension_path, function(err, data) {
         if (!err) {
             var parsedData = JSON.parse(data);
             var dependencies = typeof parsedData.required == "object" ? parsedData.required : {};
 
-            Object.keys(dependencies).forEach(function (codename) {
+            Object.keys(dependencies).forEach(function(codename) {
                 var version = dependencies[codename];
                 //get files of codename extension
-                fs.readFile(shopunity_dir + 'extension/' + codename + '.json', function (err, codenameData) {
+                fs.readFile(shopunity_dir + 'extension/' + codename + '.json', function(err, codenameData) {
                     if (!err) {
                         //find git folder next to root folder
                         var codename_dir = path.resolve(base_dir, "../") + '/' + codename;
@@ -37,17 +37,17 @@ gulp.task('default', function () {
                             var files = typeof parsedCodenameData.files == "object" ? parsedCodenameData.files : [];
                             var dirs = typeof parsedCodenameData.dirs == "object" ? parsedCodenameData.dirs : [];
                             //get files from dir
-                            addDirs(dirs, files, function(err, files){
-                                files = files.map(function (file) {
+                            addDirs(dirs, files, function(err, files) {
+                                files = files.map(function(file) {
                                     return base_dir + '/' + file;
                                 });
                                 console.log(files);
-                                
-                                gulp.watch(files, function (data) {
+
+                                gulp.watch(files, function(data) {
                                     if (data.type === 'changed') {
                                         console.log('file changed: ' + data.path);
-                                        console.log(data.path.replace(base_dir,codename_dir))
-                                        fs.copyFileSync(data.path,data.path.replace(base_dir,codename_dir),function (err,data) {
+                                        console.log(data.path.replace(base_dir, codename_dir))
+                                        fs.copyFileSync(data.path, data.path.replace(base_dir, codename_dir), function(err, data) {
                                             console.log(err)
                                             console.log(data)
                                         });
@@ -55,13 +55,13 @@ gulp.task('default', function () {
                                     } else if (data.type === 'deleted') {
                                         console.log('file deleted: ' + data.path);
                                         //delete file on the git folder
-                                    }else {
+                                    } else {
                                         console.log(data);
                                     }
                                 });
                             })
 
-                            
+
                         } else {
                             console.log(codename_dir + ' does not exist');
                         }
@@ -84,32 +84,34 @@ gulp.task('default', function () {
     });
 });
 
-function addDirs(dirs, files, callback){
-    if(dirs){
-        Object.keys(dirs).forEach(function(key){
+function addDirs(dirs, files, callback) {
+    if (dirs) {
+        Object.keys(dirs).forEach(function(key) {
             var dir = dirs[key];
             if (fs.existsSync(base_dir + '/' + dir)) {
                 console.log('Dir parsed: ' + base_dir + '/' + dir);
                 fs.readdir(base_dir + '/' + dir, function(err, fileData) {
-                    if(!err){
+                    if (!err) {
                         fileData.forEach(function(file) {
-                            console.log('File added: '+dir + '/' + file);
+                            console.log('File added: ' + dir + '/' + file);
+                            if (fs.lstatSync(base_dir + '/' + dir + '/' + file).isDirectory() && file != 'node_modules') {
+                                addDirs([dir + '/' + file], files, function(err, files) {});
+                            }
                             files.push(dir + '/' + file);
-                            
                         });
                         callback(false, files);
-                    }else{
-                        console.log('Error! '+file);
+                    } else {
+                        console.log('Error! ' + file);
                         callback(true, files);
                     }
-                   
+
                 });
-            }else{
+            } else {
                 console.log('Dir not found: ' + base_dir + '/' + dir);
                 callback(true, files);
             }
         });
-    }else{
+    } else {
         callback(true, files);
     }
 }
