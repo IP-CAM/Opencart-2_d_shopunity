@@ -2,6 +2,8 @@
 /*
  *	location: admin/controller
  */
+include_once (DIR_SYSTEM .'library/d_shopunity/develop/vendor/autoload.php');
+
 
 class ControllerExtensionDShopunityExtension extends Controller {
 
@@ -777,6 +779,63 @@ class ControllerExtensionDShopunityExtension extends Controller {
 		}
 
 		$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL'));
+	}
+
+	public function popup_unittest(){
+		$json = array();
+		if(isset($this->request->get['codename'])){
+			$codename = $this->request->get['codename'];
+			$data['extension'] = $this->model_extension_d_shopunity_mbooth->getExtension($codename);
+		}else{
+			$json['error'] = 'ERROR! Codename is missing';
+		}
+
+		if(isset($data['extension'])){
+			$json['content'] = $this->load->view($this->route.'_popup_unittest', $data);
+		}
+
+		$this->response->setOutput(json_encode($json));
+		
+	}
+
+	public function unittest(){
+		$json = array();
+		if(isset($this->request->get['test'])){
+			$test = $this->request->get['test'];
+		}
+		
+		if(isset($this->request->get['codename'])){
+			$codename = $this->request->get['codename'];
+			$extension = $this->model_extension_d_shopunity_mbooth->getExtension($codename);
+		}
+
+		if(isset($extension) && isset($test)){
+			if(!empty($extension['tests']) && is_array($extension['tests']) && isset($extension['tests'][$test])){
+				$test_path = $extension['tests'][$test];
+			}
+		}
+		
+		if(isset($test_path)){ 
+			$root = substr(DIR_SYSTEM, 0, -7);
+			
+			if (file_exists($file = $root . '/.env') || file_exists($file =  DIR_SYSTEM .'library/d_shopunity/develop/.env')) {
+				$dotenv = new \Dotenv\Dotenv(dirname($file));
+				$dotenv->load();
+			}
+			$_SERVER['OC_ROOT'] = $root;
+			try {
+				
+				$phpunit = new  PHPUnit\TextUI\TestRunner;
+				$phpunit->dorun($phpunit->getTest($test, DIR_SYSTEM .'library/d_shopunity/test/phpunit/'.$test_path));
+
+			} catch (Exception $e) {
+				print $e->getMessage() . "\n";
+				die ("Unit tests failed.");
+			}
+		}else{
+			$json['error'] = 'Error! codename missing';
+			print_r($json);
+		}
 	}
 
 	public function json(){

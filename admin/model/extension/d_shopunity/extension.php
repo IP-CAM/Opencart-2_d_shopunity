@@ -383,7 +383,11 @@ class ModelExtensionDShopunityExtension extends Model {
                 $result['approve'] = '';
                 $result['disapprove'] = '';
             }  
-
+            if(!empty($data['tests'])){
+                $result['popup_unittest'] = $this->_ajax($this->url->link('extension/d_shopunity/extension/popup_unittest', $this->url_token . '&codename='.$data['codename'] , 'SSL'));
+            }else{
+                $result['popup_unittest'] = '';
+            }
         }
 
         return $result;
@@ -476,6 +480,11 @@ class ModelExtensionDShopunityExtension extends Model {
             $result['test'] = '';
             $result['approve'] = '';
             $result['disapprove'] = '';
+            if(!empty($result['tests'])){
+                $result['popup_unittest'] = $this->_ajax($this->url->link('extension/d_shopunity/extension/popup_unittest', $this->url_token . '&codename='.$data['codename'] , 'SSL'));
+            }else{
+                $result['popup_unittest'] = '';
+            }
         }
 
         return $result;

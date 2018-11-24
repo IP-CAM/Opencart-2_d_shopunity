@@ -41,6 +41,10 @@
                         <a class="btn btn-info btn-xs  show-loading" href="{{ extension.admin }}"  data-toggle="tooltip" data-original-title="Admin"><span class="fa fa-pencil"></span></a>
                     {% endif %} 
 
+                    {% if extension.tests and extension.downloadable %} 
+                        <a class="btn btn-info btn-xs show-loading popup-unittest-extension" data-href="{{ extension.popup_unittest }}" data-toggle="tooltip" data-original-title="Run tests"><span class="fa fa-flask"></span></a>
+                    {% endif %} 
+
                     {% if extension.submittable  and  extension.installed %} 
                         <a class="btn btn-warning btn-xs  show-loading submit-extension" data-href="{{ extension.submit }}" data-toggle="tooltip" data-original-title="Submit"><span class="fa fa-cloud-upload"></span></a>
                     {% endif %} 
@@ -54,6 +58,8 @@
                     {% if extension.submittable  and  extension.extension_id  ==  1 %} 
                         <a class="btn btn-warning btn-xs show-loading developer-update-extension" data-href="{{ extension.developer_update }}" data-toggle="tooltip" data-original-title="Update everywhere"><span class="fa fa-globe"></span></a>
                     {% endif %} 
+
+                    
                     
                     </div>
                 {% endif %} 
