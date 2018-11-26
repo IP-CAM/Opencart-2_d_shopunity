@@ -52,6 +52,7 @@
         "system/library/d_shopunity/backup/index.php",
         "system/library/d_shopunity/develop/gulpfile.js",
         "system/library/d_shopunity/develop/package.json",
+        "system/library/d_shopunity/develop/phpunit.xml",
         "system/library/d_shopunity/develop/bootstrap.php",
         "system/library/d_shopunity/develop/OpenCartTest.php",
         "system/library/d_shopunity/develop/composer.json",
