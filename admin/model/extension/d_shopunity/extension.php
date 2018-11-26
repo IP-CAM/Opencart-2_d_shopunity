@@ -131,7 +131,6 @@ class ModelExtensionDShopunityExtension extends Model {
                 $result[] = $this->_mbooth_extension($extension);
             }
         }
-        
         return $result;
     }
 
@@ -383,10 +382,14 @@ class ModelExtensionDShopunityExtension extends Model {
                 $result['approve'] = '';
                 $result['disapprove'] = '';
             }  
-            if(!empty($data['tests'])){
+            if(!empty($data['mbooth']['tests'])){
+                $result['unittestable'] = true;
                 $result['popup_unittest'] = $this->_ajax($this->url->link('extension/d_shopunity/extension/popup_unittest', $this->url_token . '&codename='.$data['codename'] , 'SSL'));
+                $result['unittest'] = $this->_ajax($this->url->link('extension/d_shopunity/extension/unittest', $this->url_token . '&codename='.$data['codename'] , 'SSL'));
             }else{
+                $result['unittestable'] = false;
                 $result['popup_unittest'] = '';
+                $result['unittest'] = '';
             }
         }
 
@@ -480,9 +483,12 @@ class ModelExtensionDShopunityExtension extends Model {
             $result['test'] = '';
             $result['approve'] = '';
             $result['disapprove'] = '';
-            if(!empty($result['tests'])){
+            if(!empty($result['mbooth']['tests'])){
+                
+                $result['unittestable'] = true;
                 $result['popup_unittest'] = $this->_ajax($this->url->link('extension/d_shopunity/extension/popup_unittest', $this->url_token . '&codename='.$data['codename'] , 'SSL'));
             }else{
+                $result['unittestable'] = false;
                 $result['popup_unittest'] = '';
             }
         }

@@ -570,6 +570,36 @@ d_shopunity = {
 
     },
 
+    unittestExtension: function($node) {
+        var that = this;
+        var codename = $node.data('codename');
+        var extension_id = $node.data('extension_id');
+        var tests = JSON.parse($('#extension_' + extension_id).find('#tests_json').val());
+        for (test in tests) {
+            $.ajax({
+                url: $node.data('href') + '&test=' + test,
+                dataType: 'html',
+                test: test,
+                method: 'get',
+                success: function(text) {
+                    that.hideLoading($('.loading'));
+                    console.log(this.test);
+                    console.log(text);
+                    if (text.includes("OK ")) {
+                        $('#test_' + this.test).css({ 'color': 'green' });
+                        $('#test_' + this.test).text($('#test_' + this.test).text() + ' Passed!');
+                    } else {
+                        $('#test_' + this.test).css({ 'color': 'red' });
+                        $('#test_' + this.test).text($('#test_' + this.test).text() + ' Failed!');
+                    }
+
+                }
+            });
+        }
+
+        return false;
+    },
+
     showLoading: function($loading) {
         $loading.addClass('show');
     },
@@ -620,6 +650,10 @@ d_shopunity = {
 
         $(document).on('click', '.popup-unittest-extension', function() {
             that.popupUnittestExtension($(this));
+        });
+
+        $(document).on('click', '.unittest-extension', function() {
+            that.unittestExtension($(this));
         });
 
         $(document).on('click', '.download-extension', function() {

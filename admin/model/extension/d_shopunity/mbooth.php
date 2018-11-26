@@ -667,6 +667,15 @@ class ModelExtensionDShopunityMbooth extends Model {
                 }
             }
 
+            if(!empty($data['tests'])){
+                $result['unittestable'] = true;
+                $result['popup_unittest'] = $this->_ajax($this->url->link('extension/d_shopunity/extension/popup_unittest', $this->url_token . '&codename='.$data['codename'] , 'SSL'));
+                $result['unittest'] = $this->_ajax($this->url->link('extension/d_shopunity/extension/unittest', $this->url_token . '&codename='.$data['codename'] , 'SSL'));
+            }else{
+                $result['unittestable'] = false;
+                $result['popup_unittest'] = '';
+                $result['unittest'] = '';
+            }
 
 
             if (!empty($data['dirs'])) {
@@ -686,6 +695,10 @@ class ModelExtensionDShopunityMbooth extends Model {
         }
         return $result;
 
+    }
+
+    private function _ajax($url){
+        return html_entity_decode($url);
     }
 
 }
