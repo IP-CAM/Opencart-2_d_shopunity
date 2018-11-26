@@ -57,6 +57,8 @@
         "system/library/d_shopunity/develop/OpenCartTest.php",
         "system/library/d_shopunity/develop/composer.json",
         "system/library/d_shopunity/develop/.env-dist",
+        "system/config/test.php",
+        "system/library/session/test.php",
 
         "system/library/modulegenerator.php",
         "system/library/semver.php",
