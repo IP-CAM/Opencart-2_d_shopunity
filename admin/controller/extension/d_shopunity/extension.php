@@ -2,9 +2,6 @@
 /*
  *	location: admin/controller
  */
-include_once (DIR_SYSTEM .'library/d_shopunity/develop/vendor/autoload.php');
-
-
 class ControllerExtensionDShopunityExtension extends Controller {
 
 	private $codename = 'd_shopunity';
@@ -799,6 +796,13 @@ class ControllerExtensionDShopunityExtension extends Controller {
 	}
 
 	public function unittest(){
+		if(file_exists(DIR_SYSTEM .'library/d_shopunity/develop/vendor/autoload.php')){
+			include_once (DIR_SYSTEM .'library/d_shopunity/develop/vendor/autoload.php');
+		}else{
+			$json['error'] = 'Error! please run `composer install` in folder `system/library/d_shopunity/develop`';
+			print_r($json);
+		}
+		
 		$json = array();
 		if(isset($this->request->get['test'])){
 			$test = $this->request->get['test'];
