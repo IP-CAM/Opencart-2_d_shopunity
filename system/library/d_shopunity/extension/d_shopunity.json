@@ -62,10 +62,7 @@
         "system/library/session/test.php",
 
         "system/library/modulegenerator.php",
-        "system/library/semver.php",
-
-        "system/library/test/phpunit/admin/ModelExtensionDShopunityMboothAdminTest.php",
-        "system/library/test/phpunit/catalog/ModelExtensionDShopunityMboothTest.php"
+        "system/library/semver.php"
     ],
     "dirs": [
 
@@ -87,12 +84,6 @@
         "system/library/semver",
         "system/library/hyperlight"
     ],
-    "tests": {
-        "phpunit": {
-            "ModelExtensionDShopunityMboothAdminTest": "admin/ModelExtensionDShopunityMboothAdminTest.php",
-            "ModelExtensionDShopunityMboothTest": "catalog/ModelExtensionDShopunityMboothTest.php"
-        }
-    },
     "changelog": [{
             "version": "4.0.13",
             "change": "Adding OC version 3.0.3.1"
