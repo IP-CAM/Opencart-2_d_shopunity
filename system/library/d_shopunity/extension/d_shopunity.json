@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "4.1.0",
+    "version": "4.0.13",
     "name": "Shopunity Extension manager",
     "description": "Allows you to connect his opencart store to shopunity network and purchase modules with ease",
     "index": "extension/d_shopunity",
@@ -13,7 +13,8 @@
         "3.0.0.0",
         "3.0.1.1",
         "3.0.1.2",
-        "3.0.2.0"
+        "3.0.2.0",
+        "3.0.3.1"
     ],
     "type": "module",
     "license": {
@@ -63,8 +64,8 @@
         "system/library/modulegenerator.php",
         "system/library/semver.php",
 
-        "system/library/d_shopunity/test/phpunit/admin/ModelExtensionDShopunityMboothAdminTest.php",
-        "system/library/d_shopunity/test/phpunit/catalog/ModelExtensionDShopunityMboothTest.php"
+        "system/library/test/phpunit/admin/ModelExtensionDShopunityMboothAdminTest.php",
+        "system/library/test/phpunit/catalog/ModelExtensionDShopunityMboothTest.php"
     ],
     "dirs": [
 
@@ -87,12 +88,14 @@
         "system/library/hyperlight"
     ],
     "tests": {
-        "ModelExtensionDShopunityMboothAdminTest": "admin/ModelExtensionDShopunityMboothAdminTest.php",
-        "ModelExtensionDShopunityMboothTest": "catalog/ModelExtensionDShopunityMboothTest.php"
+        "phpunit": {
+            "ModelExtensionDShopunityMboothAdminTest": "admin/ModelExtensionDShopunityMboothAdminTest.php",
+            "ModelExtensionDShopunityMboothTest": "catalog/ModelExtensionDShopunityMboothTest.php"
+        }
     },
     "changelog": [{
-            "version": "4.1.0",
-            "change": "Added phpunit"
+            "version": "4.0.13",
+            "change": "Adding OC version 3.0.3.1"
         },
         {
             "version": "4.0.12",
