@@ -137,7 +137,7 @@
                     {% if extension.downloadable  and  extension.tester_comment %} 
                         <div class="alert alert-info">{{ extension.tester_comment }}</div>
                     {% endif %} 
-                    <div class="description">{{ extension.description }}</div>
+                    <div id="description" class="description">{{ extension.description }}</div>
                 </div>
             </div>
             <!-- <pre>  
@@ -146,7 +146,18 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
 <script>
+    $( document ).ready(function() {
+        var description = $('#description').text();
+        var converter = new showdown.Converter(),
+            text      = description,
+            html      = converter.makeHtml(text);
+
+        $('#description').html(html);
+    });
+
     $(document).on('click', '.purchase .btn', function(){
         var href = $(this).attr('href');
             href += '&extension_recurring_price_id='+$(this).parents('.purchase').find('select').val();
