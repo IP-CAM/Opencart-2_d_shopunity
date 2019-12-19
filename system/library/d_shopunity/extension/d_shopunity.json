@@ -1,6 +1,6 @@
 {
     "codename": "d_shopunity",
-    "version": "4.0.13",
+    "version": "4.0.14",
     "name": "Shopunity Extension manager",
     "description": "Allows you to connect his opencart store to shopunity network and purchase modules with ease",
     "index": "extension/d_shopunity",
@@ -84,7 +84,12 @@
         "system/library/semver",
         "system/library/hyperlight"
     ],
-    "changelog": [{
+    "changelog": [
+        {
+            "version": "4.0.14",
+            "change": "Add markdown text transform to the extension page"
+        },
+        {
             "version": "4.0.13",
             "change": "Adding OC version 3.0.3.1"
         },
