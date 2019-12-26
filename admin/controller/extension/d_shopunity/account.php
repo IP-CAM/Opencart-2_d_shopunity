@@ -37,14 +37,14 @@ class ControllerExtensionDShopunityAccount extends Controller {
 		$this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity.css');
         $this->document->addStyle('view/stylesheet/d_shopunity/d_shopunity_layout.css');
 		$this->document->addScript('view/javascript/d_shopunity/d_shopunity.js');
-		
+
 		$this->load->language('extension/module/d_shopunity');
    		$this->load->language('extension/d_shopunity/account');
    		$this->load->model('user/user');
 
 
    		// Breadcrumbs
-		$data['breadcrumbs'] = array(); 
+		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', $this->url_token, 'SSL')
@@ -91,7 +91,7 @@ class ControllerExtensionDShopunityAccount extends Controller {
         if (!extension_loaded('zip')) {
             $data['warning'] = $this->language->get('error_zip');
         }
-        
+
         if (!function_exists('iconv') && !extension_loaded('mbstring')) {
             $data['warning'] = $this->language->get('error_mbstring');
         }
@@ -107,14 +107,14 @@ class ControllerExtensionDShopunityAccount extends Controller {
 		if(!$this->config->get('welcome_extensions_visited')){
 		$filter_data = array(
 			'codename'=> array(
-				'd_visual_designer',
+                'd_vuefront',
 				'd_blog_module',
 				'd_quickcheckout',
 				'd_seo_module'
 			)
 		);
 		$data['extensions'] = $this->model_extension_d_shopunity_extension->getExtensions($filter_data);
-		
+
 			$this->session->data['welcome_extensions'] = $filter_data;
 			$this->load->model('setting/setting');
 			$this->model_setting_setting->editSetting('welcome_extensions', array('welcome_extensions_visited' => '1'));
@@ -123,7 +123,7 @@ class ControllerExtensionDShopunityAccount extends Controller {
 		$data['action_connect'] = $this->model_extension_d_shopunity_account->getAuthorizeUrl('extension/d_shopunity/account/callback');
 		$this->load->model('extension/d_opencart_patch/url');
         $data['cancel'] = $this->model_extension_d_opencart_patch_url->getExtensionLink('module');
-		
+
 		$user = $this->model_user_user->getUser($this->user->getId());
 		$data['store_info'] = array(
 			'name' => $this->config->get('config_name'),
@@ -156,20 +156,20 @@ class ControllerExtensionDShopunityAccount extends Controller {
    	public function callback(){
 
 		$json = $this->model_extension_d_shopunity_account->getToken('extension/d_shopunity/account/callback');
-	
+
 		if ($json) {
 			if(isset($json['access_token'])){
 				$this->model_extension_d_shopunity_account->login($json);
 				$this->response->redirect($this->url->link('extension/d_shopunity/extension', $this->url_token, 'SSL'));
-	
+
 			}else{
 				$this->session->data['error']   = $this->language->get('error_connection_failed');
 			}
-			
+
 		}else{
 			$this->session->data['error']   = $this->language->get('error_not_json');
 		}
-			
+
 		$this->response->redirect($this->url->link('extension/d_shopunity/account/login', $this->url_token, 'SSL'));
 	}
 
