@@ -57,7 +57,7 @@ class Api {
 
     public function getStoreId(){
         $store = $this->getCurrentStore();
-        return $store['store_id'];
+        return (isset($store['store_id']) ? $store['store_id'] : 0);
     }
 
     public function getCurrentStore(){

@@ -35,28 +35,28 @@
 				</div>
 				<div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
 					<ul  class="nav nav-pills">
-						<li {% if route == 'extension/d_shopunity/extension' %}class="active" {% endif %}><a href="{{ href_extension }}" >
+						<li {% if route == 'extension/d_shopunity/extension' %} class="active" {% endif %}><a href="{{ href_extension }}" >
 							<span class="fa fa-puzzle-piece"></span> 
 							{{ tab_extension }}
 						</a></li>
-						<li {% if route == 'extension/d_shopunity/market' %}class="active" {% endif %}><a href="{{ href_market }}" >
+						<li {% if route == 'extension/d_shopunity/market' %} class="active" {% endif %}><a href="{{ href_market }}" >
 							<span class="fa fa-flask"></span> 
 							{{ tab_market }}
 						</a></li>
 						
 						{% if developer %}
-						<li {% if route == 'extension/d_shopunity/developer' %}class="active" {% endif %}><a href="{{ href_developer }}" >
+						<li {% if route == 'extension/d_shopunity/developer' %} class="active" {% endif %}><a href="{{ href_developer }}" >
 							<span class="fa fa-code"></span> 
 							{{ tab_developer }}
 						</a></li>
 						{% endif %}
 						{% if tester %}
-						<li {% if route == 'extension/d_shopunity/tester' %}class="active" {% endif %}><a href="{{ href_tester }}" >
+						<li {% if route == 'extension/d_shopunity/tester' %} class="active" {% endif %}><a href="{{ href_tester }}" >
 							<span class="fa fa-rocket"></span> 
 							{{ tab_tester }}
 						</a></li>
 						{% endif %}
-						<li {% if route == 'extension/d_shopunity/order' or route == 'd_shopunity/invoice' or route == 'd_shopunity/transaction' %}class="active" {% endif %}><a href="{{ href_billing }}" >
+						<li {% if route == 'extension/d_shopunity/order' or route == 'd_shopunity/invoice' or route == 'd_shopunity/transaction' %} class="active" {% endif %}><a href="{{ href_billing }}" >
 							<span class="fa fa-money"></span> 
 							{{ tab_billing }}
 						</a></li>
@@ -64,7 +64,7 @@
 							<span class="fa fa-undo"></span> 
 							{{ tab_backup }}
 						</a></li> -->
-						<!-- <li {% if route == 'd_shopunity/setting' %}class="active" {% endif %}><a href="{{ href_setting }}" >
+						<!-- <li {% if route == 'd_shopunity/setting' %} class="active" {% endif %}><a href="{{ href_setting }}" >
 							<span class="fa fa-cog"></span> 
 							{{ tab_setting }}
 						</a></li> -->
